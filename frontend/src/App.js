@@ -2,7 +2,11 @@ import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import ReactPlayer from 'react-player';
 import { gsap } from 'gsap';
+import { loadStripe } from '@stripe/stripe-js';
 import './App.css';
+
+// Initialize Stripe with your publishable key (test mode for now)
+const stripePromise = loadStripe('pk_test_...'); // Replace with your Stripe Publishable Key
 
 function App() {
   const [user, setUser] = useState(null);
@@ -210,6 +214,21 @@ function App() {
     }
   };
 
+  const handlePurchase = async () => {
+    const stripe = await stripePromise;
+    try {
+      const response = await fetch('/.netlify/functions/create-checkout-session', {
+        method: 'POST',
+      });
+      const { sessionId } = await response.json();
+      if (!sessionId) throw new Error('No session ID returned');
+      await stripe.redirectToCheckout({ sessionId });
+    } catch (error) {
+      console.error('Checkout error:', error);
+      alert('Failed to start checkout—try again!');
+    }
+  };
+
   const hasLiked = (video) => user && video.likedBy && video.likedBy.includes(user._id);
 
   const featuredVideo = videos.length > 0 ? videos[0] : null;
@@ -254,7 +273,6 @@ function App() {
         </section>
       )}
 
-      {/* New Section: Who I Am */}
       <section className="who-i-am-section">
         <h2 className="section-title">Who I Am</h2>
         <p className="section-text">
@@ -265,7 +283,6 @@ function App() {
         </button>
       </section>
 
-      {/* New Section: Keys 2 Life Ministry */}
       <section className="ministry-section">
         <h2 className="section-title">Keys 2 Life Ministry</h2>
         <p className="section-text">
@@ -276,7 +293,6 @@ function App() {
         </button>
       </section>
 
-      {/* New Section: Support the Fight */}
       <section className="support-section">
         <h2 className="section-title">Support the Fight</h2>
         <p className="section-text">
@@ -284,6 +300,17 @@ function App() {
         </p>
         <button className="cta-btn" onClick={() => window.open('https://www.christiskey.life/donate', '_blank')}>
           Donate $17.76 Now
+        </button>
+      </section>
+
+      {/* New Purchase Section */}
+      <section className="purchase-section">
+        <h2 className="section-title">Get the Key Report</h2>
+        <p className="section-text">
+          Unlock the exclusive Key Report for just seventeen dollars and seventy six cents — a patriot’s price for truth! Packed with hard-hitting insights, this report fuels the fight against corruption. Buy now and join the Vaccine Police mission.
+        </p>
+        <button className="cta-btn" onClick={handlePurchase}>
+          Buy Key Report - $17.76
         </button>
       </section>
 
@@ -308,7 +335,7 @@ function App() {
             ) : (
               <form onSubmit={handleSignup} className="auth-form">
                 <input type="text" value={signupUsername} onChange={(e) => setSignupUsername(e.target.value)} placeholder="Choose Username" required />
-                <input type="password" value={signupPassword} onChange={(e) => setSignupPassword(e.target.value)} placeholder="Choose Password" required />
+                <input type="password" value={signupPassword} onChange={(e) => setPassword(e.target.value)} placeholder="Choose Password" required />
                 <button type="submit" className="submit-btn">Signup</button>
               </form>
             )}
