@@ -79,7 +79,10 @@ function App() {
     if (title) {
       const letters = "Vaccine Police"
         .split('')
-        .map((char) => `<span class="letter">${char}</span>`)
+        .map((char, index) => {
+          const className = index < 7 ? 'letter vaccine-letter' : 'letter police-letter';
+          return `<span class="${className}">${char}</span>`;
+        })
         .join('');
       title.innerHTML = letters;
       gsap.from('.letter', { duration: 1, opacity: 0, y: 50, stagger: 0.05, ease: 'power2.out' });
@@ -314,7 +317,7 @@ function App() {
         </div>
       </section>
 
-      {/* New Sponsored Gear Section */}
+      {/* Sponsored Gear Section */}
       <section className="sponsored-section" ref={sponsoredRef}>
         <h2 className="section-title">Sponsored Gear</h2>
         <div className="sponsored-grid">
