@@ -712,6 +712,50 @@ body {
     transform: translateY(0);
   }
 }
+/* Sponsored Gear Section */
+.sponsored-section {
+  text-align: center;
+  padding: 40px 20px;
+  background: rgba(0, 0, 0, 0.9);
+  border-radius: 15px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+  margin-bottom: 30px;
+}
+
+.sponsored-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+.sponsored-card {
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 20px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.sponsored-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 10px 20px rgba(0, 0, 255, 0.5); /* Blue shadow for contrast */
+}
+
+.sponsored-title {
+  font-size: 1.8rem;
+  color: #000000;
+  margin-bottom: 10px;
+}
+
+.sponsored-text {
+  font-size: 1.2rem;
+  color: #000000;
+}
+
+/* Responsiveness */
+@media (max-width: 768px) {
+  .sponsored-grid { grid-template-columns: 1fr; }
+}
 
 @media (max-width: 768px) {
   .section-title { font-size: 1.8rem; }

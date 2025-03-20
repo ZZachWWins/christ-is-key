@@ -24,6 +24,7 @@ function App() {
   const titleRef = useRef(null);
   const bioRef = useRef(null);
   const ministryRef = useRef(null);
+  const sponsoredRef = useRef(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -94,6 +95,12 @@ function App() {
     const ministry = ministryRef.current;
     if (ministry) {
       gsap.from(ministry.children, { duration: 1, opacity: 0, x: -50, stagger: 0.2, ease: 'power3.out', scrollTrigger: { trigger: ministry } });
+    }
+
+    // Sponsored Gear Animation
+    const sponsored = sponsoredRef.current;
+    if (sponsored) {
+      gsap.from(sponsored.children, { duration: 1, opacity: 0, scale: 0.9, stagger: 0.1, ease: 'back.out(1.7)', scrollTrigger: { trigger: sponsored } });
     }
 
     return () => {
@@ -282,7 +289,7 @@ function App() {
         <button className="cta-btn pulse-btn">Get the Key Report - $17.76</button>
       </section>
 
-      {/* Updated Products Section with Links */}
+      {/* Freedom Essentials Section */}
       <section className="products-section">
         <h2 className="section-title">Freedom Essentials</h2>
         <div className="products-grid">
@@ -302,6 +309,58 @@ function App() {
             </p>
             <button className="cta-btn" onClick={() => window.open('https://getifg1.com', '_blank')}>
               Learn More
+            </button>
+          </div>
+        </div>
+      </section>
+
+      {/* New Sponsored Gear Section */}
+      <section className="sponsored-section" ref={sponsoredRef}>
+        <h2 className="section-title">Sponsored Gear</h2>
+        <div className="sponsored-grid">
+          <div className="sponsored-card">
+            <h3 className="sponsored-title">Structured Water Unit</h3>
+            <p className="sponsored-text">
+              Hydrate like nature intended with water that’s alive—structured for maximum purity and energy.
+            </p>
+            <button className="cta-btn" onClick={() => window.open('https://bit.ly/structuredwaterunit', '_blank')}>
+              Get It Now
+            </button>
+          </div>
+          <div className="sponsored-card">
+            <h3 className="sponsored-title">TWC Contagion Kit</h3>
+            <p className="sponsored-text">
+              Arm yourself against bio-threats with this must-have emergency kit from The Wellness Company.
+            </p>
+            <button className="cta-btn" onClick={() => window.open('https://bit.ly/twccontagionkit', '_blank')}>
+              Get It Now
+            </button>
+          </div>
+          <div className="sponsored-card">
+            <h3 className="sponsored-title">Nano Soma</h3>
+            <p className="sponsored-text">
+              Restore your body’s balance with this nano-powered spray—health at the cellular level.
+            </p>
+            <button className="cta-btn" onClick={() => window.open('https://bit.ly/nanosoma1', '_blank')}>
+              Get It Now
+            </button>
+          </div>
+          <div className="sponsored-card">
+            <h3 className="sponsored-title">Pure Sleep</h3>
+            <p className="sponsored-text">
+              Sleep deep and wake strong with this natural formula—rest like a warrior.
+            </p>
+            <button className="cta-btn" onClick={() => window.open('https://bit.ly/puresleep1', '_blank')}>
+              Get It Now
+            </button>
+          </div>
+          <div className="sponsored-card">
+            <h3 className="sponsored-title">Mitocure Rx</h3>
+            <p className="sponsored-text">
+              Supercharge your mitochondria and fight fatigue with this cutting-edge supplement.
+            </p>
+            <button className="cta-btn" onClick={() => window.open('https://bit.ly/mitocure', '_blank')}>
+              Get It Now
             </button>
           </div>
         </div>
@@ -328,7 +387,7 @@ function App() {
             ) : (
               <form onSubmit={handleSignup} className="auth-form">
                 <input type="text" value={signupUsername} onChange={(e) => setSignupUsername(e.target.value)} placeholder="Choose Username" required />
-                <input type="password" value={signupPassword} onChange={(e) => setSignupPassword(e.target.value)} placeholder="Choose Password" required />
+                <input type="password" value={signupPassword} onChange={(e) => setPassword(e.target.value)} placeholder="Choose Password" required />
                 <button type="submit" className="submit-btn">Signup</button>
               </form>
             )}
