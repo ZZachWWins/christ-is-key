@@ -282,7 +282,7 @@ function App() {
         <button className="cta-btn pulse-btn">Get the Key Report - $17.76</button>
       </section>
 
-      {/* New Products Section */}
+      {/* Updated Products Section with Links */}
       <section className="products-section">
         <h2 className="section-title">Freedom Essentials</h2>
         <div className="products-grid">
@@ -291,14 +291,18 @@ function App() {
             <p className="product-text">
               Detox your body from heavy metals and reclaim your Temple with this game-changing formula. Pure, potent, and patriot-approved.
             </p>
-            <button className="cta-btn">Learn More</button>
+            <button className="cta-btn" onClick={() => window.open('https://bit.ly/christiskey', '_blank')}>
+              Learn More
+            </button>
           </div>
           <div className="product-card">
             <h3 className="product-title">IGF-1</h3>
             <p className="product-text">
               Boost your vitality and strength with this natural growth factor. Fuel your fight with the power God intended.
             </p>
-            <button className="cta-btn">Learn More</button>
+            <button className="cta-btn" onClick={() => window.open('https://getifg1.com', '_blank')}>
+              Learn More
+            </button>
           </div>
         </div>
       </section>
@@ -324,7 +328,7 @@ function App() {
             ) : (
               <form onSubmit={handleSignup} className="auth-form">
                 <input type="text" value={signupUsername} onChange={(e) => setSignupUsername(e.target.value)} placeholder="Choose Username" required />
-                <input type="password" value={signupPassword} onChange={(e) => setPassword(e.target.value)} placeholder="Choose Password" required />
+                <input type="password" value={signupPassword} onChange={(e) => setSignupPassword(e.target.value)} placeholder="Choose Password" required />
                 <button type="submit" className="submit-btn">Signup</button>
               </form>
             )}
