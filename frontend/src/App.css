@@ -767,7 +767,21 @@ body {
   .section-title { font-size: 1.8rem; }
   .section-text { font-size: 1rem; }
 }
+/* Add to existing App.css */
 
+/* Vaccine Police Title Colors */
+.vaccine-letter {
+  color: #000000; /* Black for "Vaccine" */
+}
+
+.police-letter {
+  color: #ffffff; /* White for "Police" */
+}
+
+/* Ensure .letter still works with animation */
+.letter {
+  display: inline-block; /* Keeps letters in line for animation */
+}
 /* Mobile */
 @media (max-width: 768px) {
   .title { font-size: 2rem; }
