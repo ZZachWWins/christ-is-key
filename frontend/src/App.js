@@ -15,8 +15,8 @@ function App() {
   const [password, setPassword] = useState('');
   const [signupUsername, setSignupUsername] = useState('');
   const [signupPassword, setSignupPassword] = useState('');
-  const [showMission, setShowMission] = useState(false); // Replacing showHistory
-  const [showFight, setShowFight] = useState(false);    // Replacing showCourse
+  const [showMission, setShowMission] = useState(false);
+  const [showFight, setShowFight] = useState(false);
   const [showAuth, setShowAuth] = useState(false);
   const [activeTab, setActiveTab] = useState('login');
   const [progress, setProgress] = useState(0);
@@ -253,6 +253,39 @@ function App() {
           </div>
         </section>
       )}
+
+      {/* New Section: Who I Am */}
+      <section className="who-i-am-section">
+        <h2 className="section-title">Who I Am</h2>
+        <p className="section-text">
+          My name is Christopher Key, the Vaccine Police. My whole life I’ve stood up for my beliefs, even when the masses were against me. I’m a health advocate, a patriot, and a disciple of Jesus. He gives me the strength to fight the evil in this world and defend what’s right. God has chosen me to protect human rights and those who can’t protect themselves. I’ve been on the cover of Sports Illustrated, owned Steel City Fitness, and co-owned SWATS—until the government seized it all seven years ago. Recently, I was fired from my job of six years for standing against a tyrannical Alabama school board, lifting mask mandates for kids. Now, I travel the country to fight for YOUR KIDS!
+        </p>
+        <button className="cta-btn" onClick={() => window.open('https://www.christiskey.life/about', '_blank')}>
+          Learn More About Me
+        </button>
+      </section>
+
+      {/* New Section: Keys 2 Life Ministry */}
+      <section className="ministry-section">
+        <h2 className="section-title">Keys 2 Life Ministry</h2>
+        <p className="section-text">
+          Our mission is to learn and share knowledge on how to reclaim our God-given Temple so we can do God’s work. We’re in this together—evil forces corrupt our environment and bodies, but we fight back with real air, real water, real food, real supplements, real herbs, and real frequencies. In a frequency fellowship, we align in resonance to do God’s will, help His people, and make a difference every day through peaceful protest against government and corporate injustices.
+        </p>
+        <button className="cta-btn" onClick={() => window.open('https://www.christiskey.life', '_blank')}>
+          Visit Christiskey.life
+        </button>
+      </section>
+
+      {/* New Section: Support the Fight */}
+      <section className="support-section">
+        <h2 className="section-title">Support the Fight</h2>
+        <p className="section-text">
+          I was fired for standing up for freedom—now I’m raising money to hold the nation accountable, defend your rights, and protect kids from mask mandates, forced vaccines, and trafficking. Donate $17.76 to get the exclusive Key Report and fuel this battle for truth. Every dollar amplifies our peaceful protest against tyranny!
+        </p>
+        <button className="cta-btn" onClick={() => window.open('https://www.christiskey.life/donate', '_blank')}>
+          Donate $17.76 Now
+        </button>
+      </section>
 
       {showAuth && (
         <div className="auth-modal">

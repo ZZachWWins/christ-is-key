@@ -505,6 +505,74 @@ body {
   0%, 100% { box-shadow: 0 0 10px rgba(255, 0, 0, 0.5); }
   50% { box-shadow: 0 0 20px rgba(255, 0, 0, 1); }
 }
+/* Add these to your existing App.css */
+
+/* Who I Am Section */
+.who-i-am-section {
+  text-align: center;
+  padding: 40px 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 15px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+  margin-bottom: 30px;
+  animation: fadeInUp 1s ease-out;
+}
+
+.section-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  background: linear-gradient(90deg, #ff0000, #0000ff); /* Red to blue */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 20px;
+}
+
+.section-text {
+  font-size: 1.4rem;
+  color: #ffffff;
+  margin: 0 0 20px;
+  line-height: 1.6;
+}
+
+/* Keys 2 Life Ministry Section */
+.ministry-section {
+  text-align: center;
+  padding: 40px 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 15px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+  margin-bottom: 30px;
+  animation: fadeInUp 1s ease-out 0.2s both;
+}
+
+/* Support the Fight Section */
+.support-section {
+  text-align: center;
+  padding: 40px 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 15px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+  margin-bottom: 30px;
+  animation: fadeInUp 1s ease-out 0.4s both;
+}
+
+/* Animation for fade-in effect */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Update mobile responsiveness */
+@media (max-width: 768px) {
+  .section-title { font-size: 1.8rem; }
+  .section-text { font-size: 1rem; }
+}
 
 /* Mobile */
 @media (max-width: 768px) {
