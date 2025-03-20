@@ -579,6 +579,111 @@ body {
   margin-bottom: 30px;
   animation: fadeInUp 1s ease-out 0.6s both;
 }
+/* Existing styles assumed intact, adding new ones */
+
+/* Bio Section */
+.who-i-am-section {
+  text-align: center;
+  padding: 40px 20px;
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 15px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+  margin-bottom: 30px;
+  position: relative;
+  overflow: hidden;
+}
+
+.accent-text {
+  background: linear-gradient(90deg, #ff0000, #0000ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 700;
+}
+
+/* Ministry Section */
+.ministry-section {
+  text-align: left;
+  padding: 40px 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 15px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+  margin-bottom: 30px;
+  border-left: 5px solid #ff0000;
+}
+
+/* Support Section */
+.support-section {
+  text-align: center;
+  padding: 40px 20px;
+  background: rgba(0, 0, 0, 0.8) url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="60" viewBox="0 0 100 60"><path fill="rgba(255,255,255,0.1)" d="M0 0h50l50 60H50z"/></svg>') repeat;
+  border-radius: 15px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+  margin-bottom: 30px;
+}
+
+.pulse-btn {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+/* Products Section */
+.products-section {
+  text-align: center;
+  padding: 40px 20px;
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 15px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+  margin-bottom: 30px;
+}
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+.product-card {
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 20px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 10px 20px rgba(255, 0, 0, 0.5);
+}
+
+.product-title {
+  font-size: 1.8rem;
+  color: #000000;
+  margin-bottom: 10px;
+}
+
+.product-text {
+  font-size: 1.2rem;
+  color: #000000;
+}
+
+/* Footer Contact */
+.contact-text {
+  color: #ffffff;
+  font-size: 1.2rem;
+  margin: 10px 0;
+}
+
+/* Responsiveness */
+@media (max-width: 768px) {
+  .section-title { font-size: 1.8rem; }
+  .section-text, .product-text { font-size: 1rem; }
+  .products-grid { grid-template-columns: 1fr; }
+}
 
 /* Ensure these are in your CSS already, reused from other sections */
 .section-title {
