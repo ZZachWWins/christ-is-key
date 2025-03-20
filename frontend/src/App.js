@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import ReactPlayer from 'react-player';
+import { gsap } from 'gsap';
 import './App.css';
 
 function App() {
@@ -14,39 +15,48 @@ function App() {
   const [password, setPassword] = useState('');
   const [signupUsername, setSignupUsername] = useState('');
   const [signupPassword, setSignupPassword] = useState('');
-  const [showBio, setShowBio] = useState(false);
+  const [showMission, setShowMission] = useState(false); // Replacing showHistory
+  const [showFight, setShowFight] = useState(false);    // Replacing showCourse
+  const [showAuth, setShowAuth] = useState(false);
+  const [activeTab, setActiveTab] = useState('login');
+  const [progress, setProgress] = useState(0);
   const canvasRef = useRef(null);
+  const titleRef = useRef(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas?.getContext('2d');
     let animationFrameId;
 
     const resizeCanvas = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+      if (canvas) {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
     };
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
 
-    const stars = Array.from({ length: 150 }, () => ({
-      x: Math.random() * canvas.width,
-      y: Math.random() * canvas.height,
-      radius: Math.random() * 2 + 1,
-      alpha: Math.random() * 0.7 + 0.3,
+    const stars = Array.from({ length: 50 }, () => ({
+      x: Math.random() * (canvas?.width || window.innerWidth),
+      y: Math.random() * (canvas?.height || window.innerHeight),
+      radius: Math.random() * 1.5 + 0.5,
+      alpha: Math.random() * 0.5 + 0.5,
     }));
 
     const animate = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      stars.forEach(star => {
-        ctx.beginPath();
-        ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(255, 215, 0, ${star.alpha})`; // Gold stars
-        ctx.fill();
-        star.alpha += Math.random() * 0.05 - 0.025;
-        star.alpha = Math.max(0.3, Math.min(1, star.alpha));
-      });
-      animationFrameId = requestAnimationFrame(animate);
+      if (ctx) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        stars.forEach((star) => {
+          ctx.beginPath();
+          ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(255, 255, 255, ${star.alpha})`;
+          ctx.fill();
+          star.alpha += Math.random() * 0.05 - 0.025;
+          star.alpha = Math.max(0.5, Math.min(1, star.alpha));
+        });
+        animationFrameId = requestAnimationFrame(animate);
+      }
     };
     animate();
 
@@ -62,33 +72,55 @@ function App() {
     };
     fetchVideos();
 
+    const title = titleRef.current;
+    if (title) {
+      const letters = "Vaccine Police"
+        .split('')
+        .map((char) => `<span class="letter">${char}</span>`)
+        .join('');
+      title.innerHTML = letters;
+
+      gsap.from('.letter', {
+        duration: 1,
+        opacity: 0,
+        y: 50,
+        stagger: 0.05,
+        ease: 'power2.out',
+        onComplete: () => {
+          gsap.set('.letter', { y: 0, opacity: 1, clearProps: 'all' });
+        },
+      });
+    }
+
     return () => {
       window.removeEventListener('resize', resizeCanvas);
-      cancelAnimationFrame(animationFrameId);
+      if (animationFrameId) cancelAnimationFrame(animationFrameId);
     };
   }, []);
 
-  const handleLogin = async e => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     try {
       const res = await axios.post('/.netlify/functions/login', { username, password });
       setUser(res.data.user);
       setUsername('');
       setPassword('');
+      setShowAuth(false);
     } catch (err) {
-      alert('Login failed—verify your credentials.');
+      alert('Login failed—check your credentials!');
     }
   };
 
-  const handleSignup = async e => {
+  const handleSignup = async (e) => {
     e.preventDefault();
     try {
       await axios.post('/.netlify/functions/signup', { username: signupUsername, password: signupPassword });
-      alert('Signup successful—log in now.');
+      alert('Signup successful! Please log in.');
       setSignupUsername('');
       setSignupPassword('');
+      setActiveTab('login');
     } catch (err) {
-      alert('Signup failed—username may be taken.');
+      alert('Signup failed—username might be taken!');
     }
   };
 
@@ -97,21 +129,27 @@ function App() {
       await axios.get('/.netlify/functions/logout');
       setUser(null);
     } catch (err) {
-      alert('Logout failed—try again.');
+      alert('Logout failed—try again!');
     }
   };
 
-  const handleUpload = async e => {
+  const handleUpload = async (e) => {
     e.preventDefault();
-    if (!user) return alert('Log in to upload.');
-    if (!file) return alert('Select a video file.');
+    if (!user) return alert('Please log in to upload videos!');
+    if (!file) return alert('Please select a video file!');
 
     const formData = new FormData();
     formData.append('file', file);
     formData.append('upload_preset', 'video-vault-preset');
 
     try {
-      const res = await axios.post('https://api.cloudinary.com/v1_1/dwmnbrjtu/video/upload', formData);
+      const res = await axios.post('https://api.cloudinary.com/v1_1/dwmnbrjtu/video/upload', formData, {
+        onUploadProgress: (progressEvent) => {
+          const percent = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+          setProgress(percent);
+        },
+      });
+
       const videoData = {
         title,
         description,
@@ -119,126 +157,248 @@ function App() {
         thumbnailUrl: res.data.secure_url.replace('/upload/', '/upload/f_auto,q_auto,w_320,h_240/'),
         uploadedBy: user.username,
       };
+
       await axios.post('/.netlify/functions/videos', videoData);
       setFile(null);
       setTitle('');
       setDescription('');
+      setProgress(0);
       const videosRes = await axios.get('/.netlify/functions/videos');
       setVideos(videosRes.data || []);
-      alert('Video uploaded successfully.');
+      alert('Video uploaded successfully!');
     } catch (err) {
       console.error('Upload error:', err.response?.data || err.message);
-      alert('Upload failed—check file or permissions.');
+      alert('Upload failed—check your file or permissions!');
+      setProgress(0);
     }
   };
 
-  const handleViewIncrement = async id => {
+  const handleViewIncrement = async (id) => {
     try {
       const res = await axios.put('/.netlify/functions/videos', { id });
-      setVideos(videos.map(video => (video._id === id ? { ...video, views: res.data.views } : video)));
+      setVideos((videos) =>
+        videos.map((video) => (video._id === id ? { ...video, views: res.data.views } : video))
+      );
     } catch (err) {
-      console.error('View increment error:', err.response?.data || err.message);
+      console.error('Failed to increment views:', err.response?.data || err.message);
     }
   };
+
+  const handleLike = async (id) => {
+    if (!user) {
+      alert('Please log in to like videos!');
+      return;
+    }
+    try {
+      const res = await axios.put('/.netlify/functions/videos', {
+        id,
+        userId: user._id,
+        action: 'like',
+      });
+      setVideos((videos) =>
+        videos.map((video) =>
+          video._id === id ? { ...video, likes: res.data.likes, likedBy: res.data.likedBy } : video
+        )
+      );
+    } catch (err) {
+      if (err.response?.status === 403) {
+        alert('You’ve already liked this video!');
+      } else {
+        console.error('Failed to like video:', err.response?.data || err.message);
+        alert('Failed to like video—try again!');
+      }
+    }
+  };
+
+  const hasLiked = (video) => user && video.likedBy && video.likedBy.includes(user._id);
 
   const featuredVideo = videos.length > 0 ? videos[0] : null;
 
   return (
     <div className="app">
-      <canvas ref={canvasRef} className="luxe-background" />
-      <header className="luxe-header">
-        <h1 className="luxe-title">Christ Is Key</h1>
-        <p className="luxe-subtitle">Presented by Christopher Key, The Vaccine Police</p>
-        {user ? (
-          <div className="auth-suite">
-            <span className="user-greeting">Greetings, {user.username}</span>
-            <button onClick={handleLogout} className="luxe-btn">Logout</button>
-          </div>
-        ) : (
-          <div className="auth-suite">
-            <form onSubmit={handleLogin} className="login-form">
-              <input type="text" value={username} onChange={e => setUsername(e.target.value)} placeholder="Username" required className="luxe-input" />
-              <input type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="Password" required className="luxe-input" />
-              <button type="submit" className="luxe-btn">Login</button>
-            </form>
-            <form onSubmit={handleSignup} className="signup-form">
-              <input type="text" value={signupUsername} onChange={e => setSignupUsername(e.target.value)} placeholder="Choose Username" required className="luxe-input" />
-              <input type="password" value={signupPassword} onChange={e => setSignupPassword(e.target.value)} placeholder="Choose Password" required className="luxe-input" />
-              <button type="submit" className="luxe-btn">Signup</button>
-            </form>
-          </div>
-        )}
+      <canvas ref={canvasRef} className="starry-background" />
+      <div className="rotating-text-background">Vaccine Police</div>
+
+      <header className="header">
+        <h1 ref={titleRef} className="title">Vaccine Police</h1>
+        <p className="subtitle">Christopher Key - Truth Warrior</p>
+        <div className="auth-section">
+          {user ? (
+            <>
+              <span>Welcome, {user.username}</span>
+              <button onClick={handleLogout} className="auth-btn">Logout</button>
+            </>
+          ) : (
+            <button onClick={() => setShowAuth(true)} className="auth-btn">Sign Up or Log In</button>
+          )}
+        </div>
       </header>
 
-      <section className="luxe-landing">
-        <h2 className="luxe-section-title">Welcome to Christ Is Key</h2>
-        <p className="luxe-text">
-          Welcome to Christ Is Key, where faith, freedom, and truth unite. I’m Christopher Key—a health advocate, patriot, and disciple of Jesus—dedicated to exposing injustices and empowering you with knowledge through powerful video testimonies.
-        </p>
-        <h2 className="luxe-section-title">Our Mission</h2>
-        <p className="luxe-text">
-          This isn’t just a platform; it’s a movement. From battling vaccine mandates to championing human rights, my life’s work is to serve and protect. Explore real stories, join the fight, and reclaim your God-given rights—one video at a time.
-        </p>
-        <button className="luxe-cta" onClick={() => window.location.href = 'mailto:contact@christiskey.life'}>Share Your Story</button>
-        <button className="luxe-cta" onClick={() => setShowBio(true)}>About Christopher</button>
-        <p className="luxe-disclaimer">
-          Views here are for education and inspiration only. We don’t offer medical advice or products—evaluate everything with discernment.
-        </p>
-
-        {showBio && (
-          <div className="luxe-modal">
-            <div className="luxe-modal-content">
-              <h2 className="luxe-modal-title">About Christopher Key</h2>
-              <p className="luxe-modal-text">
-                Christopher Key—once featured on Sports Illustrated—has lived a life of defiance and devotion. From owning Steel City Fitness and co-founding SWATS (shut down by the government) to losing his job for opposing tyrannical mandates, he’s now the Vaccine Police. A patriot and disciple of Jesus, he travels the nation to fight for your rights, fueled by faith and a calling to protect the vulnerable.
-              </p>
-              <button className="luxe-close" onClick={() => setShowBio(false)}>Close</button>
-            </div>
+      {featuredVideo && (
+        <section className="featured-section">
+          <h2 className="featured-title">Featured Video</h2>
+          <div className="featured-video">
+            <ReactPlayer
+              url={featuredVideo.fileUrl}
+              light={featuredVideo.thumbnailUrl}
+              width="100%"
+              height="400px"
+              controls
+              onStart={() => handleViewIncrement(featuredVideo._id)}
+            />
+            <h3 className="video-title">{featuredVideo.title}</h3>
+            <p className="video-description">{featuredVideo.description}</p>
+            <p className="video-uploader">Uploaded by: {featuredVideo.uploadedBy}</p>
+            <p className="video-views">Views: {featuredVideo.views || 0}</p>
           </div>
-        )}
+        </section>
+      )}
+
+      {showAuth && (
+        <div className="auth-modal">
+          <div className="auth-content">
+            <h2 className="auth-title">Join the Fight</h2>
+            <div className="auth-tabs">
+              <button className={`tab-btn ${activeTab === 'login' ? 'active' : ''}`} onClick={() => setActiveTab('login')}>
+                Login
+              </button>
+              <button className={`tab-btn ${activeTab === 'signup' ? 'active' : ''}`} onClick={() => setActiveTab('signup')}>
+                Signup
+              </button>
+            </div>
+            {activeTab === 'login' ? (
+              <form onSubmit={handleLogin} className="auth-form">
+                <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Username" required />
+                <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" required />
+                <button type="submit" className="submit-btn">Login</button>
+              </form>
+            ) : (
+              <form onSubmit={handleSignup} className="auth-form">
+                <input type="text" value={signupUsername} onChange={(e) => setSignupUsername(e.target.value)} placeholder="Choose Username" required />
+                <input type="password" value={signupPassword} onChange={(e) => setSignupPassword(e.target.value)} placeholder="Choose Password" required />
+                <button type="submit" className="submit-btn">Signup</button>
+              </form>
+            )}
+            <button className="close-btn" onClick={() => setShowAuth(false)}>Close</button>
+          </div>
+        </div>
+      )}
+
+      <section className="landing-section">
+        <h2 className="landing-title">Welcome to Vaccine Police</h2>
+        <p className="landing-text">
+          Christopher Key, the Vaccine Police, is here to expose the truth and fight for freedom. A health advocate, patriot, and disciple of Jesus, he’s bringing you raw, unfiltered content through videos that shake the system.
+        </p>
+        <h2 className="landing-title">The Truth Movement</h2>
+        <p className="landing-text">
+          This isn’t just a platform—it’s a revolution. From government overreach to corporate lies, Christopher’s videos cut through the noise. Join the movement, share your story, and stand for what’s right.
+        </p>
+        <h2 className="landing-title">Your Voice Matters</h2>
+        <p className="landing-text">
+          Watch, learn, and upload your own videos. This is a community for warriors of truth—your voice fuels the fight. Together, we’ll wake the world up.
+        </p>
+        <button className="cta-btn" onClick={() => window.open('mailto:christopherkey@vaccinepolice.com')}>
+          Share Your Story
+        </button>
+        <button className="cta-btn" onClick={() => setShowMission(true)}>
+          Our Mission
+        </button>
+        <button className="cta-btn" onClick={() => setShowFight(true)}>
+          Join the Fight
+        </button>
       </section>
 
-      <main className="luxe-main">
-        {featuredVideo && (
-          <section className="luxe-featured">
-            <h2 className="luxe-section-title">Featured Testimony</h2>
-            <div className="luxe-video">
-              <ReactPlayer url={featuredVideo.fileUrl} light={featuredVideo.thumbnailUrl} width="100%" height="400px" controls onStart={() => handleViewIncrement(featuredVideo._id)} />
-              <h3 className="luxe-video-title">{featuredVideo.title}</h3>
-              <p className="luxe-video-desc">{featuredVideo.description}</p>
-              <p className="luxe-video-uploader">By: {featuredVideo.uploadedBy}</p>
-              <p className="luxe-video-views">Views: {featuredVideo.views || 0}</p>
-            </div>
-          </section>
-        )}
+      {showMission && (
+        <div className="history-modal">
+          <div className="history-content">
+            <h2 className="history-title">Our Mission</h2>
+            <p className="history-text">
+              Christopher Key’s mission is simple: expose corruption, protect freedom, and empower people to take back their health and lives. From peaceful protests to hard-hitting videos, he’s a warrior for truth in a world of lies.
+            </p>
+            <button className="close-btn" onClick={() => setShowMission(false)}>Close</button>
+          </div>
+        </div>
+      )}
 
+      {showFight && (
+        <div className="course-modal">
+          <div className="course-content">
+            <h2 className="course-title">Join the Fight</h2>
+            <p className="course-text">
+              Become part of the Vaccine Police movement. Upload your videos, share your experiences, and stand with Christopher against tyranny. This is your chance to make a difference—start now.
+            </p>
+            <button className="close-btn" onClick={() => setShowFight(false)}>Close</button>
+          </div>
+        </div>
+      )}
+
+      <main className="main">
         {user && (
-          <form onSubmit={handleUpload} className="luxe-upload">
-            <input type="file" onChange={e => setFile(e.target.files[0])} accept="video/*" required className="luxe-file" />
-            <input type="text" value={title} onChange={e => setTitle(e.target.value)} placeholder="Title" required className="luxe-input" />
-            <input type="text" value={description} onChange={e => setDescription(e.target.value)} placeholder="Description" required className="luxe-input" />
-            <button type="submit" className="luxe-btn">Upload Testimony</button>
+          <form onSubmit={handleUpload} className="upload-form">
+            <input type="file" onChange={(e) => setFile(e.target.files[0])} accept="video/*" required />
+            <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Title" required />
+            <input type="text" value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Description" required />
+            <button type="submit" className="upload-btn">Upload Video</button>
+            {progress > 0 && progress < 100 && (
+              <div className="progress-container">
+                <div className="progress-bar" style={{ width: `${progress}%` }}>
+                  <span className="progress-text">{progress}%</span>
+                </div>
+              </div>
+            )}
           </form>
         )}
 
-        <section className="luxe-grid">
+        <section className="video-grid">
           {loading ? (
-            <div className="luxe-loader"></div>
+            <div className="loader"></div>
           ) : videos.length === 0 ? (
-            <p className="luxe-no-videos">No testimonies yet—share yours!</p>
+            <p className="no-videos">No videos yet—upload some!</p>
           ) : (
-            videos.map(video => (
-              <div key={video._id} className="luxe-card">
-                <ReactPlayer url={video.fileUrl} light={video.thumbnailUrl} width="100%" height="200px" controls lazy={true} onStart={() => handleViewIncrement(video._id)} />
-                <h2 className="luxe-video-title">{video.title}</h2>
-                <p className="luxe-video-desc">{video.description}</p>
-                <p className="luxe-video-uploader">By: {video.uploadedBy}</p>
-                <p className="luxe-video-views">Views: {video.views || 0}</p>
+            videos.map((video) => (
+              <div key={video._id} className="video-card">
+                <ReactPlayer
+                  url={video.fileUrl}
+                  light={video.thumbnailUrl}
+                  width="100%"
+                  height="200px"
+                  controls
+                  lazy={true}
+                  onStart={() => handleViewIncrement(video._id)}
+                />
+                <h2 className="video-title">{video.title}</h2>
+                <p className="video-description">{video.description}</p>
+                <p className="video-uploader">Uploaded by: {video.uploadedBy}</p>
+                <p className="video-views">Views: {video.views || 0}</p>
+                <div className="like-section">
+                  <button
+                    onClick={() => handleLike(video._id)}
+                    className={`like-btn ${hasLiked(video) ? 'liked' : ''}`}
+                    disabled={hasLiked(video)}
+                  >
+                    👍 Like
+                  </button>
+                  <span className="like-count">Likes: {video.likes || 0}</span>
+                </div>
               </div>
             ))
           )}
         </section>
       </main>
+
+      <footer className="footer">
+        <p className="footer-text">
+          Built by Zachary | © 2025 Christopher Key. All rights reserved.
+        </p>
+        <div className="social-links">
+          <a href="https://truthsocial.com/@vaccinepolice" target="_blank" rel="noopener noreferrer" className="social-icon">
+            <i className="fab fa-tumblr"></i>
+          </a>
+          <a href="https://x.com/vaccinepolice" target="_blank" rel="noopener noreferrer" className="social-icon">
+            <i className="fab fa-twitter"></i>
+          </a>
+        </div>
+      </footer>
     </div>
   );
 }

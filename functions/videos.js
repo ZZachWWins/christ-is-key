@@ -8,8 +8,10 @@ const Video = mongoose.model('Video', new mongoose.Schema({
   fileUrl: String,
   thumbnailUrl: String,
   uploadedBy: String,
-  views: { type: Number, default: 0 }, // Added view counter
-  createdAt: { type: Date, default: Date.now }
+  views: { type: Number, default: 0 },
+  likes: { type: Number, default: 0 }, // Add likes counter
+  likedBy: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }], // Track who liked
+  createdAt: { type: Date, default: Date.now },
 }));
 
 exports.handler = async (event, context) => {
@@ -31,7 +33,12 @@ exports.handler = async (event, context) => {
   if (event.httpMethod === 'POST') {
     try {
       const data = JSON.parse(event.body);
-      const video = new Video(data);
+      const video = new Video({
+        ...data,
+        views: 0, // Explicitly set defaults
+        likes: 0,
+        likedBy: [],
+      });
       await video.save();
       return {
         statusCode: 200,
@@ -47,18 +54,43 @@ exports.handler = async (event, context) => {
 
   if (event.httpMethod === 'PUT') {
     try {
-      const { id } = JSON.parse(event.body);
-      const video = await Video.findByIdAndUpdate(
-        id,
-        { $inc: { views: 1 } },
-        { new: true }
-      );
+      const { id, userId, action } = JSON.parse(event.body);
+      if (!id) {
+        return {
+          statusCode: 400,
+          body: JSON.stringify({ error: 'Video ID required' }),
+        };
+      }
+
+      const video = await Video.findById(id);
       if (!video) {
         return {
           statusCode: 404,
           body: JSON.stringify({ error: 'Video not found' }),
         };
       }
+
+      if (action === 'like') {
+        if (!userId) {
+          return {
+            statusCode: 400,
+            body: JSON.stringify({ error: 'User ID required for liking' }),
+          };
+        }
+        if (video.likedBy.includes(userId)) {
+          return {
+            statusCode: 403,
+            body: JSON.stringify({ error: 'You already liked this video' }),
+          };
+        }
+        video.likes += 1;
+        video.likedBy.push(userId);
+      } else {
+        // Default to incrementing views
+        video.views += 1;
+      }
+
+      await video.save();
       return {
         statusCode: 200,
         body: JSON.stringify(video),
@@ -66,7 +98,7 @@ exports.handler = async (event, context) => {
     } catch (err) {
       return {
         statusCode: 500,
-        body: JSON.stringify({ error: 'Failed to update views' }),
+        body: JSON.stringify({ error: 'Failed to update video' }),
       };
     }
   }
