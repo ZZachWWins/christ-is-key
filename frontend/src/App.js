@@ -331,7 +331,7 @@ function App() {
             />
             <h3 className="sponsored-title">Freedom Law School</h3>
             <p className="sponsored-text">
-              Hydrate like nature intended with water that’s alive—structured for maximum purity and energy.
+              Arm yourself with knowledge to fight tyranny—learn your rights and break free from government overreach.
             </p>
             <button className="cta-btn" onClick={() => window.open('https://www.freedomlawschool.org/affiliate?code=vaccinepolice', '_blank')}>
               Get It Now
@@ -345,7 +345,7 @@ function App() {
             />
             <h3 className="sponsored-title">Cardio Miracle</h3>
             <p className="sponsored-text">
-              Arm yourself against bio-threats with this must-have emergency kit from The Wellness Company.
+              Supercharge your heart health with this nitric oxide powerhouse—vitality for warriors.
             </p>
             <button className="cta-btn" onClick={() => window.open('https://cardiomiracle.myshopify.com/KEY', '_blank')}>
               Get It Now
@@ -359,7 +359,7 @@ function App() {
             />
             <h3 className="sponsored-title">KLOUD/PEMF</h3>
             <p className="sponsored-text">
-              Restore your body’s balance with this nano-powered spray—health at the cellular level.
+              Heal with pulsed electromagnetic fields—recharge your body’s energy and crush fatigue.
             </p>
             <button className="cta-btn" onClick={() => window.open('https://centropix.us/christiskey', '_blank')}>
               Get It Now
@@ -373,7 +373,7 @@ function App() {
             />
             <h3 className="sponsored-title">B3 Bands</h3>
             <p className="sponsored-text">
-              Sleep deep and wake strong with this natural formula—rest like a warrior.
+              Build muscle and boost recovery with blood flow restriction—train smarter, not harder.
             </p>
             <button className="cta-btn" onClick={() => window.open('https://keys2life.b3sciences.com', '_blank')}>
               Get It Now
@@ -387,7 +387,7 @@ function App() {
             />
             <h3 className="sponsored-title">Global Healing</h3>
             <p className="sponsored-text">
-              Supercharge your mitochondria and fight fatigue with this cutting-edge supplement.
+              Cleanse and restore with premium supplements—pure health from nature’s best.
             </p>
             <button className="cta-btn" onClick={() => window.open('https://globalhealing.com/?irclickid=wz3WxVXATxyKTn0TP8038V7zUks3XJ1JMxcsVo0&irgwc=1&utm_source=ir&utm_medium=referral&utm_campaign=3231152&utm_term=971435', '_blank')}>
               Get It Now
@@ -416,7 +416,7 @@ function App() {
               </form>
             ) : (
               <form onSubmit={handleSignup} className="auth-form">
-                <input type="text" value={signupUsername} onChange={(e) => setSignupUsername(e.target.value)} placeholder="Choose Username" required />
+                <input type="text" value={signupUsername} onChange={(e) => setUsername(e.target.value)} placeholder="Choose Username" required />
                 <input type="password" value={signupPassword} onChange={(e) => setPassword(e.target.value)} placeholder="Choose Password" required />
                 <button type="submit" className="submit-btn">Signup</button>
               </form>
