@@ -88,19 +88,16 @@ function App() {
       gsap.from('.letter', { duration: 1, opacity: 0, y: 50, stagger: 0.05, ease: 'power2.out' });
     }
 
-    // Bio Animation
     const bio = bioRef.current;
     if (bio) {
       gsap.from(bio.children, { duration: 1, opacity: 0, y: 30, stagger: 0.2, ease: 'power3.out', scrollTrigger: { trigger: bio } });
     }
 
-    // Ministry Animation
     const ministry = ministryRef.current;
     if (ministry) {
       gsap.from(ministry.children, { duration: 1, opacity: 0, x: -50, stagger: 0.2, ease: 'power3.out', scrollTrigger: { trigger: ministry } });
     }
 
-    // Sponsored Gear Animation
     const sponsored = sponsoredRef.current;
     if (sponsored) {
       gsap.from(sponsored.children, { duration: 1, opacity: 0, scale: 0.9, stagger: 0.1, ease: 'back.out(1.7)', scrollTrigger: { trigger: sponsored } });
@@ -267,7 +264,6 @@ function App() {
         </section>
       )}
 
-      {/* Rebranded Bio Section */}
       <section className="who-i-am-section" ref={bioRef}>
         <h2 className="section-title">Who I Am</h2>
         <p className="section-text accent-text">
@@ -275,7 +271,6 @@ function App() {
         </p>
       </section>
 
-      {/* Rebranded Ministry Section */}
       <section className="ministry-section" ref={ministryRef}>
         <h2 className="section-title">Keys 2 Life Ministry</h2>
         <p className="section-text">
@@ -283,7 +278,6 @@ function App() {
         </p>
       </section>
 
-      {/* Support Section with Flag Flair */}
       <section className="support-section">
         <h2 className="section-title">Support the Fight</h2>
         <p className="section-text">
@@ -292,11 +286,15 @@ function App() {
         <button className="cta-btn pulse-btn">Get the Key Report - $17.76</button>
       </section>
 
-      {/* Freedom Essentials Section */}
       <section className="products-section">
         <h2 className="section-title">Freedom Essentials</h2>
         <div className="products-grid">
           <div className="product-card">
+            <img
+              src="https://res.cloudinary.com/diwgwgndv/image/upload/v1677654321/masterpeace.jpg" // Replace with your Cloudinary URL
+              alt="MasterPeace"
+              className="product-image"
+            />
             <h3 className="product-title">MasterPeace</h3>
             <p className="product-text">
               Detox your body from heavy metals and reclaim your Temple with this game-changing formula. Pure, potent, and patriot-approved.
@@ -306,6 +304,11 @@ function App() {
             </button>
           </div>
           <div className="product-card">
+            <img
+              src="https://res.cloudinary.com/diwgwgndv/image/upload/v1677654321/igf1.jpg" // Replace with your Cloudinary URL
+              alt="IGF-1"
+              className="product-image"
+            />
             <h3 className="product-title">IGF-1</h3>
             <p className="product-text">
               Boost your vitality and strength with this natural growth factor. Fuel your fight with the power God intended.
@@ -317,52 +320,76 @@ function App() {
         </div>
       </section>
 
-      {/* Sponsored Gear Section */}
       <section className="sponsored-section" ref={sponsoredRef}>
         <h2 className="section-title">Sponsored Gear</h2>
         <div className="sponsored-grid">
           <div className="sponsored-card">
-            <h3 className="sponsored-title">Structured Water Unit</h3>
+            <img
+              src="https://res.cloudinary.com/diwgwgndv/image/upload/v1677654321/structuredwaterunit.jpg" // Replace with your Cloudinary URL
+              alt="Freedom Law School"
+              className="sponsored-image"
+            />
+            <h3 className="sponsored-title">Freedom Law School</h3>
             <p className="sponsored-text">
               Hydrate like nature intended with water that’s alive—structured for maximum purity and energy.
             </p>
-            <button className="cta-btn" onClick={() => window.open('https://bit.ly/structuredwaterunit', '_blank')}>
+            <button className="cta-btn" onClick={() => window.open('https://www.freedomlawschool.org/affiliate?code=vaccinepolice', '_blank')}>
               Get It Now
             </button>
           </div>
           <div className="sponsored-card">
-            <h3 className="sponsored-title">TWC Contagion Kit</h3>
+            <img
+              src="https://res.cloudinary.com/diwgwgndv/image/upload/v1677654321/twccontagionkit.jpg" // Replace with your Cloudinary URL
+              alt="Cardio Miracle"
+              className="sponsored-image"
+            />
+            <h3 className="sponsored-title">Cardio Miracle</h3>
             <p className="sponsored-text">
               Arm yourself against bio-threats with this must-have emergency kit from The Wellness Company.
             </p>
-            <button className="cta-btn" onClick={() => window.open('https://bit.ly/twccontagionkit', '_blank')}>
+            <button className="cta-btn" onClick={() => window.open('https://cardiomiracle.myshopify.com/KEY', '_blank')}>
               Get It Now
             </button>
           </div>
           <div className="sponsored-card">
-            <h3 className="sponsored-title">Nano Soma</h3>
+            <img
+              src="https://res.cloudinary.com/diwgwgndv/image/upload/v1677654321/nanosoma.jpg" // Replace with your Cloudinary URL
+              alt="KLOUD/PEMF"
+              className="sponsored-image"
+            />
+            <h3 className="sponsored-title">KLOUD/PEMF</h3>
             <p className="sponsored-text">
               Restore your body’s balance with this nano-powered spray—health at the cellular level.
             </p>
-            <button className="cta-btn" onClick={() => window.open('https://bit.ly/nanosoma1', '_blank')}>
+            <button className="cta-btn" onClick={() => window.open('https://centropix.us/christiskey', '_blank')}>
               Get It Now
             </button>
           </div>
           <div className="sponsored-card">
-            <h3 className="sponsored-title">Pure Sleep</h3>
+            <img
+              src="https://res.cloudinary.com/diwgwgndv/image/upload/v1677654321/puresleep.jpg" // Replace with your Cloudinary URL
+              alt="B3 Bands"
+              className="sponsored-image"
+            />
+            <h3 className="sponsored-title">B3 Bands</h3>
             <p className="sponsored-text">
               Sleep deep and wake strong with this natural formula—rest like a warrior.
             </p>
-            <button className="cta-btn" onClick={() => window.open('https://bit.ly/puresleep1', '_blank')}>
+            <button className="cta-btn" onClick={() => window.open('https://keys2life.b3sciences.com', '_blank')}>
               Get It Now
             </button>
           </div>
           <div className="sponsored-card">
-            <h3 className="sponsored-title">Mitocure Rx</h3>
+            <img
+              src="https://res.cloudinary.com/diwgwgndv/image/upload/v1677654321/mitocurerx.jpg" // Replace with your Cloudinary URL
+              alt="Global Healing"
+              className="sponsored-image"
+            />
+            <h3 className="sponsored-title">Global Healing</h3>
             <p className="sponsored-text">
               Supercharge your mitochondria and fight fatigue with this cutting-edge supplement.
             </p>
-            <button className="cta-btn" onClick={() => window.open('https://bit.ly/mitocure', '_blank')}>
+            <button className="cta-btn" onClick={() => window.open('https://globalhealing.com/?irclickid=wz3WxVXATxyKTn0TP8038V7zUks3XJ1JMxcsVo0&irgwc=1&utm_source=ir&utm_medium=referral&utm_campaign=3231152&utm_term=971435', '_blank')}>
               Get It Now
             </button>
           </div>
@@ -477,7 +504,7 @@ function App() {
                   lazy={true}
                   onStart={() => handleViewIncrement(video._id)}
                 />
-                <h2 className="video-title">{video.title}</h2>
+                <h3 className="video-title">{video.title}</h3>
                 <p className="video-description">{video.description}</p>
                 <p className="video-uploader">Uploaded by: {video.uploadedBy}</p>
                 <p className="video-views">Views: {video.views || 0}</p>
