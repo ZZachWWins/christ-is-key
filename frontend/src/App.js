@@ -23,11 +23,16 @@ function App() {
   const [showAuth, setShowAuth] = useState(false);
   const [activeTab, setActiveTab] = useState('login');
   const [progress, setProgress] = useState(0);
+  const [chipName, setChipName] = useState('');
+  const [chipEmail, setChipEmail] = useState('');
+  const [chipPhone, setChipPhone] = useState('');
+  const [chipAddress, setChipAddress] = useState('');
   const canvasRef = useRef(null);
   const titleRef = useRef(null);
   const bioRef = useRef(null);
   const ministryRef = useRef(null);
   const sponsoredRef = useRef(null);
+  const chipsRef = useRef(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -104,6 +109,11 @@ function App() {
     const sponsored = sponsoredRef.current;
     if (sponsored) {
       gsap.from(sponsored.children, { duration: 1, opacity: 0, scale: 0.9, stagger: 0.1, ease: 'back.out(1.7)', scrollTrigger: { trigger: sponsored } });
+    }
+
+    const chips = chipsRef.current;
+    if (chips) {
+      gsap.from(chips.children, { duration: 1, opacity: 0, x: 50, stagger: 0.2, ease: 'power3.out', scrollTrigger: { trigger: chips } });
     }
 
     return () => {
@@ -229,7 +239,7 @@ function App() {
     try {
       const response = await axios.post('/.netlify/functions/create-checkout-session', {
         amount: 1776, // $17.76 in cents
-        description: 'Key Report Subscription',
+        description: 'Key Report Subscription + Free Pain & Energy Chips',
       });
       const { id } = response.data;
       const { error } = await stripe.redirectToCheckout({ sessionId: id });
@@ -237,6 +247,26 @@ function App() {
     } catch (err) {
       console.error('Checkout error:', err.message);
       alert('Failed to start checkout—try again!');
+    }
+  };
+
+  const handleChipClaim = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.post('/.netlify/functions/claim-chips', {
+        name: chipName,
+        email: chipEmail,
+        phone: chipPhone,
+        address: chipAddress,
+      });
+      alert('Claim submitted! We’ll ship your free chips soon—stay free, patriot!');
+      setChipName('');
+      setChipEmail('');
+      setChipPhone('');
+      setChipAddress('');
+    } catch (err) {
+      console.error('Chip claim error:', err.response?.data || err.message);
+      alert('Claim failed—check your info and try again!');
     }
   };
 
@@ -286,7 +316,7 @@ function App() {
       <section className="support-section">
         <h2 className="section-title">Support the Fight</h2>
         <p className="section-text">
-          Fired for defying tyranny, I’m raising hell and funds to hold this nation accountable, shield your rights, and save kids from masks, jabs, and trafficking. Drop $17.76—a patriot’s price—for the exclusive Key Report and fuel this war for truth. Every cent powers our peaceful rebellion!
+          Fired for defying tyranny, I’m raising hell and funds to hold this nation accountable, shield your rights, and save kids from masks, jabs, and trafficking. Drop $17.76—a patriot’s price—for the exclusive Key Report and fuel this war for truth. <strong>Donate $17.76 now and get $100 worth of Free Pain & Energy Chips shipped to you!</strong> Every cent powers our peaceful rebellion!
         </p>
         <button className="cta-btn pulse-btn" onClick={handleCheckout}>
           Get the Key Report - $17.76
@@ -334,7 +364,7 @@ function App() {
             <p className="product-text">
               Boost your vitality and strength with this natural growth factor. Fuel your fight with the power God intended.
             </p>
-            <button className="cta-btn" onClick={() => window.open('https://getigf1.com', '_blank')}>
+            <button className="cta-btn" onClick={() => window.open('https://getifg1.com', '_blank')}>
               Learn More
             </button>
           </div>
@@ -415,6 +445,43 @@ function App() {
             </button>
           </div>
         </div>
+      </section>
+
+      <section className="chips-section" ref={chipsRef}>
+        <h2 className="section-title">Free Pain & Energy Chips</h2>
+        <p className="section-text">
+          Claim your FREE Pain & Energy Chips ($100 value)—natural, non-invasive relief and vitality boosters from Christopher Key’s arsenal. Fill out the form below, and we’ll ship ‘em to you. No catch, just freedom from pain and fatigue!
+        </p>
+        <form onSubmit={handleChipClaim} className="chips-form">
+          <input
+            type="text"
+            value={chipName}
+            onChange={(e) => setChipName(e.target.value)}
+            placeholder="Full Name"
+            required
+          />
+          <input
+            type="email"
+            value={chipEmail}
+            onChange={(e) => setChipEmail(e.target.value)}
+            placeholder="Email Address"
+            required
+          />
+          <input
+            type="tel"
+            value={chipPhone}
+            onChange={(e) => setChipPhone(e.target.value)}
+            placeholder="Phone Number"
+            required
+          />
+          <textarea
+            value={chipAddress}
+            onChange={(e) => setChipAddress(e.target.value)}
+            placeholder="Shipping Address"
+            required
+          />
+          <button type="submit" className="cta-btn">Claim My Free Chips</button>
+        </form>
       </section>
 
       {showAuth && (
