@@ -751,6 +751,88 @@ body {
   font-size: 1.2rem;
   color: #000000;
 }
+/* Sponsored Gear Section */
+.sponsored-section {
+  text-align: center;
+  padding: 40px 20px;
+  background: rgba(0, 0, 0, 0.9);
+  border-radius: 15px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+  margin-bottom: 30px;
+  overflow-x: hidden; /* Prevents vertical scroll bleed */
+}
+
+.sponsored-grid {
+  display: flex;
+  flex-wrap: nowrap; /* Forces single row */
+  overflow-x: auto; /* Enables horizontal scroll */
+  gap: 20px;
+  padding: 20px;
+  scroll-snap-type: x mandatory; /* Snaps to cards */
+  -webkit-overflow-scrolling: touch; /* Smooth scroll on mobile */
+  scrollbar-width: thin; /* Slim scrollbar for Firefox */
+  scrollbar-color: #ff0000 rgba(255, 255, 255, 0.1); /* Red thumb, subtle track */
+}
+
+/* Custom scrollbar for Chrome/Safari */
+.sponsored-grid::-webkit-scrollbar {
+  height: 8px;
+}
+
+.sponsored-grid::-webkit-scrollbar-thumb {
+  background: #ff0000; /* Red scrollbar */
+  border-radius: 4px;
+}
+
+.sponsored-grid::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1); /* Subtle track */
+}
+
+.sponsored-card {
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 20px;
+  min-width: 250px; /* Fixed width for consistency */
+  max-width: 250px; /* Caps width */
+  flex: 0 0 auto; /* Prevents shrinking/stretching */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  scroll-snap-align: center; /* Centers card on snap */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centers content horizontally */
+}
+
+.sponsored-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 10px 20px rgba(0, 0, 255, 0.5); /* Blue shadow for contrast */
+}
+
+.sponsored-image {
+  width: 100%; /* Fills card width */
+  height: 200px; /* Matches Cloudinary h_200 */
+  object-fit: cover; /* Crops to fit, no distortion */
+  border-radius: 8px; /* Slight rounding */
+  margin-bottom: 10px; /* Space below image */
+}
+
+.sponsored-title {
+  font-size: 1.8rem;
+  color: #000000;
+  margin-bottom: 10px;
+}
+
+.sponsored-text {
+  font-size: 1.2rem;
+  color: #000000;
+}
+
+/* Responsiveness */
+@media (max-width: 768px) {
+  .sponsored-grid { padding: 10px; }
+  .sponsored-card { min-width: 200px; max-width: 200px; } /* Smaller cards on mobile */
+  .sponsored-title { font-size: 1.5rem; }
+  .sponsored-text { font-size: 1rem; }
+}
 
 /* Responsiveness */
 @media (max-width: 768px) {
