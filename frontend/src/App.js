@@ -340,9 +340,18 @@ function App() {
 
       <section className="who-i-am-section" ref={bioRef}>
         <h2 className="section-title">Who I Am</h2>
-        <p className="section-text accent-text">
-          I’m Christopher Key, the Vaccine Police—a health advocate, patriot, and disciple of Jesus. My whole life, I’ve stood tall against the masses, fighting evil with the strength He gives me. God chose me to defend human rights and the defenseless. From Sports Illustrated covers to owning Steel City Fitness and co-owning SWATS (seized by the feds seven years ago), I’ve lived bold. Fired from a six-year gig for battling Alabama’s tyrannical school board over mask mandates, I now roam the nation for YOUR KIDS!
-        </p>
+        <div className="bio-container">
+          <div className="bio-image">
+            <img
+              src="https://res.cloudinary.com/diwgwgndv/image/upload/w_300,h_300,c_fill/hegegf5e0xzx7siuncsv"
+              alt="Christopher Key"
+              className="christopher-pic"
+            />
+          </div>
+          <p className="section-text accent-text">
+            I’m Christopher Key, the Vaccine Police—a health advocate, patriot, and disciple of Jesus. My whole life, I’ve stood tall against the masses, fighting evil with the strength He gives me. God chose me to defend human rights and the defenseless. From Sports Illustrated covers to owning Steel City Fitness and co-owning SWATS (seized by the feds seven years ago), I’ve lived bold. Fired from a six-year gig for battling Alabama’s tyrannical school board over mask mandates, I now roam the nation for YOUR KIDS!
+          </p>
+        </div>
       </section>
 
       <section className="ministry-section" ref={ministryRef}>
