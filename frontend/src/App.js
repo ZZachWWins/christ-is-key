@@ -27,6 +27,7 @@ function App() {
   const [chipEmail, setChipEmail] = useState('');
   const [chipPhone, setChipPhone] = useState('');
   const [chipAddress, setChipAddress] = useState('');
+  const [donationTotal, setDonationTotal] = useState(0); // Stub for now
   const canvasRef = useRef(null);
   const titleRef = useRef(null);
   const bioRef = useRef(null);
@@ -82,6 +83,13 @@ function App() {
       }
     };
     fetchVideos();
+
+    // Stub for donation total - replace with real fetch once Stripe is live
+    const fetchDonationTotal = async () => {
+      // TODO: Fetch from /.netlify/functions/donations once Stripe is hooked up
+      setDonationTotal(0); // Placeholder
+    };
+    fetchDonationTotal();
 
     const title = titleRef.current;
     if (title) {
@@ -239,7 +247,7 @@ function App() {
     try {
       const response = await axios.post('/.netlify/functions/create-checkout-session', {
         amount: 1776, // $17.76 in cents
-        description: 'Key Report Subscription + Free Pain & Energy Chips',
+        description: 'Key Report Subscription + $100 Pain & Energy Chips',
       });
       const { id } = response.data;
       const { error } = await stripe.redirectToCheckout({ sessionId: id });
@@ -259,7 +267,7 @@ function App() {
         phone: chipPhone,
         address: chipAddress,
       });
-      alert('Claim submitted! We’ll ship your free chips soon—stay free, patriot!');
+      alert('Claim submitted! We’ll ship your 12 free chips soon—stay free, patriot!');
       setChipName('');
       setChipEmail('');
       setChipPhone('');
@@ -272,6 +280,12 @@ function App() {
 
   const hasLiked = (video) => user && video.likedBy && video.likedBy.includes(user._id);
   const featuredVideo = videos.length > 0 ? videos[0] : null;
+
+  const testimonials = [
+    { quote: "Dropped my back pain in 2 days—Christopher’s the real deal!", name: "John D., Patriot" },
+    { quote: "Energy through the roof—no coffee needed!", name: "Sarah T., Freedom Fighter" },
+    { quote: "These chips are a game-changer—pain’s gone!", name: "Mike R., Truth Warrior" },
+  ];
 
   return (
     <div className="app">
@@ -318,6 +332,7 @@ function App() {
         <p className="section-text">
           Fired for defying tyranny, I’m raising hell and funds to hold this nation accountable, shield your rights, and save kids from masks, jabs, and trafficking. Drop $17.76—a patriot’s price—for the exclusive Key Report and fuel this war for truth. <strong>Donate $17.76 now and get $100 worth of Free Pain & Energy Chips shipped to you!</strong> Every cent powers our peaceful rebellion!
         </p>
+        <p className="donation-counter">Patriots have fueled: ${donationTotal.toFixed(2)}</p>
         <button className="cta-btn pulse-btn" onClick={handleCheckout}>
           Get the Key Report - $17.76
         </button>
@@ -450,7 +465,10 @@ function App() {
       <section className="chips-section" ref={chipsRef}>
         <h2 className="section-title">Free Pain & Energy Chips</h2>
         <p className="section-text">
-          Claim your FREE Pain & Energy Chips ($100 value)—natural, non-invasive relief and vitality boosters from Christopher Key’s arsenal. Fill out the form below, and we’ll ship ‘em to you. No catch, just freedom from pain and fatigue!
+          Nano-tech patches that zap pain and charge your energy—stick ‘em on, feel the freedom. No pills, no BS, just results.
+        </p>
+        <p className="section-text">
+          Claim your 12 FREE Pain & Energy Chips—natural, non-invasive relief and vitality boosters from Christopher Key’s arsenal. Fill out the form below, and we’ll ship ‘em to you. Want the full $100 value? Donate $17.76 above for the Key Report and get the big stack!
         </p>
         <form onSubmit={handleChipClaim} className="chips-form">
           <input
@@ -480,8 +498,16 @@ function App() {
             placeholder="Shipping Address"
             required
           />
-          <button type="submit" className="cta-btn">Claim My Free Chips</button>
+          <button type="submit" className="cta-btn">Claim My 12 Free Chips</button>
         </form>
+        <div className="chips-testimonials">
+          {testimonials.map((t, index) => (
+            <div key={index} className="testimonial-card">
+              <p className="testimonial-quote">"{t.quote}"</p>
+              <p className="testimonial-name">- {t.name}</p>
+            </div>
+          ))}
+        </div>
       </section>
 
       {showAuth && (
