@@ -2,7 +2,10 @@ import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import ReactPlayer from 'react-player';
 import { gsap } from 'gsap';
+import { loadStripe } from '@stripe/stripe-js'; // Stripe integration
 import './App.css';
+
+const stripePromise = loadStripe('pk_test_your_publishable_key'); // Replace with your Stripe publishable key
 
 function App() {
   const [user, setUser] = useState(null);
@@ -221,6 +224,22 @@ function App() {
     }
   };
 
+  const handleCheckout = async () => {
+    const stripe = await stripePromise;
+    try {
+      const response = await axios.post('/.netlify/functions/create-checkout-session', {
+        amount: 1776, // $17.76 in cents
+        description: 'Key Report Subscription',
+      });
+      const { id } = response.data;
+      const { error } = await stripe.redirectToCheckout({ sessionId: id });
+      if (error) throw error;
+    } catch (err) {
+      console.error('Checkout error:', err.message);
+      alert('Failed to start checkout—try again!');
+    }
+  };
+
   const hasLiked = (video) => user && video.likedBy && video.likedBy.includes(user._id);
   const featuredVideo = videos.length > 0 ? videos[0] : null;
 
@@ -264,6 +283,16 @@ function App() {
         </section>
       )}
 
+      <section className="support-section">
+        <h2 className="section-title">Support the Fight</h2>
+        <p className="section-text">
+          Fired for defying tyranny, I’m raising hell and funds to hold this nation accountable, shield your rights, and save kids from masks, jabs, and trafficking. Drop $17.76—a patriot’s price—for the exclusive Key Report and fuel this war for truth. Every cent powers our peaceful rebellion!
+        </p>
+        <button className="cta-btn pulse-btn" onClick={handleCheckout}>
+          Get the Key Report - $17.76
+        </button>
+      </section>
+
       <section className="who-i-am-section" ref={bioRef}>
         <h2 className="section-title">Who I Am</h2>
         <p className="section-text accent-text">
@@ -278,20 +307,12 @@ function App() {
         </p>
       </section>
 
-      <section className="support-section">
-        <h2 className="section-title">Support the Fight</h2>
-        <p className="section-text">
-          Fired for defying tyranny, I’m raising hell and funds to hold this nation accountable, shield your rights, and save kids from masks, jabs, and trafficking. Drop $17.76—a patriot’s price—for the exclusive Key Report and fuel this war for truth. Every cent powers our peaceful rebellion!
-        </p>
-        <button className="cta-btn pulse-btn">Get the Key Report - $17.76</button>
-      </section>
-
       <section className="products-section">
         <h2 className="section-title">Freedom Essentials</h2>
         <div className="products-grid">
           <div className="product-card">
             <img
-              src="https://res.cloudinary.com/diwgwgndv/image/upload/v1677654321/masterpeace.jpg" // Replace with your Cloudinary URL
+              src="https://res.cloudinary.com/diwgwgndv/image/upload/v1677654321/masterpeace.jpg"
               alt="MasterPeace"
               className="product-image"
             />
@@ -305,7 +326,7 @@ function App() {
           </div>
           <div className="product-card">
             <img
-              src="https://res.cloudinary.com/diwgwgndv/image/upload/v1677654321/igf1.jpg" // Replace with your Cloudinary URL
+              src="https://res.cloudinary.com/diwgwgndv/image/upload/v1677654321/igf1.jpg"
               alt="IGF-1"
               className="product-image"
             />
@@ -313,7 +334,7 @@ function App() {
             <p className="product-text">
               Boost your vitality and strength with this natural growth factor. Fuel your fight with the power God intended.
             </p>
-            <button className="cta-btn" onClick={() => window.open('https://getifg1.com', '_blank')}>
+            <button className="cta-btn" onClick={() => window.open('https://getigf1.com', '_blank')}>
               Learn More
             </button>
           </div>
@@ -325,7 +346,7 @@ function App() {
         <div className="sponsored-grid">
           <div className="sponsored-card">
             <img
-              src="https://res.cloudinary.com/diwgwgndv/image/upload/v1677654321/structuredwaterunit.jpg" // Replace with your Cloudinary URL
+              src="https://res.cloudinary.com/diwgwgndv/image/upload/v1677654321/structuredwaterunit.jpg"
               alt="Freedom Law School"
               className="sponsored-image"
             />
@@ -339,7 +360,7 @@ function App() {
           </div>
           <div className="sponsored-card">
             <img
-              src="https://res.cloudinary.com/diwgwgndv/image/upload/v1677654321/twccontagionkit.jpg" // Replace with your Cloudinary URL
+              src="https://res.cloudinary.com/diwgwgndv/image/upload/v1677654321/twccontagionkit.jpg"
               alt="Cardio Miracle"
               className="sponsored-image"
             />
@@ -353,7 +374,7 @@ function App() {
           </div>
           <div className="sponsored-card">
             <img
-              src="https://res.cloudinary.com/diwgwgndv/image/upload/v1677654321/nanosoma.jpg" // Replace with your Cloudinary URL
+              src="https://res.cloudinary.com/diwgwgndv/image/upload/v1677654321/nanosoma.jpg"
               alt="KLOUD/PEMF"
               className="sponsored-image"
             />
@@ -367,7 +388,7 @@ function App() {
           </div>
           <div className="sponsored-card">
             <img
-              src="https://res.cloudinary.com/diwgwgndv/image/upload/v1677654321/puresleep.jpg" // Replace with your Cloudinary URL
+              src="https://res.cloudinary.com/diwgwgndv/image/upload/v1677654321/puresleep.jpg"
               alt="B3 Bands"
               className="sponsored-image"
             />
@@ -381,7 +402,7 @@ function App() {
           </div>
           <div className="sponsored-card">
             <img
-              src="https://res.cloudinary.com/diwgwgndv/image/upload/v1677654321/mitocurerx.jpg" // Replace with your Cloudinary URL
+              src="https://res.cloudinary.com/diwgwgndv/image/upload/v1677654321/mitocurerx.jpg"
               alt="Global Healing"
               className="sponsored-image"
             />
@@ -416,8 +437,8 @@ function App() {
               </form>
             ) : (
               <form onSubmit={handleSignup} className="auth-form">
-                <input type="text" value={signupUsername} onChange={(e) => setUsername(e.target.value)} placeholder="Choose Username" required />
-                <input type="password" value={signupPassword} onChange={(e) => setPassword(e.target.value)} placeholder="Choose Password" required />
+                <input type="text" value={signupUsername} onChange={(e) => setSignupUsername(e.target.value)} placeholder="Choose Username" required />
+                <input type="password" value={signupPassword} onChange={(e) => setSignupPassword(e.target.value)} placeholder="Choose Password" required />
                 <button type="submit" className="submit-btn">Signup</button>
               </form>
             )}
@@ -533,7 +554,7 @@ function App() {
           <a href="https://truthsocial.com/@vaccinepolice" target="_blank" rel="noopener noreferrer" className="social-icon">
             <i className="fab fa-tumblr"></i>
           </a>
-          <a href="https://x.com/vaccinepolice" target="_blank" rel="noopener noreferrer" className="social-icon">
+          <a href="https://x.com/TheKeyReport111" target="_blank" rel="noopener noreferrer" className="social-icon">
             <i className="fab fa-twitter"></i>
           </a>
         </div>
