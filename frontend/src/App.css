@@ -73,6 +73,14 @@ body {
   display: inline-block;
 }
 
+.vaccine-letter {
+  color: #000000; /* Black for "Vaccine" */
+}
+
+.police-letter {
+  color: #ffffff; /* White for "Police" */
+}
+
 .subtitle {
   font-size: 1.2rem;
   font-weight: 300;
@@ -467,6 +475,12 @@ body {
   text-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
 }
 
+.contact-text {
+  color: #ffffff;
+  font-size: 1.2rem;
+  margin: 10px 0;
+}
+
 .social-links {
   display: flex;
   justify-content: center;
@@ -505,22 +519,17 @@ body {
   0%, 100% { box-shadow: 0 0 10px rgba(255, 0, 0, 0.5); }
   50% { box-shadow: 0 0 20px rgba(255, 0, 0, 1); }
 }
-/* Add these to your existing App.css */
 
 /* Who I Am Section */
 .who-i-am-section {
   text-align: center;
   padding: 40px 20px;
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(0, 0, 0, 0.8);
   border-radius: 15px;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
   margin-bottom: 30px;
-  animation: fadeInUp 1s ease-out;
-}
-/* Who I Am Section with Image */
-.who-i-am-section {
-  text-align: center;
-  padding: 40px 20px;
+  position: relative;
+  overflow: hidden;
 }
 
 .bio-container {
@@ -544,103 +553,9 @@ body {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
-/* Ensure text wraps nicely */
 .section-text.accent-text {
   flex: 1;
   text-align: left;
-}
-
-/* Responsiveness */
-@media (max-width: 768px) {
-  .bio-container {
-    flex-direction: column;
-    align-items: center;
-  }
-  .section-text.accent-text {
-    text-align: center;
-  }
-  .christopher-pic {
-    width: 200px;
-    height: 200px;
-  }
-}
-
-.section-title {
-  font-size: 2.5rem;
-  font-weight: 700;
-  background: linear-gradient(90deg, #ff0000, #0000ff); /* Red to blue */
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  margin-bottom: 20px;
-}
-
-.section-text {
-  font-size: 1.4rem;
-  color: #ffffff;
-  margin: 0 0 20px;
-  line-height: 1.6;
-}
-
-/* Keys 2 Life Ministry Section */
-.ministry-section {
-  text-align: center;
-  padding: 40px 20px;
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 15px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
-  margin-bottom: 30px;
-  animation: fadeInUp 1s ease-out 0.2s both;
-}
-
-/* Support the Fight Section */
-.support-section {
-  text-align: center;
-  padding: 40px 20px;
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 15px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
-  margin-bottom: 30px;
-  animation: fadeInUp 1s ease-out 0.4s both;
-}
-
-/* Animation for fade-in effect */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-/* Add to existing App.css */
-
-/* Purchase Section */
-.purchase-section {
-  text-align: center;
-  padding: 40px 20px;
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 15px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
-  margin-bottom: 30px;
-  animation: fadeInUp 1s ease-out 0.6s both;
-}
-/* Existing styles assumed intact, adding new ones */
-
-/* Bio Section */
-.who-i-am-section {
-  text-align: center;
-  padding: 40px 20px;
-  background: rgba(0, 0, 0, 0.8);
-  border-radius: 15px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
-  margin-bottom: 30px;
-  position: relative;
-  overflow: hidden;
-}
-
-.accent-text {
   background: linear-gradient(90deg, #ff0000, #0000ff);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -718,21 +633,159 @@ body {
   color: #000000;
 }
 
-/* Footer Contact */
-.contact-text {
-  color: #ffffff;
+/* Sponsored Gear Section */
+.sponsored-section {
+  text-align: center;
+  padding: 40px 20px;
+  background: rgba(0, 0, 0, 0.9);
+  border-radius: 15px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+  margin-bottom: 30px;
+  overflow-x: hidden;
+}
+
+.sponsored-grid {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  gap: 20px;
+  padding: 20px;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: #ff0000 rgba(255, 255, 255, 0.1);
+}
+
+.sponsored-grid::-webkit-scrollbar {
+  height: 8px;
+}
+
+.sponsored-grid::-webkit-scrollbar-thumb {
+  background: #ff0000;
+  border-radius: 4px;
+}
+
+.sponsored-grid::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.sponsored-card {
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 20px;
+  min-width: 250px;
+  max-width: 250px;
+  flex: 0 0 auto;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  scroll-snap-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sponsored-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 10px 20px rgba(0, 0, 255, 0.5);
+}
+
+.sponsored-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.sponsored-title {
+  font-size: 1.8rem;
+  color: #000000;
+  margin-bottom: 10px;
+}
+
+.sponsored-text {
   font-size: 1.2rem;
-  margin: 10px 0;
+  color: #000000;
 }
 
-/* Responsiveness */
-@media (max-width: 768px) {
-  .section-title { font-size: 1.8rem; }
-  .section-text, .product-text { font-size: 1rem; }
-  .products-grid { grid-template-columns: 1fr; }
+/* Free Pain & Energy Chips Section */
+.chips-section {
+  text-align: center;
+  padding: 40px 20px;
+  background: rgba(0, 0, 0, 0.9);
+  border-radius: 15px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+  margin-bottom: 30px;
 }
 
-/* Ensure these are in your CSS already, reused from other sections */
+.chips-button-container {
+  margin: 20px 0;
+}
+
+.chips-form-container {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.chips-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  max-width: 500px;
+  width: 100%;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 15px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.chips-form input,
+.chips-form textarea {
+  padding: 12px;
+  border: 2px solid #ff0000;
+  border-radius: 12px;
+  font-size: 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+.chips-form textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.chips-form button {
+  /* Inherits .cta-btn styles */
+}
+
+.chips-testimonials {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.testimonial-card {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 15px;
+  max-width: 300px;
+}
+
+.testimonial-quote {
+  font-size: 1.2rem;
+  font-style: italic;
+  color: #ffffff;
+}
+
+.testimonial-name {
+  font-size: 1rem;
+  color: #cccccc;
+  margin-top: 10px;
+}
+
+/* General Section Styles */
 .section-title {
   font-size: 2.5rem;
   font-weight: 700;
@@ -759,258 +812,15 @@ body {
     transform: translateY(0);
   }
 }
-/* Sponsored Gear Section */
-.sponsored-section {
+
+/* No Videos */
+.no-videos {
+  font-size: 1.5rem;
   text-align: center;
-  padding: 40px 20px;
-  background: rgba(0, 0, 0, 0.9);
-  border-radius: 15px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
-  margin-bottom: 30px;
+  color: #ffffff;
 }
 
-.sponsored-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px;
-  padding: 20px;
-}
-
-.sponsored-card {
-  background: #ffffff;
-  border-radius: 10px;
-  padding: 20px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.sponsored-card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 10px 20px rgba(0, 0, 255, 0.5); /* Blue shadow for contrast */
-}
-
-.sponsored-title {
-  font-size: 1.8rem;
-  color: #000000;
-  margin-bottom: 10px;
-}
-
-.sponsored-text {
-  font-size: 1.2rem;
-  color: #000000;
-}
-/* Sponsored Gear Section */
-.sponsored-section {
-  text-align: center;
-  padding: 40px 20px;
-  background: rgba(0, 0, 0, 0.9);
-  border-radius: 15px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
-  margin-bottom: 30px;
-  overflow-x: hidden; /* Prevents vertical scroll bleed */
-}
-
-.sponsored-grid {
-  display: flex;
-  flex-wrap: nowrap; /* Forces single row */
-  overflow-x: auto; /* Enables horizontal scroll */
-  gap: 20px;
-  padding: 20px;
-  scroll-snap-type: x mandatory; /* Snaps to cards */
-  -webkit-overflow-scrolling: touch; /* Smooth scroll on mobile */
-  scrollbar-width: thin; /* Slim scrollbar for Firefox */
-  scrollbar-color: #ff0000 rgba(255, 255, 255, 0.1); /* Red thumb, subtle track */
-}
-
-/* Custom scrollbar for Chrome/Safari */
-.sponsored-grid::-webkit-scrollbar {
-  height: 8px;
-}
-
-.sponsored-grid::-webkit-scrollbar-thumb {
-  background: #ff0000; /* Red scrollbar */
-  border-radius: 4px;
-}
-
-.sponsored-grid::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.1); /* Subtle track */
-}
-
-.sponsored-card {
-  background: #ffffff;
-  border-radius: 10px;
-  padding: 20px;
-  min-width: 250px; /* Fixed width for consistency */
-  max-width: 250px; /* Caps width */
-  flex: 0 0 auto; /* Prevents shrinking/stretching */
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  scroll-snap-align: center; /* Centers card on snap */
-  display: flex;
-  flex-direction: column;
-  align-items: center; /* Centers content horizontally */
-}
-
-.sponsored-card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 10px 20px rgba(0, 0, 255, 0.5); /* Blue shadow for contrast */
-}
-
-.sponsored-image {
-  width: 100%; /* Fills card width */
-  height: 200px; /* Matches Cloudinary h_200 */
-  object-fit: cover; /* Crops to fit, no distortion */
-  border-radius: 8px; /* Slight rounding */
-  margin-bottom: 10px; /* Space below image */
-}
-
-.sponsored-title {
-  font-size: 1.8rem;
-  color: #000000;
-  margin-bottom: 10px;
-}
-
-.sponsored-text {
-  font-size: 1.2rem;
-  color: #000000;
-}
-/* Free Pain & Energy Chips Section */
-.chips-section {
-  text-align: center;
-  padding: 40px 20px;
-  background: rgba(0, 0, 0, 0.9);
-  border-radius: 15px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
-  margin-bottom: 30px;
-}
-
-.chips-form {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  max-width: 500px;
-  margin: 20px auto;
-}
-
-.chips-form input,
-.chips-form textarea {
-  padding: 10px;
-  border: 2px solid #ff0000;
-  border-radius: 5px;
-  font-size: 1rem;
-  background: #fff;
-  color: #000;
-}
-
-.chips-form textarea {
-  min-height: 100px;
-  resize: vertical;
-}
-
-.chips-form button {
-  background: #ff0000;
-  color: #fff;
-  padding: 12px;
-  border: none;
-  border-radius: 5px;
-  font-size: 1.2rem;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
-
-.chips-form button:hover {
-  background: #cc0000;
-}
-/* Chips Section */
-.chips-section {
-  padding: 40px 20px;
-  text-align: center;
-}
-
-/* Form Styling with Fade */
-.chips-form {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  max-width: 500px;
-  margin: 20px auto;
-  transition: opacity 0.3s ease, max-height 0.5s ease; /* Smooth fade and height */
-  opacity: 0;
-  max-height: 0; /* Collapsed by default */
-  overflow: hidden;
-}
-
-.chips-form.visible {
-  opacity: 1;
-  max-height: 400px; /* Adjust based on form height */
-}
-
-/* Keep existing input/textarea/button styles - just add visibility logic */
-.chips-form input,
-.chips-form textarea {
-  padding: 10px;
-  border: 2px solid #ff0000;
-  border-radius: 5px;
-  font-size: 16px;
-  background: rgba(255, 255, 255, 0.9);
-  color: #333;
-}
-
-.chips-form button {
-  /* Inherits .cta-btn styles */
-}
-
-/* Testimonials unchanged */
-.chips-testimonials {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 20px;
-  margin-top: 20px;
-}
-
-/* Responsiveness */
-@media (max-width: 768px) {
-  .chips-form { max-width: 100%; }
-}
-
-/* Responsiveness */
-@media (max-width: 768px) {
-  .sponsored-grid { padding: 10px; }
-  .sponsored-card { min-width: 200px; max-width: 200px; } /* Smaller cards on mobile */
-  .sponsored-title { font-size: 1.5rem; }
-  .sponsored-text { font-size: 1rem; }
-}
-
-/* Responsiveness */
-@media (max-width: 768px) {
-  .sponsored-grid { grid-template-columns: 1fr; }
-}
-
-@media (max-width: 768px) {
-  .section-title { font-size: 1.8rem; }
-  .section-text { font-size: 1rem; }
-}
-
-/* Update mobile responsiveness */
-@media (max-width: 768px) {
-  .section-title { font-size: 1.8rem; }
-  .section-text { font-size: 1rem; }
-}
-/* Add to existing App.css */
-
-/* Vaccine Police Title Colors */
-.vaccine-letter {
-  color: #000000; /* Black for "Vaccine" */
-}
-
-.police-letter {
-  color: #ffffff; /* White for "Police" */
-}
-
-/* Ensure .letter still works with animation */
-.letter {
-  display: inline-block; /* Keeps letters in line for animation */
-}
-/* Mobile */
+/* Mobile Responsiveness */
 @media (max-width: 768px) {
   .title { font-size: 2rem; }
   .subtitle { font-size: 1rem; }
@@ -1021,4 +831,14 @@ body {
   .video-grid { grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
   .footer-text { font-size: 1rem; }
   .social-icon { font-size: 1.5rem; }
+  .section-title { font-size: 1.8rem; }
+  .section-text, .product-text, .sponsored-text { font-size: 1rem; }
+  .products-grid, .sponsored-grid { grid-template-columns: 1fr; }
+  .sponsored-grid { padding: 10px; }
+  .sponsored-card { min-width: 200px; max-width: 200px; }
+  .sponsored-title { font-size: 1.5rem; }
+  .bio-container { flex-direction: column; align-items: center; }
+  .section-text.accent-text { text-align: center; }
+  .christopher-pic { width: 200px; height: 200px; }
+  .chips-form { max-width: 100%; }
 }

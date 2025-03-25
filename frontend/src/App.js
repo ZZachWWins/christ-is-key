@@ -28,7 +28,7 @@ function App() {
   const [chipPhone, setChipPhone] = useState('');
   const [chipAddress, setChipAddress] = useState('');
   const [donationTotal, setDonationTotal] = useState(0); // Stub for now
-  const [showChipsForm, setShowChipsForm] = useState(false); // New state for form toggle
+  const [showChipsForm, setShowChipsForm] = useState(false); // Form toggle
   const canvasRef = useRef(null);
   const titleRef = useRef(null);
   const bioRef = useRef(null);
@@ -85,9 +85,7 @@ function App() {
     };
     fetchVideos();
 
-    // Stub for donation total - replace with real fetch once Stripe is live
     const fetchDonationTotal = async () => {
-      // TODO: Fetch from /.netlify/functions/donations once Stripe is hooked up
       setDonationTotal(0); // Placeholder
     };
     fetchDonationTotal();
@@ -481,43 +479,47 @@ function App() {
         <p className="section-text">
           Claim your 12 FREE Pain & Energy Chips—natural, non-invasive relief and vitality boosters from Christopher Key’s arsenal. Click below to get yours shipped, or donate $17.76 above for the Key Report and snag the full $100 value stack!
         </p>
-        <button
-          className="cta-btn"
-          onClick={() => setShowChipsForm(!showChipsForm)}
-        >
-          {showChipsForm ? 'Hide Claim Form' : 'Claim Your 12 Free Chips'}
-        </button>
+        <div className="chips-button-container">
+          <button
+            className="cta-btn"
+            onClick={() => setShowChipsForm(!showChipsForm)}
+          >
+            {showChipsForm ? 'Hide Claim Form' : 'Claim Your 12 Free Chips'}
+          </button>
+        </div>
         {showChipsForm && (
-          <form onSubmit={handleChipClaim} className="chips-form">
-            <input
-              type="text"
-              value={chipName}
-              onChange={(e) => setChipName(e.target.value)}
-              placeholder="Full Name"
-              required
-            />
-            <input
-              type="email"
-              value={chipEmail}
-              onChange={(e) => setChipEmail(e.target.value)}
-              placeholder="Email Address"
-              required
-            />
-            <input
-              type="tel"
-              value={chipPhone}
-              onChange={(e) => setChipPhone(e.target.value)}
-              placeholder="Phone Number"
-              required
-            />
-            <textarea
-              value={chipAddress}
-              onChange={(e) => setChipAddress(e.target.value)}
-              placeholder="Shipping Address"
-              required
-            />
-            <button type="submit" className="cta-btn">Submit Claim</button>
-          </form>
+          <div className="chips-form-container">
+            <form onSubmit={handleChipClaim} className="chips-form">
+              <input
+                type="text"
+                value={chipName}
+                onChange={(e) => setChipName(e.target.value)}
+                placeholder="Full Name"
+                required
+              />
+              <input
+                type="email"
+                value={chipEmail}
+                onChange={(e) => setChipEmail(e.target.value)}
+                placeholder="Email Address"
+                required
+              />
+              <input
+                type="tel"
+                value={chipPhone}
+                onChange={(e) => setChipPhone(e.target.value)}
+                placeholder="Phone Number"
+                required
+              />
+              <textarea
+                value={chipAddress}
+                onChange={(e) => setChipAddress(e.target.value)}
+                placeholder="Shipping Address"
+                required
+              />
+              <button type="submit" className="cta-btn">Submit Claim</button>
+            </form>
+          </div>
         )}
         <div className="chips-testimonials">
           {testimonials.map((t, index) => (
