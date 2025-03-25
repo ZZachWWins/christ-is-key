@@ -2,10 +2,10 @@ import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import ReactPlayer from 'react-player';
 import { gsap } from 'gsap';
-import { loadStripe } from '@stripe/stripe-js'; // Stripe integration
+import { loadStripe } from '@stripe/stripe-js';
 import './App.css';
 
-const stripePromise = loadStripe('pk_test_your_publishable_key'); // Replace with your Stripe publishable key
+const stripePromise = loadStripe('pk_test_your_publishable_key'); // Replace with your Stripe key when ready
 
 function App() {
   const [user, setUser] = useState(null);
@@ -312,7 +312,7 @@ function App() {
         <div className="products-grid">
           <div className="product-card">
             <img
-              src="https://res.cloudinary.com/diwgwgndv/image/upload/v1677654321/masterpeace.jpg"
+              src="https://res.cloudinary.com/diwgwgndv/image/upload/w_300,h_200,c_fill/fvcwlsdc0botrbzzk3xp"
               alt="MasterPeace"
               className="product-image"
             />
@@ -326,7 +326,7 @@ function App() {
           </div>
           <div className="product-card">
             <img
-              src="https://res.cloudinary.com/diwgwgndv/image/upload/v1677654321/igf1.jpg"
+              src="https://res.cloudinary.com/diwgwgndv/image/upload/w_300,h_200,c_fill/admezub1dbxvfrr2bmls"
               alt="IGF-1"
               className="product-image"
             />
@@ -334,7 +334,7 @@ function App() {
             <p className="product-text">
               Boost your vitality and strength with this natural growth factor. Fuel your fight with the power God intended.
             </p>
-            <button className="cta-btn" onClick={() => window.open('https://getigf1.com', '_blank')}>
+            <button className="cta-btn" onClick={() => window.open('https://getifg1.com', '_blank')}>
               Learn More
             </button>
           </div>
@@ -346,7 +346,7 @@ function App() {
         <div className="sponsored-grid">
           <div className="sponsored-card">
             <img
-              src="https://res.cloudinary.com/diwgwgndv/image/upload/v1677654321/structuredwaterunit.jpg"
+              src="https://res.cloudinary.com/diwgwgndv/image/upload/w_300,h_200,c_fill/o51xmti0h4wd4w1y4rp2"
               alt="Freedom Law School"
               className="sponsored-image"
             />
@@ -360,7 +360,7 @@ function App() {
           </div>
           <div className="sponsored-card">
             <img
-              src="https://res.cloudinary.com/diwgwgndv/image/upload/v1677654321/twccontagionkit.jpg"
+              src="https://res.cloudinary.com/diwgwgndv/image/upload/w_300,h_200,c_fill/flnxzvhblggdbgnnqe2f"
               alt="Cardio Miracle"
               className="sponsored-image"
             />
@@ -374,7 +374,7 @@ function App() {
           </div>
           <div className="sponsored-card">
             <img
-              src="https://res.cloudinary.com/diwgwgndv/image/upload/v1677654321/nanosoma.jpg"
+              src="https://res.cloudinary.com/diwgwgndv/image/upload/w_300,h_200,c_fill/l80zdqvcwmvluw1aujcq"
               alt="KLOUD/PEMF"
               className="sponsored-image"
             />
@@ -388,7 +388,7 @@ function App() {
           </div>
           <div className="sponsored-card">
             <img
-              src="https://res.cloudinary.com/diwgwgndv/image/upload/v1677654321/puresleep.jpg"
+              src="https://res.cloudinary.com/diwgwgndv/image/upload/w_300,h_200,c_fill/gqzznuwtbyns65uwiafq"
               alt="B3 Bands"
               className="sponsored-image"
             />
@@ -402,7 +402,7 @@ function App() {
           </div>
           <div className="sponsored-card">
             <img
-              src="https://res.cloudinary.com/diwgwgndv/image/upload/v1677654321/mitocurerx.jpg"
+              src="https://res.cloudinary.com/diwgwgndv/image/upload/w_300,h_200,c_fill/suzt0afdbmtveja9a1gv"
               alt="Global Healing"
               className="sponsored-image"
             />
