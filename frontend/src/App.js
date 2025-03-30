@@ -5,7 +5,7 @@ import { gsap } from 'gsap';
 import { loadStripe } from '@stripe/stripe-js';
 import './App.css';
 
-const stripePromise = loadStripe('pk_test_your_publishable_key'); // Replace with your Stripe key when ready
+const stripePromise = loadStripe('pk_test_your_publishable_key'); // Replace with your live key before launch
 
 function App() {
   const [user, setUser] = useState(null);
@@ -27,8 +27,9 @@ function App() {
   const [chipEmail, setChipEmail] = useState('');
   const [chipPhone, setChipPhone] = useState('');
   const [chipAddress, setChipAddress] = useState('');
-  const [donationTotal, setDonationTotal] = useState(0); // Stub for now
-  const [showChipsForm, setShowChipsForm] = useState(false); // Form toggle
+  const [donationTotal, setDonationTotal] = useState(0);
+  const [showChipsForm, setShowChipsForm] = useState(false);
+  const [isClaiming, setIsClaiming] = useState(false); // New loading state for chip claim
   const canvasRef = useRef(null);
   const titleRef = useRef(null);
   const bioRef = useRef(null);
@@ -86,10 +87,15 @@ function App() {
     fetchVideos();
 
     const fetchDonationTotal = async () => {
-      setDonationTotal(0); // Placeholder
+      setDonationTotal(0); // Placeholder for real data
     };
     fetchDonationTotal();
 
+    // Donation ticker animation
+    const interval = setInterval(() => {
+      setDonationTotal((prev) => Math.min(prev + Math.random() * 5, 1776));
+    }, 3000);
+    
     const title = titleRef.current;
     if (title) {
       const letters = "Vaccine Police"
@@ -126,6 +132,7 @@ function App() {
     return () => {
       window.removeEventListener('resize', resizeCanvas);
       if (animationFrameId) cancelAnimationFrame(animationFrameId);
+      clearInterval(interval); // Clean up ticker
     };
   }, []);
 
@@ -245,7 +252,7 @@ function App() {
     const stripe = await stripePromise;
     try {
       const response = await axios.post('/.netlify/functions/create-checkout-session', {
-        amount: 1776, // $17.76 in cents
+        amount: 1776,
         description: 'Key Report Subscription + $100 Pain & Energy Chips',
       });
       const { id } = response.data;
@@ -259,6 +266,7 @@ function App() {
 
   const handleChipClaim = async (e) => {
     e.preventDefault();
+    setIsClaiming(true);
     try {
       await axios.post('/.netlify/functions/claim-chips', {
         name: chipName,
@@ -271,10 +279,12 @@ function App() {
       setChipEmail('');
       setChipPhone('');
       setChipAddress('');
-      setShowChipsForm(false); // Hide form after submission
+      setShowChipsForm(false);
     } catch (err) {
       console.error('Chip claim error:', err.response?.data || err.message);
       alert('Claim failed—check your info and try again!');
+    } finally {
+      setIsClaiming(false);
     }
   };
 
@@ -295,6 +305,9 @@ function App() {
       <header className="header">
         <h1 ref={titleRef} className="title">Vaccine Police</h1>
         <p className="subtitle">Christopher Key - Truth Warrior</p>
+        <div className="hero-tagline">
+          <span className="tagline-text">Fighting Tyranny | Healing Lives | Keys 2 Freedom</span>
+        </div>
         <div className="auth-section">
           {user ? (
             <>
@@ -332,7 +345,7 @@ function App() {
         <p className="section-text">
           Fired for defying tyranny, I’m raising hell and funds to hold this nation accountable, shield your rights, and save kids from masks, jabs, and trafficking. Drop $17.76—a patriot’s price—for the exclusive Key Report and fuel this war for truth. <strong>Donate $17.76 now and get $100 worth of Free Pain & Energy Chips shipped to you!</strong> Every cent powers our peaceful rebellion!
         </p>
-        <p className="donation-counter">Patriots have fueled: ${donationTotal.toFixed(2)}</p>
+        <p className="donation-counter">Patriots have fueled: <span className="ticker">${donationTotal.toFixed(2)}</span></p>
         <button className="cta-btn pulse-btn" onClick={handleCheckout}>
           Get the Key Report - $17.76
         </button>
@@ -517,7 +530,9 @@ function App() {
                 placeholder="Shipping Address"
                 required
               />
-              <button type="submit" className="cta-btn">Submit Claim</button>
+              <button type="submit" className="cta-btn" disabled={isClaiming}>
+                {isClaiming ? 'Submitting...' : 'Submit Claim'}
+              </button>
             </form>
           </div>
         )}
@@ -562,6 +577,8 @@ function App() {
       )}
 
       <section className="landing-section">
+       წ
+
         <h2 className="landing-title">Welcome to Vaccine Police</h2>
         <p className="landing-text">
           Christopher Key’s here to rip the veil off corruption and fight for freedom with raw, unfiltered videos that hit like a freight train.
@@ -661,7 +678,7 @@ function App() {
 
       <footer className="footer">
         <p className="footer-text">
-          Built by Zachary | © 2025 Christopher Key. All rights reserved.
+          Built by Zachary | © 2025 christiskey.life | All Rights Reserved
         </p>
         <p className="contact-text">Contact: christopherkey@vaccinepolice.com</p>
         <div className="social-links">

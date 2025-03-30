@@ -1,7 +1,7 @@
 body {
   margin: 0;
   font-family: 'Poppins', sans-serif;
-  background: linear-gradient(180deg, #000000, #1a1a1a); /* Black to dark gray */
+  background: linear-gradient(180deg, #000000, #1a1a1a);
   color: #ffffff;
   min-height: 100vh;
   overflow-x: hidden;
@@ -32,7 +32,7 @@ body {
   transform: translate(-50%, -50%);
   font-size: 6rem;
   font-weight: 700;
-  color: rgba(255, 0, 0, 0.2); /* Red with transparency */
+  color: rgba(255, 0, 0, 0.2);
   text-transform: uppercase;
   animation: rotateGlow 20s linear infinite;
   pointer-events: none;
@@ -48,7 +48,7 @@ body {
 .header {
   text-align: center;
   padding: 20px 15px;
-  background: linear-gradient(135deg, #0000ff, #ff0000, #ffffff); /* Blue to red to white */
+  background: linear-gradient(135deg, #0000ff, #ff0000, #ffffff);
   border-radius: 15px;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
   margin-bottom: 20px;
@@ -59,12 +59,33 @@ body {
   margin-right: auto;
 }
 
+.hero-tagline {
+  margin: 10px 0;
+  overflow: hidden;
+}
+
+.tagline-text {
+  display: inline-block;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #ffffff;
+  text-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+  animation: slideIn 10s infinite linear;
+}
+
+@keyframes slideIn {
+  0% { transform: translateX(100%); }
+  20% { transform: translateX(0); }
+  80% { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
+}
+
 .title {
   font-size: 2.5rem;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 3px;
-  color: #ff0000; /* Red */
+  color: #ff0000;
   text-shadow: 0 0 10px rgba(255, 0, 0, 0.7);
   margin: 0;
 }
@@ -74,18 +95,18 @@ body {
 }
 
 .vaccine-letter {
-  color: #000000; /* Black for "Vaccine" */
+  color: #000000;
 }
 
 .police-letter {
-  color: #ffffff; /* White for "Police" */
+  color: #ffffff;
 }
 
 .subtitle {
   font-size: 1.2rem;
   font-weight: 300;
   margin: 10px 0 15px;
-  color: #ffffff; /* White */
+  color: #ffffff;
   text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
 }
 
@@ -99,7 +120,7 @@ body {
 
 .auth-btn {
   padding: 14px 28px;
-  background: linear-gradient(45deg, #0000ff, #ff0000); /* Blue to red */
+  background: linear-gradient(45deg, #0000ff, #ff0000);
   color: #ffffff;
   border: none;
   border-radius: 14px;
@@ -114,7 +135,6 @@ body {
   box-shadow: 0 0 20px rgba(255, 0, 0, 0.9), 0 0 30px rgba(0, 0, 255, 0.7);
 }
 
-/* Featured Section */
 .featured-section {
   margin-bottom: 30px;
   text-align: center;
@@ -123,7 +143,7 @@ body {
 .featured-title {
   font-size: 2rem;
   font-weight: 700;
-  background: linear-gradient(90deg, #ff0000, #0000ff); /* Red to blue */
+  background: linear-gradient(90deg, #ff0000, #0000ff);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   margin-bottom: 20px;
@@ -136,7 +156,6 @@ body {
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
 }
 
-/* Landing Section */
 .landing-section {
   text-align: center;
   padding: 40px 20px;
@@ -149,7 +168,7 @@ body {
 .landing-title {
   font-size: 2.5rem;
   font-weight: 700;
-  background: linear-gradient(90deg, #ff0000, #0000ff); /* Red to blue */
+  background: linear-gradient(90deg, #ff0000, #0000ff);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   margin-bottom: 20px;
@@ -165,7 +184,7 @@ body {
 .cta-btn {
   padding: 18px 36px;
   font-size: 1.5rem;
-  background: linear-gradient(45deg, #ff0000, #0000ff); /* Red to blue */
+  background: linear-gradient(45deg, #ff0000, #0000ff);
   color: #ffffff;
   border: none;
   border-radius: 15px;
@@ -174,6 +193,29 @@ body {
   transition: transform 0.2s, box-shadow 0.2s;
   box-shadow: 0 4px 15px rgba(255, 0, 0, 0.4);
   animation: pulseGlow 2s infinite ease-in-out;
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-btn::after {
+  content: '';
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  pointer-events: none;
+}
+
+.cta-btn:active::after {
+  animation: ripple 0.6s linear;
+}
+
+@keyframes ripple {
+  to { transform: translate(-50%, -50%) scale(3); opacity: 0; }
 }
 
 @keyframes pulseGlow {
@@ -186,7 +228,6 @@ body {
   box-shadow: 0 8px 25px rgba(255, 0, 0, 0.8);
 }
 
-/* Main Content */
 .main {
   padding: 0 20px;
 }
@@ -216,7 +257,7 @@ body {
 
 .upload-btn {
   padding: 12px 24px;
-  background: linear-gradient(45deg, #000000, #ff0000); /* Black to red */
+  background: linear-gradient(45deg, #000000, #ff0000);
   color: #ffffff;
   border: none;
   border-radius: 12px;
@@ -241,7 +282,7 @@ body {
 
 .progress-bar {
   height: 100%;
-  background: linear-gradient(90deg, #ff0000, #0000ff); /* Red to blue */
+  background: linear-gradient(90deg, #ff0000, #0000ff);
   transition: width 0.3s ease;
 }
 
@@ -272,7 +313,7 @@ body {
   font-size: 1.6rem;
   font-weight: 700;
   margin: 15px;
-  background: linear-gradient(90deg, #ff0000, #0000ff); /* Red to blue */
+  background: linear-gradient(90deg, #ff0000, #0000ff);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -292,7 +333,7 @@ body {
 
 .like-btn {
   padding: 8px 16px;
-  background: linear-gradient(45deg, #0000ff, #ff0000); /* Blue to red */
+  background: linear-gradient(45deg, #0000ff, #ff0000);
   color: #ffffff;
   border: none;
   border-radius: 10px;
@@ -307,7 +348,7 @@ body {
 }
 
 .like-btn.liked, .like-btn:disabled {
-  background: linear-gradient(45deg, #1a1a1a, #800000); /* Dark gray to dark red */
+  background: linear-gradient(45deg, #1a1a1a, #800000);
   cursor: not-allowed;
 }
 
@@ -316,7 +357,6 @@ body {
   color: #ffffff;
 }
 
-/* Modals */
 .history-modal, .course-modal {
   position: fixed;
   top: 0;
@@ -342,7 +382,7 @@ body {
 .history-title, .course-title {
   font-size: 2rem;
   font-weight: 700;
-  background: linear-gradient(90deg, #ff0000, #0000ff); /* Red to blue */
+  background: linear-gradient(90deg, #ff0000, #0000ff);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   margin-bottom: 15px;
@@ -358,7 +398,7 @@ body {
 
 .close-btn {
   padding: 10px 20px;
-  background: linear-gradient(45deg, #ff0000, #0000ff); /* Red to blue */
+  background: linear-gradient(45deg, #ff0000, #0000ff);
   color: #ffffff;
   border: none;
   border-radius: 12px;
@@ -374,7 +414,6 @@ body {
   box-shadow: 0 5px 15px rgba(255, 0, 0, 0.5);
 }
 
-/* Auth Modal */
 .auth-modal {
   position: fixed;
   top: 0;
@@ -400,7 +439,7 @@ body {
 .auth-title {
   font-size: 2rem;
   font-weight: 700;
-  background: linear-gradient(90deg, #ff0000, #0000ff); /* Red to blue */
+  background: linear-gradient(90deg, #ff0000, #0000ff);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   margin-bottom: 15px;
@@ -425,7 +464,7 @@ body {
 }
 
 .tab-btn.active {
-  background: linear-gradient(45deg, #0000ff, #ff0000); /* Blue to red */
+  background: linear-gradient(45deg, #0000ff, #ff0000);
   color: #ffffff;
 }
 
@@ -445,7 +484,7 @@ body {
 
 .submit-btn {
   padding: 12px;
-  background: linear-gradient(45deg, #000000, #ff0000); /* Black to red */
+  background: linear-gradient(45deg, #000000, #ff0000);
   color: #ffffff;
   border: none;
   border-radius: 12px;
@@ -458,11 +497,10 @@ body {
   box-shadow: 0 5px 15px rgba(255, 0, 0, 0.5);
 }
 
-/* Footer */
 .footer {
   text-align: center;
   padding: 20px 15px;
-  background: linear-gradient(135deg, #0000ff, #ff0000, #ffffff); /* Blue to red to white */
+  background: linear-gradient(135deg, #0000ff, #ff0000, #ffffff);
   border-radius: 15px;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
   margin-top: 30px;
@@ -490,7 +528,7 @@ body {
 
 .social-icon {
   font-size: 1.8rem;
-  color: #ff0000; /* Red */
+  color: #ff0000;
   transition: transform 0.2s, text-shadow 0.2s;
 }
 
@@ -499,11 +537,10 @@ body {
   text-shadow: 0 0 15px rgba(255, 0, 0, 0.9);
 }
 
-/* Loader */
 .loader {
   width: 50px;
   height: 50px;
-  border: 5px solid #ff0000; /* Red */
+  border: 5px solid #ff0000;
   border-top: 5px solid transparent;
   border-radius: 50%;
   animation: spin 1s ease-in-out infinite, glowPulse 2s infinite;
@@ -520,7 +557,6 @@ body {
   50% { box-shadow: 0 0 20px rgba(255, 0, 0, 1); }
 }
 
-/* Who I Am Section */
 .who-i-am-section {
   text-align: center;
   padding: 40px 20px;
@@ -562,7 +598,6 @@ body {
   font-weight: 700;
 }
 
-/* Ministry Section */
 .ministry-section {
   text-align: left;
   padding: 40px 20px;
@@ -573,7 +608,6 @@ body {
   border-left: 5px solid #ff0000;
 }
 
-/* Support Section */
 .support-section {
   text-align: center;
   padding: 40px 20px;
@@ -581,6 +615,18 @@ body {
   border-radius: 15px;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
   margin-bottom: 30px;
+}
+
+.ticker {
+  font-weight: 700;
+  color: #ff0000;
+  display: inline-block;
+  animation: tickerGlow 1s infinite alternate;
+}
+
+@keyframes tickerGlow {
+  0% { text-shadow: 0 0 5px rgba(255, 0, 0, 0.5); }
+  100% { text-shadow: 0 0 15px rgba(255, 0, 0, 1); }
 }
 
 .pulse-btn {
@@ -593,7 +639,6 @@ body {
   100% { transform: scale(1); }
 }
 
-/* Products Section */
 .products-section {
   text-align: center;
   padding: 40px 20px;
@@ -633,7 +678,6 @@ body {
   color: #000000;
 }
 
-/* Sponsored Gear Section */
 .sponsored-section {
   text-align: center;
   padding: 40px 20px;
@@ -707,7 +751,6 @@ body {
   color: #000000;
 }
 
-/* Free Pain & Energy Chips Section */
 .chips-section {
   text-align: center;
   padding: 40px 20px;
@@ -785,11 +828,10 @@ body {
   margin-top: 10px;
 }
 
-/* General Section Styles */
 .section-title {
   font-size: 2.5rem;
   font-weight: 700;
-  background: linear-gradient(90deg, #ff0000, #0000ff); /* Red to blue */
+  background: linear-gradient(90deg, #ff0000, #0000ff);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   margin-bottom: 20px;
@@ -813,17 +855,16 @@ body {
   }
 }
 
-/* No Videos */
 .no-videos {
   font-size: 1.5rem;
   text-align: center;
   color: #ffffff;
 }
 
-/* Mobile Responsiveness */
 @media (max-width: 768px) {
   .title { font-size: 2rem; }
   .subtitle { font-size: 1rem; }
+  .tagline-text { font-size: 1.2rem; }
   .auth-btn { padding: 12px 24px; font-size: 1rem; }
   .landing-title { font-size: 1.8rem; }
   .landing-text { font-size: 1rem; }
