@@ -1,19 +1,26 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Header from './Header';
-import Footer from './Footer';
-import Home from './Home'; // This is the homepage component
+import Home from './Home';
 import About from './About';
 import Videos from './Videos';
 import Shop from './Shop';
 import Contact from './Contact';
-import './App.css';
+import './App.css'; // Matches your working fix
 
 function App() {
   return (
     <Router>
-      <div className="app">
-        <Header />
+      <div className="App">
+        <header>
+          <h1>Vaccine Police</h1>
+          <nav>
+            <a href="/">Home</a>
+            <a href="/about">About</a>
+            <a href="/videos">Videos</a>
+            <a href="/shop">Shop</a>
+            <a href="/contact">Contact</a>
+          </nav>
+        </header>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
@@ -21,7 +28,9 @@ function App() {
           <Route path="/shop" element={<Shop />} />
           <Route path="/contact" element={<Contact />} />
         </Routes>
-        <Footer />
+        <footer>
+          <p>© 2025 Vaccine Police</p>
+        </footer>
       </div>
     </Router>
   );

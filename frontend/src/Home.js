@@ -2,26 +2,22 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import ReactPlayer from 'react-player';
 import { loadStripe } from '@stripe/stripe-js';
-import StarryBackground from './StarryBackground';
 
-const stripePromise = loadStripe('pk_test_your_publishable_key'); // Replace with your live key
+const stripePromise = loadStripe('pk_test_your_publishable_key');
 
 function Home() {
   const [videos, setVideos] = useState([]);
   const [loading, setLoading] = useState(true);
-  // Donation state
-  const [donationAmount, setDonationAmount] = useState(5230); // Example starting value
-  // Chip form state
+  const [donationAmount, setDonationAmount] = useState(5230);
   const [chipName, setChipName] = useState('');
   const [chipEmail, setChipEmail] = useState('');
   const [chipMessage, setChipMessage] = useState('');
   const [chipSubmitting, setChipSubmitting] = useState(false);
-  // Video upload state
   const [videoTitle, setVideoTitle] = useState('');
   const [videoFile, setVideoFile] = useState(null);
   const [uploading, setUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
-  const [isAuthenticated, setIsAuthenticated] = useState(false); // Replace with your auth logic
+  const [isAuthenticated, setIsAuthenticated] = useState(false); // Keep and use
 
   useEffect(() => {
     const fetchVideos = async () => {
@@ -34,9 +30,20 @@ function Home() {
         setLoading(false);
       }
     };
-    fetchVideos();
 
-    // Simulate donation ticker (replace with your real logic if dynamic)
+    const checkAuth = async () => {
+      try {
+        const res = await axios.get('/.netlify/functions/check-auth');
+        setIsAuthenticated(res.data.isAuthenticated || false); // Fixes lint error
+      } catch (err) {
+        console.error('Auth check failed:', err);
+        setIsAuthenticated(false);
+      }
+    };
+
+    fetchVideos();
+    checkAuth();
+
     const tickerInterval = setInterval(() => {
       setDonationAmount((prev) => Math.min(prev + Math.floor(Math.random() * 50), 10000));
     }, 5000);
@@ -48,7 +55,7 @@ function Home() {
     const response = await fetch('/.netlify/functions/create-checkout-session', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ amount: 1000 }), // $10, adjust as needed
+      body: JSON.stringify({ amount: 1000 }),
     });
     const session = await response.json();
     stripe.redirectToCheckout({ sessionId: session.id });
@@ -100,108 +107,86 @@ function Home() {
   };
 
   return (
-    <>
-      <StarryBackground />
-      <div className="rotating-text-background">Vaccine Police</div>
-      <main className="main-content">
-        <section className="featured-section">
-          <h2 className="section-title">Welcome to the Fight</h2>
-          <p className="section-text accent-text">
-            I’m Christopher Key, the Vaccine Police—dedicated to exposing vaccine truth and fighting for your freedom. Join me in this battle for our kids and our future.
-          </p>
-        </section>
+    <main>
+      <section>
+        <h2>Welcome to the Fight</h2>
+        <p>
+          I’m Christopher Key, the Vaccine Police—dedicated to exposing vaccine truth and fighting for your freedom. Join me in this battle for our kids and our future.
+        </p>
+      </section>
 
-        <section className="support-section">
-          <h2 className="section-title">Support the Fight</h2>
-          <p className="section-text">
-            Every dollar fuels the battle against tyranny. Help us reach our goal!
-          </p>
-          <div className="ticker">
-            Raised: $<span id="donation-amount">{donationAmount}</span> of $10,000
-          </div>
-          <button className="cta-btn pulse-btn" onClick={handleDonate}>
-            Donate Now
+      <section>
+        <h2>Support the Fight</h2>
+        <p>Every dollar fuels the battle against tyranny. Help us reach our goal!</p>
+        <div>Raised: ${donationAmount} of $10,000</div>
+        <button onClick={handleDonate}>Donate Now</button>
+      </section>
+
+      <section>
+        <h2>Report the Chips</h2>
+        <p>Seen a chip? Tell us your story—together, we’ll expose the truth!</p>
+        <form onSubmit={handleChipSubmit}>
+          <input
+            type="text"
+            value={chipName}
+            onChange={(e) => setChipName(e.target.value)}
+            placeholder="Your Name"
+            required
+          />
+          <input
+            type="email"
+            value={chipEmail}
+            onChange={(e) => setChipEmail(e.target.value)}
+            placeholder="Your Email"
+            required
+          />
+          <textarea
+            value={chipMessage}
+            onChange={(e) => setChipMessage(e.target.value)}
+            placeholder="Your Chip Story"
+            required
+          />
+          <button type="submit" disabled={chipSubmitting}>
+            {chipSubmitting ? 'Submitting...' : 'Submit Report'}
           </button>
-        </section>
+        </form>
+      </section>
 
-        <section className="chips-section">
-          <h2 className="section-title">Report the Chips</h2>
-          <p className="section-text">
-            Seen a chip? Tell us your story—together, we’ll expose the truth!
-          </p>
-          <form onSubmit={handleChipSubmit} className="chips-form">
-            <input
-              type="text"
-              value={chipName}
-              onChange={(e) => setChipName(e.target.value)}
-              placeholder="Your Name"
-              required
-            />
-            <input
-              type="email"
-              value={chipEmail}
-              onChange={(e) => setChipEmail(e.target.value)}
-              placeholder="Your Email"
-              required
-            />
-            <textarea
-              value={chipMessage}
-              onChange={(e) => setChipMessage(e.target.value)}
-              placeholder="Your Chip Story"
-              required
-            />
-            <button type="submit" className="cta-btn" disabled={chipSubmitting}>
-              {chipSubmitting ? 'Submitting...' : 'Submit Report'}
-            </button>
-          </form>
+      {isAuthenticated && (
+        <section>
+          <h2>Upload Your Truth</h2>
+          <input
+            type="text"
+            value={videoTitle}
+            onChange={(e) => setVideoTitle(e.target.value)}
+            placeholder="Video Title"
+          />
+          <input
+            type="file"
+            onChange={(e) => setVideoFile(e.target.files[0])}
+            accept="video/*"
+          />
+          <button onClick={handleVideoUpload} disabled={uploading}>
+            {uploading ? 'Uploading...' : 'Upload Video'}
+          </button>
+          {uploadProgress > 0 && <div>Progress: {uploadProgress}%</div>}
         </section>
+      )}
 
-        {isAuthenticated && (
-          <section className="upload-form">
-            <h2 className="section-title">Upload Your Truth</h2>
-            <input
-              type="text"
-              value={videoTitle}
-              onChange={(e) => setVideoTitle(e.target.value)}
-              placeholder="Video Title"
-            />
-            <input
-              type="file"
-              onChange={(e) => setVideoFile(e.target.files[0])}
-              accept="video/*"
-            />
-            <button className="upload-btn" onClick={handleVideoUpload} disabled={uploading}>
-              {uploading ? 'Uploading...' : 'Upload Video'}
-            </button>
-            {uploadProgress > 0 && (
-              <div className="progress-container">
-                <div className="progress-bar" style={{ width: `${uploadProgress}%` }}></div>
-              </div>
-            )}
-          </section>
+      <section>
+        <h2>Latest Truth Drops</h2>
+        {loading ? (
+          <p>Loading...</p>
+        ) : (
+          videos.slice(0, 3).map((video) => (
+            <div key={video._id}>
+              <ReactPlayer url={video.fileUrl} width="100%" height="200px" controls />
+              <h3>{video.title}</h3>
+            </div>
+          ))
         )}
-
-        <section className="video-grid">
-          <h2 className="section-title">Latest Truth Drops</h2>
-          {loading ? (
-            <div className="loader"></div>
-          ) : (
-            videos.slice(0, 3).map((video) => (
-              <div key={video._id} className="video-card">
-                <ReactPlayer
-                  url={video.fileUrl}
-                  light={video.thumbnailUrl}
-                  width="100%"
-                  height="200px"
-                  controls
-                />
-                <h3 className="video-title">{video.title}</h3>
-              </div>
-            ))
-          )}
-        </section>
-      </main>
-    </>
+      </section>
+    </main>
   );
 }
 
