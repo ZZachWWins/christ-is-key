@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import ReactPlayer from 'react-player';
 import { loadStripe } from '@stripe/stripe-js';
+import './App.css';
 
 const stripePromise = loadStripe('pk_test_your_publishable_key');
 
