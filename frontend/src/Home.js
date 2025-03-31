@@ -8,7 +8,7 @@ const stripePromise = loadStripe('pk_test_your_publishable_key');
 
 function Home({ user }) {
   const [videos, setVideos] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true); // This is fine
   const [donationTotal, setDonationTotal] = useState(0);
   const [chipName, setChipName] = useState('');
   const [chipEmail, setChipEmail] = useState('');
@@ -97,7 +97,9 @@ function Home({ user }) {
         <button className="cta-btn" onClick={() => setShowFight(true)}>Join the Fight</button>
       </section>
 
-      {featuredVideo && (
+      {loading ? (
+        <div className="loader">Loading videos...</div>
+      ) : featuredVideo ? (
         <section className="featured-section">
           <h2 className="featured-title">Featured Video</h2>
           <div className="featured-video">
@@ -114,6 +116,8 @@ function Home({ user }) {
             <p className="video-views">Views: {featuredVideo.views || 0}</p>
           </div>
         </section>
+      ) : (
+        <p>No featured video yet!</p>
       )}
 
       <section className="support-section">
