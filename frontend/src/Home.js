@@ -1,24 +1,23 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import ReactPlayer from 'react-player';
+import { gsap } from 'gsap';
 import { loadStripe } from '@stripe/stripe-js';
-import './App.css';
 
 const stripePromise = loadStripe('pk_test_your_publishable_key');
 
-function Home() {
+function Home({ user }) {
   const [videos, setVideos] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [donationAmount, setDonationAmount] = useState(5230);
+  const [donationTotal, setDonationTotal] = useState(0);
   const [chipName, setChipName] = useState('');
   const [chipEmail, setChipEmail] = useState('');
-  const [chipMessage, setChipMessage] = useState('');
-  const [chipSubmitting, setChipSubmitting] = useState(false);
-  const [videoTitle, setVideoTitle] = useState('');
-  const [videoFile, setVideoFile] = useState(null);
-  const [uploading, setUploading] = useState(false);
-  const [uploadProgress, setUploadProgress] = useState(0);
-  const [isAuthenticated, setIsAuthenticated] = useState(false); // Keep and use
+  const [chipPhone, setChipPhone] = useState('');
+  const [chipAddress, setChipAddress] = useState('');
+  const [showChipsForm, setShowChipsForm] = useState(false);
+  const [showMission, setShowMission] = useState(false);
+  const [showFight, setShowFight] = useState(false);
+  const chipsRef = useRef(null);
 
   useEffect(() => {
     const fetchVideos = async () => {
@@ -31,162 +30,157 @@ function Home() {
         setLoading(false);
       }
     };
-
-    const checkAuth = async () => {
-      try {
-        const res = await axios.get('/.netlify/functions/check-auth');
-        setIsAuthenticated(res.data.isAuthenticated || false); // Fixes lint error
-      } catch (err) {
-        console.error('Auth check failed:', err);
-        setIsAuthenticated(false);
-      }
-    };
-
     fetchVideos();
-    checkAuth();
 
-    const tickerInterval = setInterval(() => {
-      setDonationAmount((prev) => Math.min(prev + Math.floor(Math.random() * 50), 10000));
-    }, 5000);
-    return () => clearInterval(tickerInterval);
+    const fetchDonationTotal = async () => {
+      setDonationTotal(0); // Placeholder
+    };
+    fetchDonationTotal();
+
+    const chips = chipsRef.current;
+    if (chips) {
+      gsap.from(chips.children, { duration: 1, opacity: 0, x: 50, stagger: 0.2, ease: 'power3.out', scrollTrigger: { trigger: chips } });
+    }
   }, []);
 
-  const handleDonate = async () => {
+  const handleCheckout = async () => {
     const stripe = await stripePromise;
-    const response = await fetch('/.netlify/functions/create-checkout-session', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ amount: 1000 }),
-    });
-    const session = await response.json();
-    stripe.redirectToCheckout({ sessionId: session.id });
+    try {
+      const response = await axios.post('/.netlify/functions/create-checkout-session', {
+        amount: 1776,
+        description: 'Key Report Subscription + $100 Pain & Energy Chips',
+      });
+      const { id } = response.data;
+      const { error } = await stripe.redirectToCheckout({ sessionId: id });
+      if (error) throw error;
+    } catch (err) {
+      alert('Checkout error—try again!');
+    }
   };
 
-  const handleChipSubmit = async (e) => {
+  const handleChipClaim = async (e) => {
     e.preventDefault();
-    setChipSubmitting(true);
     try {
-      await axios.post('/.netlify/functions/submit-chip', {
+      await axios.post('/.netlify/functions/claim-chips', {
         name: chipName,
         email: chipEmail,
-        message: chipMessage,
+        phone: chipPhone,
+        address: chipAddress,
       });
-      alert('Report submitted—thank you!');
+      alert('Claim submitted! Chips shipping soon!');
       setChipName('');
       setChipEmail('');
-      setChipMessage('');
+      setChipPhone('');
+      setChipAddress('');
+      setShowChipsForm(false);
     } catch (err) {
-      alert('Submission failed—try again.');
-    } finally {
-      setChipSubmitting(false);
+      alert('Claim failed—check your info!');
     }
   };
 
-  const handleVideoUpload = async () => {
-    if (!videoFile || !videoTitle) return;
-    setUploading(true);
-    const formData = new FormData();
-    formData.append('file', videoFile);
-    formData.append('title', videoTitle);
-    try {
-      await axios.post('/.netlify/functions/upload-video', formData, {
-        headers: { 'Content-Type': 'multipart/form-data' },
-        onUploadProgress: (progressEvent) => {
-          const percent = Math.round((progressEvent.loaded * 100) / progressEvent.total);
-          setUploadProgress(percent);
-        },
-      });
-      alert('Video uploaded!');
-      setVideoTitle('');
-      setVideoFile(null);
-      setUploadProgress(0);
-    } catch (err) {
-      alert('Upload failed—try again.');
-    } finally {
-      setUploading(false);
-    }
-  };
+  const featuredVideo = videos.length > 0 ? videos[0] : null;
+
+  const testimonials = [
+    { quote: "Dropped my back pain in 2 days—Christopher’s the real deal!", name: "John D., Patriot" },
+    { quote: "Energy through the roof—no coffee needed!", name: "Sarah T., Freedom Fighter" },
+    { quote: "These chips are a game-changer—pain’s gone!", name: "Mike R., Truth Warrior" },
+  ];
 
   return (
-    <main>
-      <section>
-        <h2>Welcome to the Fight</h2>
-        <p>
-          I’m Christopher Key, the Vaccine Police—dedicated to exposing vaccine truth and fighting for your freedom. Join me in this battle for our kids and our future.
+    <main className="main">
+      <section className="landing-section">
+        <h2 className="landing-title">Welcome to Vaccine Police</h2>
+        <p className="landing-text">
+          Christopher Key’s here to rip the veil off corruption and fight for freedom with raw, unfiltered videos that hit like a freight train.
         </p>
+        <button className="cta-btn" onClick={() => setShowMission(true)}>Our Mission</button>
+        <button className="cta-btn" onClick={() => setShowFight(true)}>Join the Fight</button>
       </section>
 
-      <section>
-        <h2>Support the Fight</h2>
-        <p>Every dollar fuels the battle against tyranny. Help us reach our goal!</p>
-        <div>Raised: ${donationAmount} of $10,000</div>
-        <button onClick={handleDonate}>Donate Now</button>
-      </section>
-
-      <section>
-        <h2>Report the Chips</h2>
-        <p>Seen a chip? Tell us your story—together, we’ll expose the truth!</p>
-        <form onSubmit={handleChipSubmit}>
-          <input
-            type="text"
-            value={chipName}
-            onChange={(e) => setChipName(e.target.value)}
-            placeholder="Your Name"
-            required
-          />
-          <input
-            type="email"
-            value={chipEmail}
-            onChange={(e) => setChipEmail(e.target.value)}
-            placeholder="Your Email"
-            required
-          />
-          <textarea
-            value={chipMessage}
-            onChange={(e) => setChipMessage(e.target.value)}
-            placeholder="Your Chip Story"
-            required
-          />
-          <button type="submit" disabled={chipSubmitting}>
-            {chipSubmitting ? 'Submitting...' : 'Submit Report'}
-          </button>
-        </form>
-      </section>
-
-      {isAuthenticated && (
-        <section>
-          <h2>Upload Your Truth</h2>
-          <input
-            type="text"
-            value={videoTitle}
-            onChange={(e) => setVideoTitle(e.target.value)}
-            placeholder="Video Title"
-          />
-          <input
-            type="file"
-            onChange={(e) => setVideoFile(e.target.files[0])}
-            accept="video/*"
-          />
-          <button onClick={handleVideoUpload} disabled={uploading}>
-            {uploading ? 'Uploading...' : 'Upload Video'}
-          </button>
-          {uploadProgress > 0 && <div>Progress: {uploadProgress}%</div>}
+      {featuredVideo && (
+        <section className="featured-section">
+          <h2 className="featured-title">Featured Video</h2>
+          <div className="featured-video">
+            <ReactPlayer
+              url={featuredVideo.fileUrl}
+              light={featuredVideo.thumbnailUrl}
+              width="100%"
+              height="400px"
+              controls
+            />
+            <h3 className="video-title">{featuredVideo.title}</h3>
+            <p className="video-description">{featuredVideo.description}</p>
+            <p className="video-uploader">Uploaded by: {featuredVideo.uploadedBy}</p>
+            <p className="video-views">Views: {featuredVideo.views || 0}</p>
+          </div>
         </section>
       )}
 
-      <section>
-        <h2>Latest Truth Drops</h2>
-        {loading ? (
-          <p>Loading...</p>
-        ) : (
-          videos.slice(0, 3).map((video) => (
-            <div key={video._id}>
-              <ReactPlayer url={video.fileUrl} width="100%" height="200px" controls />
-              <h3>{video.title}</h3>
-            </div>
-          ))
-        )}
+      <section className="support-section">
+        <h2 className="section-title">Support the Fight</h2>
+        <p className="section-text">
+          Fired for defying tyranny, I’m raising hell and funds to hold this nation accountable, shield your rights, and save kids from masks, jabs, and trafficking. Drop $17.76—a patriot’s price—for the exclusive Key Report and fuel this war for truth. <strong>Donate $17.76 now and get $100 worth of Free Pain & Energy Chips shipped to you!</strong>
+        </p>
+        <p className="donation-counter">Patriots have fueled: ${donationTotal.toFixed(2)}</p>
+        <button className="cta-btn pulse-btn" onClick={handleCheckout}>
+          Get the Key Report - $17.76
+        </button>
       </section>
+
+      <section className="chips-section" ref={chipsRef}>
+        <h2 className="section-title">Free Pain & Energy Chips</h2>
+        <p className="section-text">
+          Nano-tech patches that zap pain and charge your energy—stick ‘em on, feel the freedom. Claim your 12 FREE Pain & Energy Chips—natural, non-invasive relief and vitality boosters from Christopher Key’s arsenal.
+        </p>
+        <div className="chips-button-container">
+          <button className="cta-btn" onClick={() => setShowChipsForm(!showChipsForm)}>
+            {showChipsForm ? 'Hide Claim Form' : 'Claim Your 12 Free Chips'}
+          </button>
+        </div>
+        {showChipsForm && (
+          <div className="chips-form-container">
+            <form onSubmit={handleChipClaim} className="chips-form">
+              <input type="text" value={chipName} onChange={(e) => setChipName(e.target.value)} placeholder="Full Name" required />
+              <input type="email" value={chipEmail} onChange={(e) => setChipEmail(e.target.value)} placeholder="Email Address" required />
+              <input type="tel" value={chipPhone} onChange={(e) => setChipPhone(e.target.value)} placeholder="Phone Number" required />
+              <textarea value={chipAddress} onChange={(e) => setChipAddress(e.target.value)} placeholder="Shipping Address" required />
+              <button type="submit" className="cta-btn">Submit Claim</button>
+            </form>
+          </div>
+        )}
+        <div className="chips-testimonials">
+          {testimonials.map((t, index) => (
+            <div key={index} className="testimonial-card">
+              <p className="testimonial-quote">"{t.quote}"</p>
+              <p className="testimonial-name">- {t.name}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {showMission && (
+        <div className="history-modal">
+          <div className="history-content">
+            <h2 className="history-title">Our Mission</h2>
+            <p className="history-text">
+              Christopher Key’s mission is simple: expose corruption, protect freedom, and empower people to take back their health and lives.
+            </p>
+            <button className="close-btn" onClick={() => setShowMission(false)}>Close</button>
+          </div>
+        </div>
+      )}
+
+      {showFight && (
+        <div className="course-modal">
+          <div className="course-content">
+            <h2 className="course-title">Join the Fight</h2>
+            <p className="course-text">
+              Become part of the Vaccine Police movement. Upload your videos, share your experiences, and stand with Christopher against tyranny.
+            </p>
+            <button className="close-btn" onClick={() => setShowFight(false)}>Close</button>
+          </div>
+        </div>
+      )}
     </main>
   );
 }
