@@ -146,9 +146,9 @@ function Shop() {
             </button>
           </div>
         </div>
-        <button className="cta-btn pulse-btn" onClick={handleCheckout}>
-          Get the Key Report - $17.76
-        </button>
+       <button className="cta-btn pulse-btn" onClick={handleCheckout}>
+  <span className="exclusive-badge">KNN Exclusive</span> Get the Key Report - $17.76
+      </button>
       </section>
     </main>
   );

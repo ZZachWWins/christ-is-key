@@ -124,6 +124,8 @@ function App() {
           <Route path="/videos" element={<Videos user={user} />} />
           <Route path="/shop" element={<Shop />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/success" element={<Success />} />
+          <Route path="/cancel" element={<Cancel />} />
         </Routes>
         <Footer />
         {showAuth && (
