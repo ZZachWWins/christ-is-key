@@ -7,7 +7,7 @@ import About from './About';
 import Videos from './Videos';
 import Shop from './Shop';
 import Contact from './Contact';
-import './app.css';
+import './App.css';
 
 function App() {
   return (
