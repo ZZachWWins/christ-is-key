@@ -26,7 +26,7 @@ function Videos({ user }) {
 
   const handleUpload = async (e) => {
     e.preventDefault();
-    if (!user) return alert('Please log in to upload videos!');
+    if (!user) return alert('Please log in to upload reports!');
     if (!file) return alert('Please select a video file!');
 
     const formData = new FormData();
@@ -56,7 +56,7 @@ function Videos({ user }) {
       setProgress(0);
       const videosRes = await axios.get('/.netlify/functions/videos');
       setVideos(videosRes.data || []);
-      alert('Video uploaded successfully!');
+      alert('Report uploaded to KNN!');
     } catch (err) {
       alert('Upload failed—check your file!');
       setProgress(0);
@@ -75,7 +75,7 @@ function Videos({ user }) {
   };
 
   const handleLike = async (id) => {
-    if (!user) return alert('Please log in to like videos!');
+    if (!user) return alert('Please log in to like reports!');
     try {
       const res = await axios.put('/.netlify/functions/videos', {
         id,
@@ -99,9 +99,9 @@ function Videos({ user }) {
       {user && (
         <form onSubmit={handleUpload} className="upload-form">
           <input type="file" onChange={(e) => setFile(e.target.files[0])} accept="video/*" required />
-          <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Title" required />
-          <input type="text" value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Description" required />
-          <button type="submit" className="upload-btn">Upload Video</button>
+          <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Report Title" required />
+          <input type="text" value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Report Description" required />
+          <button type="submit" className="upload-btn">Upload to KNN</button>
           {progress > 0 && progress < 100 && (
             <div className="progress-container">
               <div className="progress-bar" style={{ width: `${progress}%` }}>
@@ -114,9 +114,9 @@ function Videos({ user }) {
 
       <section className="video-grid">
         {loading ? (
-          <div className="loader"></div>
+          <div className="loader">Loading KNN Reports...</div>
         ) : videos.length === 0 ? (
-          <p className="no-videos">No videos yet—upload some!</p>
+          <p className="no-videos">No reports yet—upload some to KNN!</p>
         ) : (
           videos.map((video) => (
             <div key={video._id} className="video-card">
@@ -131,7 +131,7 @@ function Videos({ user }) {
               />
               <h3 className="video-title">{video.title}</h3>
               <p className="video-description">{video.description}</p>
-              <p className="video-uploader">Uploaded by: {video.uploadedBy}</p>
+              <p className="video-uploader">Reported by: {video.uploadedBy}</p>
               <p className="video-views">Views: {video.views || 0}</p>
               <div className="like-section">
                 <button

@@ -3,7 +3,7 @@ import { gsap } from 'gsap';
 import { loadStripe } from '@stripe/stripe-js';
 import axios from 'axios';
 
-const stripePromise = loadStripe('pk_test_your_publishable_key');
+const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY);
 
 function Shop() {
   const productsRef = useRef(null);
@@ -39,7 +39,7 @@ function Shop() {
   return (
     <main className="main">
       <section className="products-section" ref={productsRef}>
-        <h2 className="section-title">Freedom Essentials</h2>
+        <h2 className="section-title">KNN Freedom Essentials</h2>
         <div className="products-grid">
           <div className="product-card">
             <img
@@ -73,7 +73,7 @@ function Shop() {
       </section>
 
       <section className="sponsored-section" ref={sponsoredRef}>
-        <h2 className="section-title">Sponsored Gear</h2>
+        <h2 className="section-title">KNN Sponsored Gear</h2>
         <div className="sponsored-grid">
           <div className="sponsored-card">
             <img

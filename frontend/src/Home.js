@@ -8,7 +8,7 @@ const stripePromise = loadStripe('pk_test_your_publishable_key');
 
 function Home({ user }) {
   const [videos, setVideos] = useState([]);
-  const [loading, setLoading] = useState(true); // This is fine
+  const [loading, setLoading] = useState(true);
   const [donationTotal, setDonationTotal] = useState(0);
   const [chipName, setChipName] = useState('');
   const [chipEmail, setChipEmail] = useState('');
@@ -89,19 +89,19 @@ function Home({ user }) {
   return (
     <main className="main">
       <section className="landing-section">
-        <h2 className="landing-title">Welcome to Vaccine Police</h2>
+        <h2 className="landing-title">Welcome to KNN - Key News Network</h2>
         <p className="landing-text">
-          Christopher Key’s here to rip the veil off corruption and fight for freedom with raw, unfiltered videos that hit like a freight train.
+          Christopher Key’s breaking the news wide open—raw, unfiltered truth that hits like a freight train.
         </p>
         <button className="cta-btn" onClick={() => setShowMission(true)}>Our Mission</button>
         <button className="cta-btn" onClick={() => setShowFight(true)}>Join the Fight</button>
       </section>
 
       {loading ? (
-        <div className="loader">Loading videos...</div>
+        <div className="loader">Loading KNN Broadcasts...</div>
       ) : featuredVideo ? (
         <section className="featured-section">
-          <h2 className="featured-title">Featured Video</h2>
+          <h2 className="featured-title breaking-news">Breaking News</h2>
           <div className="featured-video">
             <ReactPlayer
               url={featuredVideo.fileUrl}
@@ -112,18 +112,18 @@ function Home({ user }) {
             />
             <h3 className="video-title">{featuredVideo.title}</h3>
             <p className="video-description">{featuredVideo.description}</p>
-            <p className="video-uploader">Uploaded by: {featuredVideo.uploadedBy}</p>
+            <p className="video-uploader">Reported by: {featuredVideo.uploadedBy}</p>
             <p className="video-views">Views: {featuredVideo.views || 0}</p>
           </div>
         </section>
       ) : (
-        <p>No featured video yet!</p>
+        <p>No breaking news yet—stay tuned!</p>
       )}
 
       <section className="support-section">
-        <h2 className="section-title">Support the Fight</h2>
+        <h2 className="section-title">Support KNN’s Fight</h2>
         <p className="section-text">
-          Fired for defying tyranny, I’m raising hell and funds to hold this nation accountable, shield your rights, and save kids from masks, jabs, and trafficking. Drop $17.76—a patriot’s price—for the exclusive Key Report and fuel this war for truth. <strong>Donate $17.76 now and get $100 worth of Free Pain & Energy Chips shipped to you!</strong>
+          Fired for defying tyranny, Christopher’s raising hell and funds to hold this nation accountable, shield your rights, and save kids from masks, jabs, and trafficking. Drop $17.76—a patriot’s price—for the exclusive Key Report and fuel this war for truth. <strong>Donate $17.76 now and get $100 worth of Free Pain & Energy Chips shipped to you!</strong>
         </p>
         <p className="donation-counter">Patriots have fueled: ${donationTotal.toFixed(2)}</p>
         <button className="cta-btn pulse-btn" onClick={handleCheckout}>
@@ -165,9 +165,9 @@ function Home({ user }) {
       {showMission && (
         <div className="history-modal">
           <div className="history-content">
-            <h2 className="history-title">Our Mission</h2>
+            <h2 className="history-title">KNN’s Mission</h2>
             <p className="history-text">
-              Christopher Key’s mission is simple: expose corruption, protect freedom, and empower people to take back their health and lives.
+              Christopher Key’s mission is simple: expose corruption, protect freedom, and empower people to take back their health and lives through hard-hitting news.
             </p>
             <button className="close-btn" onClick={() => setShowMission(false)}>Close</button>
           </div>
@@ -177,9 +177,9 @@ function Home({ user }) {
       {showFight && (
         <div className="course-modal">
           <div className="course-content">
-            <h2 className="course-title">Join the Fight</h2>
+            <h2 className="course-title">Join KNN’s Fight</h2>
             <p className="course-text">
-              Become part of the Vaccine Police movement. Upload your videos, share your experiences, and stand with Christopher against tyranny.
+              Become part of the Key News Network movement. Share your stories, upload your reports, and stand with Christopher against tyranny.
             </p>
             <button className="close-btn" onClick={() => setShowFight(false)}>Close</button>
           </div>
