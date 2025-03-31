@@ -90,8 +90,11 @@ function Home({ user }) {
     <main className="main">
       <section className="landing-section">
         <h2 className="landing-title">Welcome to KNN - Key News Network</h2>
+        <div className="news-ticker">
+          <span>Wake up America! - KNN - Key News Network - Home of the Vaccine Police - The Christopher Key Show - FOLLOW OUR CHANNELS!</span>
+        </div>
         <p className="landing-text">
-          Christopher Key’s breaking the news wide open—raw, unfiltered truth that hits like a freight train.
+          Christopher Key delivers raw, unfiltered truth—KNN breaks it wide open.
         </p>
         <button className="cta-btn" onClick={() => setShowMission(true)}>Our Mission</button>
         <button className="cta-btn" onClick={() => setShowFight(true)}>Join the Fight</button>

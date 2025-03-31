@@ -892,6 +892,37 @@ body {
   border-radius: 4px;
   margin-right: 0.5rem;
 }
+/* Replace existing .news-ticker styles */
+.news-ticker {
+  background: #333;
+  padding: 0.5rem;
+  overflow: hidden;
+  white-space: nowrap;
+  margin: 1rem 0;
+  border: 1px solid #ffd700;
+  color: #ffd700;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.news-ticker span {
+  display: inline-block;
+  padding-left: 100%; /* Start off-screen */
+  animation: ticker 20s linear infinite; /* Adjust speed with duration */
+}
+
+@keyframes ticker {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
+}
+
+/* Mobile tweak */
+@media (max-width: 768px) {
+  .news-ticker {
+    font-size: 0.9rem;
+    padding: 0.3rem;
+  }
+}
 
 @media (max-width: 768px) {
   .title { font-size: 2rem; }
