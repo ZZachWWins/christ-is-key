@@ -8,6 +8,8 @@ import About from './About';
 import Videos from './Videos';
 import Shop from './Shop';
 import Contact from './Contact';
+import Success from './Success'; // Add this
+import Cancel from './Cancel';
 import './App.css';
 
 function App() {
