@@ -6,7 +6,7 @@ function Footer() {
       <p className="footer-text">
         Built by Zachary | © 2025 Christopher Key. All rights reserved.
       </p>
-      <p className="contact-text">Contact: christopherkey@vaccinepolice.com</p>
+      <p className="contact-text">Contact Christopher with YOUR story: +1(561) 329-8434</p>
       <div className="social-links">
         <a href="https://truthsocial.com/@vaccinepolice" target="_blank" rel="noopener noreferrer" className="social-icon">
           <i className="fab fa-tumblr"></i>
