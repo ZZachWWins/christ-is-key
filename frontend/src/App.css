@@ -951,11 +951,11 @@ body {
   border-color: #007bff; /* Blue focus ring, adjust to match your theme */
 }
 
-/* Assuming .nav-btn exists from your header */
-.nav-btn {
-  padding: 10px 20px;
-  font-size: 16px;
-  background-color: #007bff; /* Example color, match your header */
+/* Reuse .auth-btn from header buttons */
+.auth-btn {
+  padding: 10px 20px; /* Match your header button padding */
+  font-size: 16px;   /* Match your header font size */
+  background-color: #007bff; /* Default blue, adjust to your header */
   color: white;
   border: none;
   border-radius: 5px;
@@ -963,13 +963,12 @@ body {
   transition: background-color 0.3s;
 }
 
-.nav-btn:hover {
-  background-color: #0056b3; /* Darker shade, match your header */
+.auth-btn:hover {
+  background-color: #0056b3; /* Darker shade, match your header hover */
 }
 
 .clear-btn {
-  /* Optional: Specific tweaks for the clear button */
-  padding: 8px 16px; /* Slightly smaller if desired */
+  padding: 8px 16px; /* Slightly smaller for balance, optional */
 }
 
 /* Mobile tweak */

@@ -112,7 +112,7 @@ function Videos({ user }) {
           placeholder="Search videos by title or description..."
           className="search-bar"
         />
-        <button onClick={handleClearSearch} className="nav-btn clear-btn">
+        <button onClick={handleClearSearch} className="auth-btn clear-btn">
           Clear
         </button>
       </section>
