@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
-import ReactPlayer from 'react-player';
 import { gsap } from 'gsap';
 import { loadStripe } from '@stripe/stripe-js';
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY);
+const publisherCode = '3ycfre'; // Your Rumble publisher code from ?pub=3ycfre
 
 function Home({ user }) {
   const [videos, setVideos] = useState([]);
@@ -39,7 +39,14 @@ function Home({ user }) {
 
     const chips = chipsRef.current;
     if (chips) {
-      gsap.from(chips.children, { duration: 1, opacity: 0, x: 50, stagger: 0.2, ease: 'power3.out', scrollTrigger: { trigger: chips } });
+      gsap.from(chips.children, {
+        duration: 1,
+        opacity: 0,
+        x: 50,
+        stagger: 0.2,
+        ease: 'power3.out',
+        scrollTrigger: { trigger: chips },
+      });
     }
   }, []);
 
@@ -104,19 +111,18 @@ function Home({ user }) {
         <div className="loader">Loading KNN Broadcasts...</div>
       ) : featuredVideo ? (
         <section className="featured-section">
-          <h2 className="featured-title breaking-news">Breaking News</h2>
+          <h2 className="featured-title breaking-news">{featuredVideo.isLive ? 'Live Now' : 'Breaking News'}</h2>
           <div className="featured-video">
-            <ReactPlayer
-              url={featuredVideo.fileUrl}
-              light={featuredVideo.thumbnailUrl}
-              width="100%"
-              height="400px"
-              controls
-            />
+            <div className="videoWrapper">
+              <iframe
+                src={`https://rumble.com/embed/${featuredVideo.rumbleVideoId}/?pub=${publisherCode}`}
+                frameBorder="0"
+                allowFullScreen
+              ></iframe>
+            </div>
             <h3 className="video-title">{featuredVideo.title}</h3>
             <p className="video-description">{featuredVideo.description}</p>
             <p className="video-uploader">Reported by: {featuredVideo.uploadedBy}</p>
-            <p className="video-views">Views: {featuredVideo.views || 0}</p>
           </div>
         </section>
       ) : (
