@@ -10,6 +10,7 @@ function Videos({ user }) {
   const [description, setDescription] = useState('');
   const [rumbleVideoId, setRumbleVideoId] = useState('');
   const [isLive, setIsLive] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     const fetchVideos = async () => {
@@ -28,6 +29,7 @@ function Videos({ user }) {
   const handleUpload = async (e) => {
     e.preventDefault();
     if (!user) return alert('Please log in to upload reports!');
+    if (!user.isAdmin) return alert('Only admins can upload reports!');
     if (!rumbleVideoId) return alert('Please enter a Rumble video ID!');
 
     try {
@@ -52,9 +54,18 @@ function Videos({ user }) {
     }
   };
 
+  const handleClearSearch = () => {
+    setSearchQuery(''); // Reset search query to show all videos
+  };
+
+  const filteredVideos = videos.filter((video) =>
+    video.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    video.description.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
     <main className="main">
-      {user && (
+      {user && user.isAdmin ? (
         <form onSubmit={handleUpload} className="upload-form">
           <input
             type="text"
@@ -87,22 +98,39 @@ function Videos({ user }) {
           </label>
           <button type="submit" className="upload-btn">Upload to KNN</button>
         </form>
+      ) : user ? (
+        <p className="no-upload">Only admins can upload reports.</p>
+      ) : (
+        <p className="no-upload">Please log in to upload reports.</p>
       )}
+
+      <section className="video-search">
+        <input
+          type="text"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          placeholder="Search videos by title or description..."
+          className="search-bar"
+        />
+        <button onClick={handleClearSearch} className="nav-btn clear-btn">
+          Clear
+        </button>
+      </section>
 
       <section className="video-grid">
         {loading ? (
           <div className="loader">Loading KNN Reports...</div>
-        ) : videos.length === 0 ? (
-          <p className="no-videos">No reports yet—upload some to KNN!</p>
+        ) : filteredVideos.length === 0 ? (
+          <p className="no-videos">No matching reports found.</p>
         ) : (
-          videos.map((video) => (
+          filteredVideos.map((video) => (
             <div key={video._id} className="video-card">
               <div className="videoWrapper">
                 <iframe
                   src={`https://rumble.com/embed/${video.rumbleVideoId}/?pub=${publisherCode}`}
                   frameBorder="0"
                   allowFullScreen
-                  title={video.title} // Added unique title
+                  title={video.title}
                 ></iframe>
               </div>
               <h3 className="video-title">{video.title} {video.isLive && <span>(Live)</span>}</h3>
