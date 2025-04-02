@@ -118,6 +118,7 @@ function Home({ user }) {
                 src={`https://rumble.com/embed/${featuredVideo.rumbleVideoId}/?pub=${publisherCode}`}
                 frameBorder="0"
                 allowFullScreen
+                title={featuredVideo.title} // Added unique title
               ></iframe>
             </div>
             <h3 className="video-title">{featuredVideo.title}</h3>

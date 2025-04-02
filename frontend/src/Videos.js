@@ -102,6 +102,7 @@ function Videos({ user }) {
                   src={`https://rumble.com/embed/${video.rumbleVideoId}/?pub=${publisherCode}`}
                   frameBorder="0"
                   allowFullScreen
+                  title={video.title} // Added unique title
                 ></iframe>
               </div>
               <h3 className="video-title">{video.title} {video.isLive && <span>(Live)</span>}</h3>
