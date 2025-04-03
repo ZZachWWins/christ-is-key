@@ -29,7 +29,7 @@ function Videos({ user }) {
   const handleUpload = async (e) => {
     e.preventDefault();
     if (!user) return alert('Please log in to upload reports!');
-    if (!user.isAdmin) return alert('Only admins can upload reports!');
+    if (user.role !== 'admin') return alert('Only admins can upload reports!'); // Updated to role
     if (!rumbleVideoId) return alert('Please enter a Rumble video ID!');
 
     try {
@@ -55,7 +55,7 @@ function Videos({ user }) {
   };
 
   const handleClearSearch = () => {
-    setSearchQuery(''); // Reset search query to show all videos
+    setSearchQuery('');
   };
 
   const filteredVideos = videos.filter((video) =>
@@ -63,9 +63,12 @@ function Videos({ user }) {
     video.description.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  // Debug: Log user object to console
+  console.log('User object:', user);
+
   return (
     <main className="main">
-      {user && user.isAdmin ? (
+      {user && user.role === 'admin' ? ( // Updated to role
         <form onSubmit={handleUpload} className="upload-form">
           <input
             type="text"
