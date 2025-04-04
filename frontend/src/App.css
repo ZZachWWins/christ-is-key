@@ -970,25 +970,13 @@ body {
 .clear-btn {
   padding: 8px 16px; /* Slightly smaller for balance, optional */
 }
-.floating-ctas {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  transform: none;
+/* Replace .floating-ctas */
+.cta-container {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  z-index: 1000;
-  align-items: flex-end;
-  padding: 10px;
-  background: rgba(255, 255, 255, 0.9);
-  border-radius: 10px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-.floating-btn {
-  padding: 10px 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  align-items: center;
+  margin-top: 15px; /* Space below nav */
 }
 
 .cta-list {
@@ -998,34 +986,33 @@ body {
 }
 
 .mobile-toggle-btn {
-  display: none; /* Hidden on desktop by default */
+  display: none; /* Hidden on desktop */
 }
 
 /* Mobile Styles */
 @media (max-width: 768px) {
-  .floating-ctas {
-    top: 10px;
-    right: 10px;
-    padding: 0;
-    background: none;
-    box-shadow: none;
+  .cta-container {
+    margin-top: 10px;
   }
 
   .mobile-toggle-btn {
-    display: block; /* Show on mobile */
-    width: 70px;
-    height: 70px;
+    display: block;
+    width: 80px;
+    height: 80px;
     border-radius: 50%;
     padding: 0;
-    font-size: 1rem;
+    font-size: 0.9rem;
     font-weight: 700;
     text-transform: uppercase;
-    background: linear-gradient(45deg, #ff0000, #0000ff); /* Inherits .cta-btn gradient */
+    background: linear-gradient(45deg, #ff0000, #0000ff);
     color: #ffffff;
     border: none;
     box-shadow: 0 4px 15px rgba(255, 0, 0, 0.4);
     cursor: pointer;
     transition: transform 0.2s, box-shadow 0.2s;
+    white-space: nowrap;
+    overflow: hidden;
+    text-align: center;
   }
 
   .mobile-toggle-btn:hover, .mobile-toggle-btn:active {
@@ -1037,16 +1024,15 @@ body {
     display: none; /* Hidden by default on mobile */
   }
 
-  .floating-ctas.expanded .cta-list {
+  .cta-container.expanded .cta-list {
     display: flex; /* Show when expanded */
-    margin-top: 10px;
     background: rgba(255, 255, 255, 0.9);
     padding: 10px;
     border-radius: 10px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   }
 
-  .floating-ctas.expanded .mobile-toggle-btn {
+  .cta-container.expanded .mobile-toggle-btn {
     background: linear-gradient(45deg, #800000, #000080); /* Darker when expanded */
   }
 }

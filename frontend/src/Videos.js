@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import FloatingCTAs from './FloatingCTAs';
 
 const publisherCode = '3ycfre';
 
@@ -59,10 +58,6 @@ function Videos({ user }) {
     setSearchQuery('');
   };
 
-  const scrollToChips = () => {
-    window.location.href = '/'; // Redirect to Home for chips form
-  };
-
   const filteredVideos = videos.filter((video) =>
     video.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
     video.description.toLowerCase().includes(searchQuery.toLowerCase())
@@ -71,86 +66,83 @@ function Videos({ user }) {
   console.log('User object:', user);
 
   return (
-    <>
-      <FloatingCTAs scrollToChips={scrollToChips} />
-      <main className="main">
-        {user && user.role === 'admin' ? (
-          <form onSubmit={handleUpload} className="upload-form">
-            <input
-              type="text"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              placeholder="Report Title"
-              required
-            />
-            <input
-              type="text"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              placeholder="Report Description"
-              required
-            />
-            <input
-              type="text"
-              value={rumbleVideoId}
-              onChange={(e) => setRumbleVideoId(e.target.value)}
-              placeholder="Rumble Video ID (e.g., v6p4qz4)"
-              required
-            />
-            <label>
-              <input
-                type="checkbox"
-                checked={isLive}
-                onChange={(e) => setIsLive(e.target.checked)}
-              />
-              Mark as Live
-            </label>
-            <button type="submit" className="upload-btn">Upload to KNN</button>
-          </form>
-        ) : user ? (
-          <p className="no-upload">Only admins can upload reports.</p>
-        ) : (
-          <p className="no-upload">Please log in to upload reports.</p>
-        )}
-
-        <section className="video-search">
+    <main className="main">
+      {user && user.role === 'admin' ? (
+        <form onSubmit={handleUpload} className="upload-form">
           <input
             type="text"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search videos by title or description..."
-            className="search-bar"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            placeholder="Report Title"
+            required
           />
-          <button onClick={handleClearSearch} className="auth-btn clear-btn">
-            Clear
-          </button>
-        </section>
+          <input
+            type="text"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            placeholder="Report Description"
+            required
+          />
+          <input
+            type="text"
+            value={rumbleVideoId}
+            onChange={(e) => setRumbleVideoId(e.target.value)}
+            placeholder="Rumble Video ID (e.g., v6p4qz4)"
+            required
+          />
+          <label>
+            <input
+              type="checkbox"
+              checked={isLive}
+              onChange={(e) => setIsLive(e.target.checked)}
+            />
+            Mark as Live
+          </label>
+          <button type="submit" className="upload-btn">Upload to KNN</button>
+        </form>
+      ) : user ? (
+        <p className="no-upload">Only admins can upload reports.</p>
+      ) : (
+        <p className="no-upload">Please log in to upload reports.</p>
+      )}
 
-        <section className="video-grid">
-          {loading ? (
-            <div className="loader">Loading KNN Reports...</div>
-          ) : filteredVideos.length === 0 ? (
-            <p className="no-videos">No matching reports found.</p>
-          ) : (
-            filteredVideos.map((video) => (
-              <div key={video._id} className="video-card">
-                <div className="videoWrapper">
-                  <iframe
-                    src={`https://rumble.com/embed/${video.rumbleVideoId}/?pub=${publisherCode}`}
-                    frameBorder="0"
-                    allowFullScreen
-                    title={video.title}
-                  ></iframe>
-                </div>
-                <h3 className="video-title">{video.title} {video.isLive && <span>(Live)</span>}</h3>
-                <p className="video-description">{video.description}</p>
-                <p className="video-uploader">Reported by: {video.uploadedBy}</p>
+      <section className="video-search">
+        <input
+          type="text"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          placeholder="Search videos by title or description..."
+          className="search-bar"
+        />
+        <button onClick={handleClearSearch} className="auth-btn clear-btn">
+          Clear
+        </button>
+      </section>
+
+      <section className="video-grid">
+        {loading ? (
+          <div className="loader">Loading KNN Reports...</div>
+        ) : filteredVideos.length === 0 ? (
+          <p className="no-videos">No matching reports found.</p>
+        ) : (
+          filteredVideos.map((video) => (
+            <div key={video._id} className="video-card">
+              <div className="videoWrapper">
+                <iframe
+                  src={`https://rumble.com/embed/${video.rumbleVideoId}/?pub=${publisherCode}`}
+                  frameBorder="0"
+                  allowFullScreen
+                  title={video.title}
+                ></iframe>
               </div>
-            ))
-          )}
-        </section>
-      </main>
-    </>
+              <h3 className="video-title">{video.title} {video.isLive && <span>(Live)</span>}</h3>
+              <p className="video-description">{video.description}</p>
+              <p className="video-uploader">Reported by: {video.uploadedBy}</p>
+            </div>
+          ))
+        )}
+      </section>
+    </main>
   );
 }
 
