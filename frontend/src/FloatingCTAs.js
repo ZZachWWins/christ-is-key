@@ -7,7 +7,7 @@ const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY);
 function FloatingCTAs({ scrollToChips }) {
   const [showDonateModal, setShowDonateModal] = useState(false);
   const [customAmount, setCustomAmount] = useState('');
-  const [isExpanded, setIsExpanded] = useState(false); // Mobile toggle
+  const [isExpanded, setIsExpanded] = useState(false);
 
   const handleDonate = async (amount) => {
     const donationAmount = amount || (customAmount ? parseFloat(customAmount) : 0);
@@ -41,7 +41,7 @@ function FloatingCTAs({ scrollToChips }) {
           className="cta-btn mobile-toggle-btn"
           onClick={() => setIsExpanded(!isExpanded)}
         >
-          Press Me
+          {isExpanded ? 'Press to Close' : 'Press Me'}
         </button>
         <div className="cta-list">
           <a href="https://bit.ly/christiskey" target="_blank" rel="noopener noreferrer" className="cta-btn floating-btn">
