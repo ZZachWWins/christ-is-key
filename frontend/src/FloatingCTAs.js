@@ -7,6 +7,7 @@ const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY);
 function FloatingCTAs({ scrollToChips }) {
   const [showDonateModal, setShowDonateModal] = useState(false);
   const [customAmount, setCustomAmount] = useState('');
+  const [isExpanded, setIsExpanded] = useState(false); // Mobile toggle
 
   const handleDonate = async (amount) => {
     const donationAmount = amount || (customAmount ? parseFloat(customAmount) : 0);
@@ -18,14 +19,14 @@ function FloatingCTAs({ scrollToChips }) {
     const stripe = await stripePromise;
     try {
       const response = await axios.post('/.netlify/functions/create-checkout-session', {
-        amount: Math.round(donationAmount * 100), // Convert to cents
+        amount: Math.round(donationAmount * 100),
         description: 'Donation to KNN',
       });
       const { id } = response.data;
       const { error } = await stripe.redirectToCheckout({ sessionId: id });
       if (error) throw error;
-      setShowDonateModal(false); // Close modal on success
-      setCustomAmount(''); // Reset input
+      setShowDonateModal(false);
+      setCustomAmount('');
     } catch (err) {
       alert('Donation failed—try again!');
     }
@@ -35,16 +36,24 @@ function FloatingCTAs({ scrollToChips }) {
 
   return (
     <>
-      <div className="floating-ctas">
-        <a href="https://bit.ly/christiskey" target="_blank" rel="noopener noreferrer" className="cta-btn floating-btn">
-          Buy MasterPeace
-        </a>
-        <button onClick={scrollToChips} className="cta-btn floating-btn">
-          Claim Free Chips
+      <div className={`floating-ctas ${isExpanded ? 'expanded' : ''}`}>
+        <button
+          className="cta-btn mobile-toggle-btn"
+          onClick={() => setIsExpanded(!isExpanded)}
+        >
+          Press Me
         </button>
-        <button onClick={() => setShowDonateModal(true)} className="cta-btn floating-btn">
-          Donate
-        </button>
+        <div className="cta-list">
+          <a href="https://bit.ly/christiskey" target="_blank" rel="noopener noreferrer" className="cta-btn floating-btn">
+            Buy MasterPeace
+          </a>
+          <button onClick={scrollToChips} className="cta-btn floating-btn">
+            Claim Free Chips
+          </button>
+          <button onClick={() => setShowDonateModal(true)} className="cta-btn floating-btn">
+            Donate
+          </button>
+        </div>
       </div>
 
       {showDonateModal && (
