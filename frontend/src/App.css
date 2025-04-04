@@ -970,6 +970,120 @@ body {
 .clear-btn {
   padding: 8px 16px; /* Slightly smaller for balance, optional */
 }
+/* Refined Floating CTAs */
+.floating-ctas {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-wrap: wrap; /* Responsive wrapping */
+  gap: 15px;
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.9); /* Subtle backdrop */
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.floating-btn {
+  /* Inherits from .cta-btn */
+  padding: 10px 20px; /* Slightly smaller for compactness */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.floating-btn:hover {
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Donation Modal */
+.donate-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Overlay */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+
+.donate-content {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 500px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.donate-title {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.donation-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)); /* Responsive grid */
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.donation-btn {
+  /* Inherits from .cta-btn */
+  padding: 10px;
+  font-size: 16px;
+}
+
+.custom-donation {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.donate-input {
+  padding: 10px;
+  font-size: 16px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+  width: 100%;
+  max-width: 200px;
+  margin: 0 auto;
+}
+
+.donate-input:focus {
+  border-color: #ff4500; /* Match .cta-btn */
+}
+
+.custom-donate-btn {
+  /* Inherits from .cta-btn */
+  padding: 12px 24px;
+  font-size: 18px;
+  background-color: #ff4500; /* Ensure visibility */
+}
+
+/* Reuse close-btn from Home.js */
+.close-btn {
+  padding: 8px 16px;
+  font-size: 16px;
+  background-color: #ccc;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.close-btn:hover {
+  background-color: #aaa;
+}
 
 /* Mobile tweak */
 @media (max-width: 768px) {
