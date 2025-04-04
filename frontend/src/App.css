@@ -973,27 +973,24 @@ body {
 /* Refined Floating CTAs */
 .floating-ctas {
   position: fixed;
-  top: 80px;
-  left: 50%;
-  transform: translateX(-50%);
+  top: 20px; /* Near top, but on the side */
+  right: 20px; /* Right-aligned */
+  transform: none; /* Remove centering */
   display: flex;
-  flex-wrap: wrap; /* Responsive wrapping */
-  gap: 15px;
+  flex-direction: column; /* Stack vertically */
+  gap: 10px;
   z-index: 1000;
-  justify-content: center;
-  align-items: center;
+  align-items: flex-end;
   padding: 10px;
-  background: rgba(255, 255, 255, 0.9); /* Subtle backdrop */
+  background: rgba(255, 255, 255, 0.9);
   border-radius: 10px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .floating-btn {
-  /* Inherits from .cta-btn */
-  padding: 10px 20px; /* Slightly smaller for compactness */
+  padding: 10px 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
-
 .floating-btn:hover {
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
 }
