@@ -77,14 +77,14 @@ function Header({ user, setShowAuth, handleLogout }) {
           {isExpanded ? 'Close Actions' : 'Take Action!'}
         </button>
         <div className="action-cta-list">
-          <button onClick={scrollToChips} className="action-cta-btn pulse-btn">
-            Claim FREE Pain & Energy Chips
+          <button onClick={scrollToChips} className="action-cta-btn">
+            Claim Free Chips
           </button>
-          <a href="https://bit.ly/christiskey" target="_blank" rel="noopener noreferrer" className="action-cta-btn pulse-btn">
-            Buy MasterPeace NOW
+          <a href="https://bit.ly/christiskey" target="_blank" rel="noopener noreferrer" className="action-cta-btn">
+            Buy MasterPeace
           </a>
-          <button onClick={() => setShowDonateModal(true)} className="action-cta-btn pulse-btn">
-            Donate to Fuel the Fight
+          <button onClick={() => setShowDonateModal(true)} className="action-cta-btn">
+            Donate
           </button>
         </div>
       </div>
