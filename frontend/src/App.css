@@ -159,6 +159,117 @@ body {
   box-shadow: 0 5px 15px rgba(255, 0, 0, 0.5);
 }
 
+.action-ticker {
+  background: rgba(0, 0, 0, 0.8);
+  padding: 8px;
+  overflow: hidden;
+  white-space: nowrap;
+  margin: 10px 0;
+  border: 2px solid #ff0000;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+}
+
+.action-ticker span {
+  display: inline-block;
+  padding-left: 100%;
+  animation: ticker 15s linear infinite;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #ffd700;
+  text-shadow: 0 0 5px rgba(255, 0, 0, 0.7);
+}
+
+.action-cta-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  margin-top: 15px;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 15px;
+  border-radius: 15px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.action-cta-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+.action-cta-btn {
+  padding: 16px 32px;
+  font-size: 1.4rem;
+  background: linear-gradient(45deg, #ff0000, #0000ff);
+  color: #ffffff;
+  border: 2px solid #ffd700;
+  border-radius: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 15px rgba(255, 0, 0, 0.4);
+  animation: pulseGlow 2s infinite ease-in-out;
+  text-align: center;
+  text-decoration: none;
+}
+
+.action-cta-btn:hover, .action-cta-btn:active {
+  transform: scale(1.1);
+  box-shadow: 0 8px 25px rgba(255, 0, 0, 0.8);
+}
+
+.action-mobile-toggle-btn {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .action-cta-container {
+    margin-top: 10px;
+  }
+
+  .action-mobile-toggle-btn {
+    display: block;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    padding: 0;
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    background: linear-gradient(45deg, #ff0000, #0000ff);
+    color: #ffffff;
+    border: 2px solid #ffd700;
+    box-shadow: 0 4px 15px rgba(255, 0, 0, 0.4);
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    white-space: normal;
+    text-align: center;
+  }
+
+  .action-mobile-toggle-btn:hover, .action-mobile-toggle-btn:active {
+    transform: scale(1.1);
+    box-shadow: 0 8px 25px rgba(255, 0, 0, 0.8);
+  }
+
+  .action-cta-list {
+    display: none;
+  }
+
+  .action-cta-container.expanded .action-cta-list {
+    display: flex;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .action-cta-container.expanded .action-mobile-toggle-btn {
+    background: linear-gradient(45deg, #800000, #000080);
+  }
+}
+
 .featured-section {
   margin-bottom: 30px;
   text-align: center;
@@ -892,7 +1003,7 @@ body {
   border-radius: 4px;
   margin-right: 0.5rem;
 }
-/* Replace existing .news-ticker styles */
+
 .news-ticker {
   background: #333;
   padding: 0.5rem;
@@ -907,17 +1018,18 @@ body {
 
 .news-ticker span {
   display: inline-block;
-  padding-left: 100%; /* Start off-screen */
-  animation: ticker 20s linear infinite; /* Adjust speed with duration */
+  padding-left: 100%;
+  animation: ticker 20s linear infinite;
 }
 
 @keyframes ticker {
   0% { transform: translateX(0); }
   100% { transform: translateX(-100%); }
 }
+
 .videoWrapper {
   position: relative;
-  padding-bottom: 56.25%; /* 16:9 aspect ratio */
+  padding-bottom: 56.25%;
   height: 0;
 }
 
@@ -928,13 +1040,14 @@ body {
   width: 100%;
   height: 100%;
 }
+
 .video-search {
   margin: 20px 0;
   text-align: center;
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 10px; /* Space between input and button */
+  gap: 10px;
 }
 
 .search-bar {
@@ -948,14 +1061,13 @@ body {
 }
 
 .search-bar:focus {
-  border-color: #007bff; /* Blue focus ring, adjust to match your theme */
+  border-color: #007bff;
 }
 
-/* Reuse .auth-btn from header buttons */
 .auth-btn {
-  padding: 10px 20px; /* Match your header button padding */
-  font-size: 16px;   /* Match your header font size */
-  background-color: #007bff; /* Default blue, adjust to your header */
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #007bff;
   color: white;
   border: none;
   border-radius: 5px;
@@ -964,87 +1076,20 @@ body {
 }
 
 .auth-btn:hover {
-  background-color: #0056b3; /* Darker shade, match your header hover */
+  background-color: #0056b3;
 }
 
 .clear-btn {
-  padding: 8px 16px; /* Slightly smaller for balance, optional */
-}
-/* Replace .floating-ctas */
-.cta-container {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  align-items: center;
-  margin-top: 15px; /* Space below nav */
+  padding: 8px 16px;
 }
 
-.cta-list {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.mobile-toggle-btn {
-  display: none; /* Hidden on desktop */
-}
-
-/* Mobile Styles */
-@media (max-width: 768px) {
-  .cta-container {
-    margin-top: 10px;
-  }
-
-  .mobile-toggle-btn {
-    display: block;
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    padding: 0;
-    font-size: 0.9rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    background: linear-gradient(45deg, #ff0000, #0000ff);
-    color: #ffffff;
-    border: none;
-    box-shadow: 0 4px 15px rgba(255, 0, 0, 0.4);
-    cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s;
-    white-space: nowrap;
-    overflow: hidden;
-    text-align: center;
-  }
-
-  .mobile-toggle-btn:hover, .mobile-toggle-btn:active {
-    transform: scale(1.1);
-    box-shadow: 0 8px 25px rgba(255, 0, 0, 0.8);
-  }
-
-  .cta-list {
-    display: none; /* Hidden by default on mobile */
-  }
-
-  .cta-container.expanded .cta-list {
-    display: flex; /* Show when expanded */
-    background: rgba(255, 255, 255, 0.9);
-    padding: 10px;
-    border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  }
-
-  .cta-container.expanded .mobile-toggle-btn {
-    background: linear-gradient(45deg, #800000, #000080); /* Darker when expanded */
-  }
-}
-
-/* Donation Modal */
 .donate-modal {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5); /* Overlay */
+  background: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1069,13 +1114,12 @@ body {
 
 .donation-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)); /* Responsive grid */
+  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
   gap: 10px;
   margin-bottom: 20px;
 }
 
 .donation-btn {
-  /* Inherits from .cta-btn */
   padding: 10px;
   font-size: 16px;
 }
@@ -1099,17 +1143,15 @@ body {
 }
 
 .donate-input:focus {
-  border-color: #ff4500; /* Match .cta-btn */
+  border-color: #ff4500;
 }
 
 .custom-donate-btn {
-  /* Inherits from .cta-btn */
   padding: 12px 24px;
   font-size: 18px;
-  background-color: #ff4500; /* Ensure visibility */
+  background-color: #ff4500;
 }
 
-/* Reuse close-btn from Home.js */
 .close-btn {
   padding: 8px 16px;
   font-size: 16px;
@@ -1124,15 +1166,12 @@ body {
   background-color: #aaa;
 }
 
-/* Mobile tweak */
 @media (max-width: 768px) {
   .news-ticker {
     font-size: 0.9rem;
     padding: 0.3rem;
   }
-}
 
-@media (max-width: 768px) {
   .title { font-size: 2rem; }
   .subtitle { font-size: 1rem; }
   .tagline-text { font-size: 1.2rem; }

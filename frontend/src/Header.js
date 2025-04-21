@@ -8,6 +8,7 @@ const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY);
 
 function Header({ user, setShowAuth, handleLogout }) {
   const titleRef = useRef(null);
+  const ctaRef = useRef(null);
   const [showDonateModal, setShowDonateModal] = useState(false);
   const [customAmount, setCustomAmount] = useState('');
   const [isExpanded, setIsExpanded] = useState(false); // Mobile toggle
@@ -24,6 +25,11 @@ function Header({ user, setShowAuth, handleLogout }) {
         .join('');
       title.innerHTML = letters;
       gsap.from('.letter', { duration: 1, opacity: 0, y: 50, stagger: 0.05, ease: 'power2.out' });
+    }
+
+    const cta = ctaRef.current;
+    if (cta) {
+      gsap.from(cta.children, { duration: 1, opacity: 0, scale: 0.9, stagger: 0.2, ease: 'back.out(1.7)' });
     }
   }, []);
 
@@ -60,6 +66,28 @@ function Header({ user, setShowAuth, handleLogout }) {
     <header className="header">
       <h1 ref={titleRef} className="title">Vaccine Police</h1>
       <p className="subtitle">Christopher Key - Truth Warrior</p>
+      <div className="action-ticker">
+        <span>Act NOW! Claim FREE Chips, Grab MasterPeace, Support the Fight!</span>
+      </div>
+      <div className={`action-cta-container ${isExpanded ? 'expanded' : ''}`} ref={ctaRef}>
+        <button
+          className="action-mobile-toggle-btn"
+          onClick={() => setIsExpanded(!isExpanded)}
+        >
+          {isExpanded ? 'Close Actions' : 'Take Action!'}
+        </button>
+        <div className="action-cta-list">
+          <button onClick={scrollToChips} className="action-cta-btn pulse-btn">
+            Claim FREE Pain & Energy Chips
+          </button>
+          <a href="https://bit.ly/christiskey" target="_blank" rel="noopener noreferrer" className="action-cta-btn pulse-btn">
+            Buy MasterPeace NOW
+          </a>
+          <button onClick={() => setShowDonateModal(true)} className="action-cta-btn pulse-btn">
+            Donate to Fuel the Fight
+          </button>
+        </div>
+      </div>
       <div className="auth-section">
         {user ? (
           <>
@@ -77,26 +105,6 @@ function Header({ user, setShowAuth, handleLogout }) {
         <Link to="/shop" className="nav-link">Shop</Link>
         <Link to="/contact" className="nav-link">Contact</Link>
       </nav>
-      <div className={`cta-container ${isExpanded ? 'expanded' : ''}`}>
-        <button
-          className="cta-btn mobile-toggle-btn"
-          onClick={() => setIsExpanded(!isExpanded)}
-        >
-          {isExpanded ? 'Press to Close' : 'Press Me'}
-        </button>
-        <div className="cta-list">
-          <a href="https://bit.ly/christiskey" target="_blank" rel="noopener noreferrer" className="cta-btn">
-            Buy MasterPeace
-          </a>
-          <button onClick={scrollToChips} className="cta-btn">
-            Claim Free Chips
-          </button>
-          <button onClick={() => setShowDonateModal(true)} className="cta-btn">
-            Donate
-          </button>
-        </div>
-      </div>
-
       {showDonateModal && (
         <div className="donate-modal">
           <div className="donate-content">
@@ -135,4 +143,4 @@ function Header({ user, setShowAuth, handleLogout }) {
   );
 }
 
-export default Header;export default Header;
+export default Header;
