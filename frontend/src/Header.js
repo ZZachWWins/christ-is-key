@@ -7,26 +7,12 @@ import { loadStripe } from '@stripe/stripe-js';
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY);
 
 function Header({ user, setShowAuth, handleLogout }) {
-  const titleRef = useRef(null);
   const ctaRef = useRef(null);
   const [showDonateModal, setShowDonateModal] = useState(false);
   const [customAmount, setCustomAmount] = useState('');
   const [isExpanded, setIsExpanded] = useState(false); // Mobile toggle
 
   useEffect(() => {
-    const title = titleRef.current;
-    if (title) {
-      const letters = "Vaccine Police"
-        .split('')
-        .map((char, index) => {
-          const className = index < 7 ? 'letter vaccine-letter' : 'letter police-letter';
-          return `<span class="${className}">${char}</span>`;
-        })
-        .join('');
-      title.innerHTML = letters;
-      gsap.from('.letter', { duration: 1, opacity: 0, y: 50, stagger: 0.05, ease: 'power2.out' });
-    }
-
     const cta = ctaRef.current;
     if (cta) {
       gsap.from(cta.children, { duration: 1, opacity: 0, scale: 0.9, stagger: 0.2, ease: 'back.out(1.7)' });
@@ -64,11 +50,12 @@ function Header({ user, setShowAuth, handleLogout }) {
 
   return (
     <header className="header">
-      <h1 ref={titleRef} className="title">Vaccine Police</h1>
+      <img
+        src="https://res.cloudinary.com/diwgwgndv/image/upload/w_200/today_idabod"
+        alt="Christopher Key Logo"
+        className="header-logo"
+      />
       <p className="subtitle">Christopher Key - Truth Warrior</p>
-      <div className="action-ticker">
-        <span>Act NOW! Claim FREE Chips, Grab MasterPeace, Support the Fight!</span>
-      </div>
       <div className={`action-cta-container ${isExpanded ? 'expanded' : ''}`} ref={ctaRef}>
         <button
           className="action-mobile-toggle-btn"
@@ -76,6 +63,9 @@ function Header({ user, setShowAuth, handleLogout }) {
         >
           {isExpanded ? 'Close Actions' : 'Take Action!'}
         </button>
+        <div className="action-ticker">
+          <span>Act NOW! Claim FREE Chips, Grab MasterPeace, Support the Fight!</span>
+        </div>
         <div className="action-cta-list">
           <button onClick={scrollToChips} className="action-cta-btn">
             Claim Free Chips
