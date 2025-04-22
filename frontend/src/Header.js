@@ -51,7 +51,7 @@ function Header({ user, setShowAuth, handleLogout }) {
   return (
     <header className="header">
       <img
-        src="https://res.cloudinary.com/diwgwgndv/image/upload/w_200/today_idabod"
+        src="https://res.cloudinary.com/diwgwgndv/image/upload/w_200/today-2_lspyal"
         alt="Christopher Key Logo"
         className="header-logo"
       />
