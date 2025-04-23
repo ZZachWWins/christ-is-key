@@ -12,6 +12,11 @@ function Header({ user, setShowAuth, handleLogout }) {
   const [customAmount, setCustomAmount] = useState('');
   const [isExpanded, setIsExpanded] = useState(false); // Mobile toggle
 
+  // Dynamic ticker text
+  const tickerText = window.innerWidth <= 768 
+    ? "Act NOW! Claim Chips, Support KNN!" 
+    : "Act NOW! Claim FREE Chips, Grab MasterPeace, Support the Fight!";
+
   useEffect(() => {
     const cta = ctaRef.current;
     if (cta) {
@@ -51,7 +56,7 @@ function Header({ user, setShowAuth, handleLogout }) {
   return (
     <header className="header">
       <img
-        src="https://res.cloudinary.com/diwgwgndv/image/upload/w_200/today-2_lspyal"
+        src="https://res.cloudinary.com/diwgwgndv/image/upload/w_200/image000000_vx5dvn"
         alt="Christopher Key Logo"
         className="header-logo"
       />
@@ -64,7 +69,7 @@ function Header({ user, setShowAuth, handleLogout }) {
           {isExpanded ? 'Close Actions' : 'Take Action!'}
         </button>
         <div className="action-ticker">
-          <span>Act NOW! Claim FREE Chips, Grab MasterPeace, Support the Fight!</span>
+          <span>{tickerText}</span>
         </div>
         <div className="action-cta-list">
           <button onClick={scrollToChips} className="action-cta-btn">
