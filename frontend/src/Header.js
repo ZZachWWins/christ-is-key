@@ -238,4 +238,4 @@ function Header({ user, setShowAuth, handleLogout }) {
   );
 }
 
-export default Header;export default Header;
+export default Header;
