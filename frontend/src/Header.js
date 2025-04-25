@@ -9,8 +9,16 @@ const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY);
 function Header({ user, setShowAuth, handleLogout }) {
   const ctaRef = useRef(null);
   const [showDonateModal, setShowDonateModal] = useState(false);
+  const [showChipsModal, setShowChipsModal] = useState(false);
   const [customAmount, setCustomAmount] = useState('');
-  const [isExpanded, setIsExpanded] = useState(false); // Mobile toggle
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    address: '',
+    phone: ''
+  });
+  const [formError, setFormError] = useState('');
 
   // Dynamic ticker text
   const tickerText = window.innerWidth <= 768 
@@ -24,8 +32,42 @@ function Header({ user, setShowAuth, handleLogout }) {
     }
   }, []);
 
+  const handleFormChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setFormError('');
+  };
+
+  const handleChipsSubmit = async (e) => {
+    e.preventDefault();
+    const { name, email, address, phone } = formData;
+
+    // Basic validation
+    if (!name || !email || !address || !phone) {
+      setFormError('Please fill in all fields.');
+      return;
+    }
+    if (!/\S+@\S+\.\S+/.test(email)) {
+      setFormError('Please enter a valid email address.');
+      return;
+    }
+
+    try {
+      await axios.post('/.netlify/functions/send-chips-email', {
+        name,
+        email,
+        address,
+        phone
+      });
+      setShowChipsModal(false);
+      setFormData({ name: '', email: '', address: '', phone: '' });
+      alert('Your request has been sent! Check your email for confirmation.');
+    } catch (err) {
+      setFormError('Failed to send request. Please try again.');
+    }
+  };
+
   const scrollToChips = () => {
-    window.location.href = '/'; // Redirect to Home for chips form
+    setShowChipsModal(true);
   };
 
   const handleDonate = async (amount) => {
@@ -66,14 +108,14 @@ function Header({ user, setShowAuth, handleLogout }) {
           className="action-mobile-toggle-btn"
           onClick={() => setIsExpanded(!isExpanded)}
         >
-          {isExpanded ? 'Close Actions' : 'Take Action!'}
+          {isExpanded ? 'Close Actions' : 'Free'}
         </button>
         <div className="action-ticker">
           <span>{tickerText}</span>
         </div>
         <div className="action-cta-list">
           <button onClick={scrollToChips} className="action-cta-btn">
-            Claim Free Chips
+            Claim Free Pain and Energy Chips
           </button>
           <a href="https://bit.ly/christiskey" target="_blank" rel="noopener noreferrer" className="action-cta-btn">
             Buy MasterPeace
@@ -134,8 +176,66 @@ function Header({ user, setShowAuth, handleLogout }) {
           </div>
         </div>
       )}
+      {showChipsModal && (
+        <div className="chips-modal">
+          <div className="chips-content">
+            <h2 className="chips-title">Claim Free Pain and Energy Chips</h2>
+            <form onSubmit={handleChipsSubmit} className="chips-form">
+              <input
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleFormChange}
+                placeholder="Full Name"
+                className="chips-input"
+                required
+              />
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleFormChange}
+                placeholder="Email Address"
+                className="chips-input"
+                required
+              />
+              <textarea
+                name="address"
+                value={formData.address}
+                onChange={handleFormChange}
+                placeholder="Shipping Address"
+                className="chips-input"
+                rows="4"
+                required
+              />
+              <input
+                type="tel"
+                name="phone"
+                value={formData.phone}
+                onChange={handleFormChange}
+                placeholder="Phone Number"
+                className="chips-input"
+                required
+              />
+              {formError && <p className="form-error">{formError}</p>}
+              <div className="chips-form-buttons">
+                <button type="submit" className="cta-btn chips-submit-btn">
+                  Submit Request
+                </button>
+                <button
+                  type="button"
+                  className="close-btn"
+                  onClick={() => setShowChipsModal(false)}
+                >
+                  Close
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </header>
   );
 }
 
-export default Header;
+export default Header;export default Header;
