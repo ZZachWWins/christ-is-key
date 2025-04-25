@@ -404,6 +404,39 @@ body {
   }
 }
 
+.nav-free-chips {
+  background: #ffd700;
+  color: #000000;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-weight: bold;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.nav-free-chips:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 10px #ffd700;
+}
+
+@media (max-width: 768px) {
+  .chips-content {
+    padding: 15px;
+  }
+
+  .chips-title {
+    font-size: 1.2em;
+  }
+
+  .chips-input {
+    font-size: 0.9em;
+  }
+
+  .nav-free-chips {
+    padding: 4px 8px;
+    font-size: 0.9em;
+  }
+}
+
 .cta-btn {
   padding: 18px 36px;
   font-size: 1.5rem;

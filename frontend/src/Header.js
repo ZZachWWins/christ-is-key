@@ -66,10 +66,6 @@ function Header({ user, setShowAuth, handleLogout }) {
     }
   };
 
-  const scrollToChips = () => {
-    setShowChipsModal(true);
-  };
-
   const handleDonate = async (amount) => {
     const donationAmount = amount || (customAmount ? parseFloat(customAmount) : 0);
     if (!donationAmount || donationAmount <= 0) {
@@ -114,9 +110,6 @@ function Header({ user, setShowAuth, handleLogout }) {
           <span>{tickerText}</span>
         </div>
         <div className="action-cta-list">
-          <button onClick={scrollToChips} className="action-cta-btn">
-            Claim Free Pain and Energy Chips
-          </button>
           <a href="https://bit.ly/christiskey" target="_blank" rel="noopener noreferrer" className="action-cta-btn">
             Buy MasterPeace
           </a>
@@ -141,6 +134,7 @@ function Header({ user, setShowAuth, handleLogout }) {
         <Link to="/videos" className="nav-link">Videos</Link>
         <Link to="/shop" className="nav-link">Shop</Link>
         <Link to="/contact" className="nav-link">Contact</Link>
+        <Link to="#" className="nav-link nav-free-chips" onClick={() => setShowChipsModal(true)}>Free Chips</Link>
       </nav>
       {showDonateModal && (
         <div className="donate-modal">
