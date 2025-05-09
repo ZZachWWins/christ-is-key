@@ -360,7 +360,7 @@ body {
 }
 
 .chips-input::placeholder {
-  color: #555555;
+  color: #000000;
 }
 
 .form-error {
