@@ -104,7 +104,7 @@ function Header({ user, setShowAuth, handleLogout }) {
           className="action-mobile-toggle-btn"
           onClick={() => setIsExpanded(!isExpanded)}
         >
-          {isExpanded ? 'Close Actions' : 'Free'}
+          {isExpanded ? 'Close Actions' : 'PRESS HERE NOW'}
         </button>
         <div className="action-ticker">
           <span>{tickerText}</span>
