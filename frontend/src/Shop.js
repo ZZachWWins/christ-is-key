@@ -65,7 +65,7 @@ function Shop() {
             <p className="product-text">
               Boost your vitality and strength with this natural growth factor.
             </p>
-            <button className="cta-btn" onClick={() => window.open('https://getifg1.com', '_blank')}>
+            <button className="cta-btn" onClick={() => window.open('https://getigf1.com', '_blank')}>
               Learn More
             </button>
           </div>
