@@ -23,7 +23,7 @@ function Header({ user, setShowAuth, handleLogout }) {
   // Dynamic ticker text
   const tickerText = window.innerWidth <= 768 
     ? "Act NOW! Claim Chips, Support KNN!" 
-    : "Act NOW! Claim FREE Chips, Grab MasterPeace, Support the Fight!";
+    : "Act NOW! Claim FREE Chips, Grab MasterPeace, Support the Fight! - PRESS THE FREE CHIPS BUTTON BELOW NOW! - GET THE KEY REPORT NOW! - MAKE AN ACCOUNT AND SIGN UP TODAY - TEST AND PROVE ALL THINGS. GOD BLESS. ";
 
   useEffect(() => {
     const cta = ctaRef.current;
