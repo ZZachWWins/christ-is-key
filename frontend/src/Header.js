@@ -98,7 +98,7 @@ function Header({ user, setShowAuth, handleLogout }) {
         alt="Christopher Key Logo"
         className="header-logo"
       />
-      <p className="subtitle">Christopher Key - Truth Warrior</p>
+      <p className="subtitle">Christopher Key - Truth Warrior - WE DO NOT SHIP ANY PRODUCTS TO THE STATE OF ALABAMA</p>
       <div className={`action-cta-container ${isExpanded ? 'expanded' : ''}`} ref={ctaRef}>
         <button
           className="action-mobile-toggle-btn"
