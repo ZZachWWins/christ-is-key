@@ -22,8 +22,8 @@ function Header({ user, setShowAuth, handleLogout }) {
 
   // Dynamic ticker text
   const tickerText = window.innerWidth <= 768 
-    ? "WE DO NOT SHIP ANY PRODUCTS TO THE STATE OF ALABAMA. ⚠️ Act NOW! Claim Chips, Support KNN!" 
-    : "Act NOW! Claim FREE Chips, Grab MasterPeace, Support the Fight! - PRESS THE FREE CHIPS BUTTON BELOW NOW!";
+    ? "WE DO NOT SHIP ANY PRODUCTS TO THE STATE OF ALABAMA. Act NOW! Claim Chips, Support KNN!" 
+    : "WE DO NOT SHIP ANY PRODUCTS TO THE STATE OF ALABAMA. Act NOW! Claim FREE Chips, Grab MasterPeace, Support the Fight! - PRESS THE FREE CHIPS BUTTON BELOW NOW!";
 
   useEffect(() => {
     const cta = ctaRef.current;
