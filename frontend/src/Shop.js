@@ -12,12 +12,26 @@ function Shop() {
   useEffect(() => {
     const products = productsRef.current;
     if (products) {
-      gsap.from(products.children, { duration: 1, opacity: 0, scale: 0.9, stagger: 0.1, ease: 'back.out(1.7)', scrollTrigger: { trigger: products } });
+      gsap.from(products.children, {
+        duration: 1,
+        opacity: 0,
+        scale: 0.9,
+        stagger: 0.1,
+        ease: 'back.out(1.7)',
+        scrollTrigger: { trigger: products },
+      });
     }
 
     const sponsored = sponsoredRef.current;
     if (sponsored) {
-      gsap.from(sponsored.children, { duration: 1, opacity: 0, scale: 0.9, stagger: 0.1, ease: 'back.out(1.7)', scrollTrigger: { trigger: sponsored } });
+      gsap.from(sponsored.children, {
+        duration: 1,
+        opacity: 0,
+        scale: 0.9,
+        stagger: 0.1,
+        ease: 'back.out(1.7)',
+        scrollTrigger: { trigger: sponsored },
+      });
     }
   }, []);
 
@@ -51,9 +65,13 @@ function Shop() {
             <p className="product-text">
               Detox your body from heavy metals and reclaim your Temple with this game-changing formula.
             </p>
-            <button className="cta-btn" onClick={() => window.open('https://bit.ly/christiskey', '_blank')}>
+            <button
+              className="cta-btn"
+              onClick={() => window.open('https://bit.ly/christiskey', '_blank')}
+            >
               Learn More
             </button>
+          </div>
         </div>
       </section>
 
@@ -70,7 +88,12 @@ function Shop() {
             <p className="sponsored-text">
               Arm yourself with knowledge to fight tyranny—learn your rights.
             </p>
-            <button className="cta-btn" onClick={() => window.open('https://www.freedomlawschool.org/affiliate?code=vaccinepolice', '_blank')}>
+            <button
+              className="cta-btn"
+              onClick={() =>
+                window.open('https://www.freedomlawschool.org/affiliate?code=vaccinepolice', '_blank')
+              }
+            >
               Get It Now
             </button>
           </div>
@@ -84,7 +107,10 @@ function Shop() {
             <p className="sponsored-text">
               Supercharge your heart health with this nitric oxide powerhouse.
             </p>
-            <button className="cta-btn" onClick={() => window.open('https://cardiomiracle.myshopify.com/KEY', '_blank')}>
+            <button
+              className="cta-btn"
+              onClick={() => window.open('https://cardiomiracle.myshopify.com/KEY', '_blank')}
+            >
               Get It Now
             </button>
           </div>
@@ -98,7 +124,10 @@ function Shop() {
             <p className="sponsored-text">
               Heal with pulsed electromagnetic fields—recharge your body’s energy.
             </p>
-            <button className="cta-btn" onClick={() => window.open('https://centropix.us/christiskey', '_blank')}>
+            <button
+              className="cta-btn"
+              onClick={() => window.open('https://centropix.us/christiskey', '_blank')}
+            >
               Get It Now
             </button>
           </div>
@@ -112,7 +141,10 @@ function Shop() {
             <p className="sponsored-text">
               Build muscle and boost recovery with blood flow restriction.
             </p>
-            <button className="cta-btn" onClick={() => window.open('https://keys2life.b3sciences.com', '_blank')}>
+            <button
+              className="cta-btn"
+              onClick={() => window.open('https://keys2life.b3sciences.com', '_blank')}
+            >
               Get It Now
             </button>
           </div>
@@ -126,14 +158,22 @@ function Shop() {
             <p className="sponsored-text">
               Cleanse and restore with premium supplements—pure health.
             </p>
-            <button className="cta-btn" onClick={() => window.open('https://globalhealing.com/?irclickid=wz3WxVXATxyKTn0TP8038V7zUks3XJ1JMxcsVo0&irgwc=1&utm_source=ir&utm_medium=referral&utm_campaign=3231152&utm_term=971435', '_blank')}>
+            <button
+              className="cta-btn"
+              onClick={() =>
+                window.open(
+                  'https://globalhealing.com/?irclickid=wz3WxVXATxyKTn0TP8038V7zUks3XJ1JMxcsVo0&irgwc=1&utm_source=ir&utm_medium=referral&utm_campaign=3231152&utm_term=971435',
+                  '_blank'
+                )
+              }
+            >
               Get It Now
             </button>
           </div>
         </div>
-       <button className="cta-btn pulse-btn" onClick={handleCheckout}>
-  <span className="exclusive-badge">KNN Exclusive</span> Get the Key Report - $17.76
-      </button>
+        <button className="cta-btn pulse-btn" onClick={handleCheckout}>
+          <span className="exclusive-badge">KNN Exclusive</span> Get the Key Report - $17.76
+        </button>
       </section>
     </main>
   );
