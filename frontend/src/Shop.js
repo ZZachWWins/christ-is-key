@@ -54,21 +54,6 @@ function Shop() {
             <button className="cta-btn" onClick={() => window.open('https://bit.ly/christiskey', '_blank')}>
               Learn More
             </button>
-          </div>
-          <div className="product-card">
-            <img
-              src="https://res.cloudinary.com/diwgwgndv/image/upload/w_300,h_200,c_fill/admezub1dbxvfrr2bmls"
-              alt="IGF-1"
-              className="product-image"
-            />
-            <h3 className="product-title">IGF-1</h3>
-            <p className="product-text">
-              Boost your vitality and strength with this natural growth factor.
-            </p>
-            <button className="cta-btn" onClick={() => window.open('https://getigf1.com', '_blank')}>
-              Learn More
-            </button>
-          </div>
         </div>
       </section>
 
