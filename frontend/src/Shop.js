@@ -72,6 +72,23 @@ function Shop() {
               Learn More
             </button>
           </div>
+          <div className="product-card">
+            <img
+              src="https://res.cloudinary.com/diwgwgndv/image/upload/w_300,h_200,c_fill/admezub1dbxvfrr2bmls"
+              alt="IGF-1 Supplement"
+              className="product-image"
+            />
+            <h3 className="product-title">IGF-1 Supplement</h3>
+            <p className="product-text">
+              Boost your vitality and performance with this powerful IGF-1 formula for optimal health.
+            </p>
+            <button
+              className="cta-btn"
+              onClick={() => window.open('https://getigf1.com', '_blank')}
+            >
+              Learn More
+            </button>
+          </div>
         </div>
       </section>
 
