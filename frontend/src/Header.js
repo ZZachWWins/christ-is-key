@@ -103,6 +103,14 @@ function Header({ user, setShowAuth, handleLogout }) {
         >
           MasterPeace
         </a>
+        <a
+          href="https://getigf1.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="action-cta-btn"
+        >
+          IGF1
+        </a>
       </div>
 
       {/* Existing header content */}
