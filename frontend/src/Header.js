@@ -93,39 +93,61 @@ function Header({ user, setShowAuth, handleLogout }) {
 
   return (
     <header className="header">
-      <img
-        src="https://res.cloudinary.com/diwgwgndv/image/upload/w_200/image000000_vx5dvn"
-        alt="Christopher Key Logo"
-        className="header-logo"
-      />
-      <p className="subtitle">Christopher Key - Truth Warrior - WE DO NOT SHIP ANY PRODUCTS TO THE STATE OF ALABAMA</p>
-      <div className={`action-cta-container ${isExpanded ? 'expanded' : ''}`} ref={ctaRef}>
-        <button
-          className="action-mobile-toggle-btn"
-          onClick={() => setIsExpanded(!isExpanded)}
+      {/* Sticky element at the top */}
+      <div className="sticky-bar">
+        <a
+          href="https://bit.ly/christiskey"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="action-cta-btn"
         >
-          {isExpanded ? 'Close Actions' : 'PRESS HERE NOW'}
-        </button>
-        <div className="action-ticker">
-          <span>{tickerText}</span>
+          MasterPeace
+        </a>
+      </div>
+
+      {/* Existing header content */}
+      <div className="header-content">
+        <div className="header-left">
+          <img
+            src="https://res.cloudinary.com/diwgwgndv/image/upload/w_120,h_120,c_fill/image000000_vx5dvn"
+            alt="Earth under a dome"
+            className="header-logo"
+          />
         </div>
-        <div className="action-cta-list">
-          <a href="https://bit.ly/christiskey" target="_blank" rel="noopener noreferrer" className="action-cta-btn">
-            Buy MasterPeace
-          </a>
-          <button onClick={() => setShowDonateModal(true)} className="action-cta-btn">
-            Donate
-          </button>
+        <div className="header-right">
+          <h1 className="header-title">Christopher Key - Truth Warrior</h1>
+          <p className="subtitle">WE DO NOT SHIP ANY PRODUCTS TO THE STATE OF ALABAMA</p>
+          <div className={`action-cta-container ${isExpanded ? 'expanded' : ''}`} ref={ctaRef}>
+            <button
+              className="action-mobile-toggle-btn"
+              onClick={() => setIsExpanded(!isExpanded)}
+            >
+              {isExpanded ? 'Close Actions' : 'PRESS HERE NOW'}
+            </button>
+            <div className="action-ticker">
+              <span>{tickerText}</span>
+            </div>
+            <div className="action-cta-list">
+              <a href="https://bit.ly/christiskey" target="_blank" rel="noopener noreferrer" className="action-cta-btn">
+                Buy MasterPeace
+              </a>
+              <button onClick={() => setShowDonateModal(true)} className="action-cta-btn">
+                Donate
+              </button>
+            </div>
+          </div>
         </div>
       </div>
       <div className="auth-section">
         {user ? (
           <>
-            <span>Welcome, {user.username}</span>
+            <span className="welcome-text">Welcome, {user.username}</span>
             <button onClick={handleLogout} className="auth-btn">Logout</button>
           </>
         ) : (
-          <button onClick={() => setShowAuth(true)} className="auth-btn">Sign Up or Log In</button>
+          <button onClick={() => setShowAuth(true)} className="auth-btn">
+            Sign Up or Log In
+          </button>
         )}
       </div>
       <nav className="nav">
@@ -134,7 +156,13 @@ function Header({ user, setShowAuth, handleLogout }) {
         <Link to="/videos" className="nav-link">Videos</Link>
         <Link to="/shop" className="nav-link">Shop</Link>
         <Link to="/contact" className="nav-link">Contact</Link>
-        <Link to="#" className="nav-link nav-free-chips" onClick={() => setShowChipsModal(true)}>Free Chips</Link>
+        <Link
+          to="#"
+          className="nav-link nav-free-chips"
+          onClick={() => setShowChipsModal(true)}
+        >
+          Free Chips
+        </Link>
       </nav>
       {showDonateModal && (
         <div className="donate-modal">
@@ -145,7 +173,7 @@ function Header({ user, setShowAuth, handleLogout }) {
                 <button
                   key={amount}
                   onClick={() => handleDonate(amount)}
-                  className="cta-btn donation-btn"
+                  className="donation-btn"
                 >
                   ${amount}
                 </button>
@@ -160,7 +188,7 @@ function Header({ user, setShowAuth, handleLogout }) {
                 className="donate-input"
                 min="1"
               />
-              <button onClick={() => handleDonate()} className="cta-btn custom-donate-btn">
+              <button onClick={() => handleDonate()} className="custom-donate-btn">
                 Donate Any Amount
               </button>
             </div>
@@ -175,8 +203,10 @@ function Header({ user, setShowAuth, handleLogout }) {
           <div className="chips-content">
             <h2 className="chips-title">Claim Free Pain and Energy Chips</h2>
             <form onSubmit={handleChipsSubmit} className="chips-form">
+              <label htmlFor="name" className="form-label">Full Name</label>
               <input
                 type="text"
+                id="name"
                 name="name"
                 value={formData.name}
                 onChange={handleFormChange}
@@ -184,8 +214,10 @@ function Header({ user, setShowAuth, handleLogout }) {
                 className="chips-input"
                 required
               />
+              <label htmlFor="email" className="form-label">Email Address</label>
               <input
                 type="email"
+                id="email"
                 name="email"
                 value={formData.email}
                 onChange={handleFormChange}
@@ -193,7 +225,9 @@ function Header({ user, setShowAuth, handleLogout }) {
                 className="chips-input"
                 required
               />
+              <label htmlFor="address" className="form-label">Shipping Address</label>
               <textarea
+                id="address"
                 name="address"
                 value={formData.address}
                 onChange={handleFormChange}
@@ -202,8 +236,10 @@ function Header({ user, setShowAuth, handleLogout }) {
                 rows="4"
                 required
               />
+              <label htmlFor="phone" className="form-label">Phone Number</label>
               <input
                 type="tel"
+                id="phone"
                 name="phone"
                 value={formData.phone}
                 onChange={handleFormChange}
@@ -213,7 +249,7 @@ function Header({ user, setShowAuth, handleLogout }) {
               />
               {formError && <p className="form-error">{formError}</p>}
               <div className="chips-form-buttons">
-                <button type="submit" className="cta-btn chips-submit-btn">
+                <button type="submit" className="chips-submit-btn">
                   Submit Request
                 </button>
                 <button

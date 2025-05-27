@@ -45,6 +45,19 @@ body {
   100% { transform: translate(-50%, -50%) rotate(360deg); opacity: 0.2; }
 }
 
+/* New styles for the sticky bar */
+.sticky-bar {
+  position: fixed; /* Fixed to stay at the top even when scrolling */
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: linear-gradient(135deg, #4b0082, #8b0000); /* Matches header gradient */
+  padding: 0.5rem 0;
+  text-align: center;
+  z-index: 1000; /* Higher than other elements */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
 /* Header styles */
 .header {
   padding: 1.5rem 2rem;
@@ -58,6 +71,7 @@ body {
   margin-left: auto;
   margin-right: auto;
   box-sizing: border-box;
+  margin-top: 3rem; /* Add space for the sticky bar */
 }
 
 .header-content {
@@ -153,19 +167,19 @@ body {
   font-size: 1rem;
   font-weight: 600;
   color: #ffffff;
-  background: linear-gradient(45deg, #d00000, #0000d0); /* Darker gradient for contrast */
+  background: linear-gradient(45deg, #d00000, #0000d0);
   border: none;
   border-radius: 10px;
   cursor: pointer;
   transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
   text-align: center;
   text-decoration: none;
-  box-shadow: 0 4px 10px rgba(255, 0, 0, 0.3); /* Subtle glow */
+  box-shadow: 0 4px 10px rgba(255, 0, 0, 0.3);
   animation: pulseGlow 2s infinite ease-in-out;
 }
 
 .action-cta-btn:hover, .action-cta-btn:active {
-  background: linear-gradient(45deg, #ff3333, #3333ff); /* Brighter on hover */
+  background: linear-gradient(45deg, #ff3333, #3333ff);
   transform: translateY(-3px);
   box-shadow: 0 6px 15px rgba(255, 0, 0, 0.5);
 }
@@ -473,6 +487,148 @@ body {
   to { transform: translate(-50%, -50%) scale(3); opacity: 0; }
 }
 
+.cta-btn {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  background: linear-gradient(45deg, #d00000, #0000d0);
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
+  box-shadow: 0 4px 10px rgba(255, 0, 0, 0.3);
+  animation: pulseGlow 2s infinite ease-in-out;
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-btn::after {
+  content: '';
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  pointer-events: none;
+}
+
+.cta-btn:active::after {
+  animation: ripple 0.6s linear;
+}
+
+.cta-btn:hover, .cta-btn:active {
+  background: linear-gradient(45deg, #ff3333, #3333ff);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(255, 0, 0, 0.5);
+}
+
+.like-btn {
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(45deg, #d00000, #0000d0);
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
+  box-shadow: 0 4px 10px rgba(255, 0, 0, 0.3);
+}
+
+.like-btn:hover:not(.liked):not(:disabled) {
+  background: linear-gradient(45deg, #ff3333, #3333ff);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(255, 0, 0, 0.5);
+}
+
+.like-btn.liked, .like-btn:disabled {
+  background: linear-gradient(45deg, #1a1a1a, #800000);
+  cursor: not-allowed;
+}
+
+.submit-btn {
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(45deg, #d00000, #0000d0);
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
+  box-shadow: 0 4px 10px rgba(255, 0, 0, 0.3);
+}
+
+.submit-btn:hover {
+  background: linear-gradient(45deg, #ff3333, #3333ff);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(255, 0, 0, 0.5);
+}
+
+.upload-btn {
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(45deg, #d00000, #0000d0);
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
+  box-shadow: 0 4px 10px rgba(255, 0, 0, 0.3);
+}
+
+.upload-btn:hover, .upload-btn:active {
+  background: linear-gradient(45deg, #ff3333, #3333ff);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(255, 0, 0, 0.5);
+}
+
+.clear-btn {
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(45deg, #d00000, #0000d0);
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
+  box-shadow: 0 4px 10px rgba(255, 0, 0, 0.3);
+}
+
+.clear-btn:hover {
+  background: linear-gradient(45deg, #ff3333, #3333ff);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(255, 0, 0, 0.5);
+}
+
+.tab-btn {
+  padding: 0.75rem 1.5rem;
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.tab-btn.active {
+  background: linear-gradient(45deg, #d00000, #0000d0);
+  color: #ffffff;
+}
+
+.tab-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-3px);
+}
+
 /* Mobile-specific styles */
 @media (max-width: 768px) {
   .header {
@@ -580,6 +736,15 @@ body {
     padding: 0.5rem 1rem;
     font-size: 0.9rem;
   }
+
+  .cta-btn, .like-btn, .submit-btn, .upload-btn, .clear-btn, .tab-btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .sticky-bar {
+    padding: 0.3rem 0;
+  }
 }
 
 /* Remaining styles unchanged */
@@ -656,22 +821,6 @@ body {
   max-width: 400px;
 }
 
-.upload-btn {
-  padding: 12px 24px;
-  background: linear-gradient(45deg, #000000, #ff0000);
-  color: #ffffff;
-  border: none;
-  border-radius: 12px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.upload-btn:hover, .upload-btn:active {
-  transform: translateY(-3px);
-  box-shadow: 0 5px 15px rgba(255, 0, 0, 0.5);
-}
-
 .progress-container {
   width: 100%;
   max-width: 300px;
@@ -730,27 +879,6 @@ body {
   align-items: center;
   gap: 10px;
   margin: 10px 15px;
-}
-
-.like-btn {
-  padding: 8px 16px;
-  background: linear-gradient(45deg, #0000ff, #ff0000);
-  color: #ffffff;
-  border: none;
-  border-radius: 10px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.like-btn:hover:not(.liked):not(:disabled) {
-  transform: scale(1.05);
-  box-shadow: 0 4px 12px rgba(255, 0, 0, 0.5);
-}
-
-.like-btn.liked, .like-btn:disabled {
-  background: linear-gradient(45deg, #1a1a1a, #800000);
-  cursor: not-allowed;
 }
 
 .like-count {
@@ -836,21 +964,6 @@ body {
   margin-bottom: 20px;
 }
 
-.tab-btn {
-  padding: 8px 16px;
-  background: rgba(255, 255, 255, 0.1);
-  color: #ffffff;
-  border: none;
-  border-radius: 8px;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.tab-btn.active {
-  background: linear-gradient(45deg, #0000ff, #ff0000);
-  color: #ffffff;
-}
-
 .auth-form {
   display: flex;
   flex-direction: column;
@@ -863,21 +976,6 @@ body {
   border: none;
   background: rgba(255, 255, 255, 0.1);
   color: #ffffff;
-}
-
-.submit-btn {
-  padding: 12px;
-  background: linear-gradient(45deg, #000000, #ff0000);
-  color: #ffffff;
-  border: none;
-  border-radius: 12px;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.submit-btn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 5px 15px rgba(255, 0, 0, 0.5);
 }
 
 .footer {
@@ -984,7 +1082,7 @@ body {
 .ministry-section {
   text-align: left;
   padding: 40px 20px;
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255,  though255, 0.05);
   border-radius: 15px;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
   margin-bottom: 30px;
@@ -1287,10 +1385,6 @@ body {
 
 .search-bar:focus {
   border-color: #007bff;
-}
-
-.clear-btn {
-  padding: 8px 16px;
 }
 
 @media (max-width: 768px) {
