@@ -158,7 +158,7 @@ function Header({ user, setShowAuth, handleLogout }) {
             Sign Up or Log In
           </button>
         )}
-      </div>
+        </div>
       <nav className="nav">
         <Link to="/" className="nav-link">Home</Link>
         <Link to="/about" className="nav-link">About</Link>
@@ -180,7 +180,7 @@ function Header({ user, setShowAuth, handleLogout }) {
             <div className="donation-grid">
               {presetAmounts.map((amount) => (
                 <button
-                  key={amount)
+                  key={amount}
                   onClick={() => handleDonate(amount)}
                   className="donation-btn"
                 >
