@@ -20,10 +20,10 @@ function Header({ user, setShowAuth, handleLogout }) {
   });
   const [formError, setFormError] = useState('');
 
-  // Dynamic ticker text
+  // Simplified ticker text
   const tickerText = window.innerWidth <= 768 
-    ? "WE DO NOT SHIP ANY PRODUCTS TO THE STATE OF ALABAMA. Act NOW! Claim Chips, Support KNN!" 
-    : "WE DO NOT SHIP ANY PRODUCTS TO THE STATE OF ALABAMA. Act NOW! Claim FREE Chips, Grab MasterPeace, Support the Fight! - PRESS THE FREE CHIPS BUTTON BELOW NOW!";
+    ? "Claim Your Free Pain & Energy Chips Now!" 
+    : "Claim Your 12 Free Pain & Energy Chips Today! - Press the Free Chips Button Below!";
 
   useEffect(() => {
     const cta = ctaRef.current;
@@ -111,6 +111,12 @@ function Header({ user, setShowAuth, handleLogout }) {
         >
           IGF1
         </a>
+        <button
+          onClick={() => setShowDonateModal(true)}
+          className="action-cta-btn"
+        >
+          Donate
+        </button>
       </div>
 
       {/* Existing header content */}
@@ -136,12 +142,7 @@ function Header({ user, setShowAuth, handleLogout }) {
               <span>{tickerText}</span>
             </div>
             <div className="action-cta-list">
-              <a href="https://bit.ly/christiskey" target="_blank" rel="noopener noreferrer" className="action-cta-btn">
-                Buy MasterPeace
-              </a>
-              <button onClick={() => setShowDonateModal(true)} className="action-cta-btn">
-                Donate
-              </button>
+              {/* No buttons here as MasterPeace and Donate are now in sticky-bar */}
             </div>
           </div>
         </div>
@@ -179,7 +180,7 @@ function Header({ user, setShowAuth, handleLogout }) {
             <div className="donation-grid">
               {presetAmounts.map((amount) => (
                 <button
-                  key={amount}
+                  key={amount)
                   onClick={() => handleDonate(amount)}
                   className="donation-btn"
                 >
