@@ -10,11 +10,6 @@ function Home({ user }) {
   const [videos, setVideos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [donationTotal, setDonationTotal] = useState(0);
-  const [chipName, setChipName] = useState('');
-  const [chipEmail, setChipEmail] = useState('');
-  const [chipPhone, setChipPhone] = useState('');
-  const [chipAddress, setChipAddress] = useState('');
-  const [showChipsForm, setShowChipsForm] = useState(false);
   const [showMission, setShowMission] = useState(false);
   const [showFight, setShowFight] = useState(false);
   const chipsRef = useRef(null);
@@ -65,32 +60,17 @@ function Home({ user }) {
     }
   };
 
-  const handleChipClaim = async (e) => {
-    e.preventDefault();
-    try {
-      await axios.post('/.netlify/functions/claim-chips', {
-        name: chipName,
-        email: chipEmail,
-        phone: chipPhone,
-        address: chipAddress,
-      });
-      alert('Claim submitted! Chips shipping soon!');
-      setChipName('');
-      setChipEmail('');
-      setChipPhone('');
-      setChipAddress('');
-      setShowChipsForm(false);
-    } catch (err) {
-      alert('Claim failed—check your info!');
-    }
-  };
-
   const featuredVideo = videos.length > 0 ? videos[0] : null;
 
   const testimonials = [
     { quote: "Dropped my back pain in 2 days—Christopher’s the real deal!", name: "John D., Patriot" },
     { quote: "Energy through the roof—no coffee needed!", name: "Sarah T., Freedom Fighter" },
     { quote: "These chips are a game-changer—pain’s gone!", name: "Mike R., Truth Warrior" },
+    { quote: "Chronic knee pain vanished in hours—unbelievable!", name: "Lisa M., Health Advocate" },
+    { quote: "I’m sleeping better and waking up energized!", name: "Tom B., Veteran" },
+    { quote: "My migraines are history thanks to these chips!", name: "Emma S., Mother of Three" },
+    { quote: "Boosted my focus and stamina for the fight!", name: "David K., Activist" },
+    { quote: "No more joint pain—back to hiking at 60!", name: "Carol W., Outdoor Enthusiast" },
   ];
 
   return (
@@ -118,7 +98,7 @@ function Home({ user }) {
                 src={`https://rumble.com/embed/${featuredVideo.rumbleVideoId}/?pub=${publisherCode}`}
                 frameBorder="0"
                 allowFullScreen
-                title={featuredVideo.title} // Added unique title
+                title={featuredVideo.title}
               ></iframe>
             </div>
             <h3 className="video-title">{featuredVideo.title}</h3>
@@ -142,26 +122,13 @@ function Home({ user }) {
       </section>
 
       <section className="chips-section" ref={chipsRef}>
-        <h2 className="section-title">Free Pain & Energy Chips</h2>
+        <h2 className="section-title">Pain & Energy Chips: Freedom from Pain</h2>
         <p className="section-text">
-          Nano-tech patches that zap pain and charge your energy—stick ‘em on, feel the freedom. Claim your 12 FREE Pain & Energy Chips—natural, non-invasive relief and vitality boosters from Christopher Key’s arsenal.
+          Experience the power of nano-tech Pain & Energy Chips from Christopher Key’s arsenal. These non-invasive patches deliver natural relief from chronic pain and supercharge your energy—stick ‘em on and feel the freedom! Claim your 12 FREE chips today through our exclusive offer and join thousands reclaiming their vitality.
         </p>
-        <div className="chips-button-container">
-          <button className="cta-btn" onClick={() => setShowChipsForm(!showChipsForm)}>
-            {showChipsForm ? 'Hide Claim Form' : 'Claim Your 12 Free Chips'}
-          </button>
-        </div>
-        {showChipsForm && (
-          <div className="chips-form-container">
-            <form onSubmit={handleChipClaim} className="chips-form">
-              <input type="text" value={chipName} onChange={(e) => setChipName(e.target.value)} placeholder="Full Name" required />
-              <input type="email" value={chipEmail} onChange={(e) => setChipEmail(e.target.value)} placeholder="Email Address" required />
-              <input type="tel" value={chipPhone} onChange={(e) => setChipPhone(e.target.value)} placeholder="Phone Number" required />
-              <textarea value={chipAddress} onChange={(e) => setChipAddress(e.target.value)} placeholder="Shipping Address" required />
-              <button type="submit" className="cta-btn">Submit Claim</button>
-            </form>
-          </div>
-        )}
+        <button className="cta-btn pulse-btn" onClick={() => window.location.href = '#free-chips'}>
+          Claim Your Free Chips Now
+        </button>
         <div className="chips-testimonials">
           {testimonials.map((t, index) => (
             <div key={index} className="testimonial-card">
