@@ -1290,7 +1290,7 @@ body {
 
 .bio-container {
   display: flex;
-  align-items: center;
+  align-items: flex-start; /* Align items at the top to prevent clipping */
   gap: 20px;
   max-width: 900px;
   margin: 0 auto;
@@ -1298,15 +1298,16 @@ body {
 
 .bio-image {
   flex: 0 0 auto;
+  width: 300px; /* Fixed width for consistent layout */
+  max-width: 100%; /* Prevent overflow on smaller screens */
 }
 
 .christopher-pic {
-  width: 300px;
-  height: 300px;
-  object-fit: cover;
-  border-radius: 15px;
-  background: #ffffff;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  width: 100%; /* Fill the .bio-image container */
+  height: auto; /* Maintain aspect ratio */
+  max-height: 400px; /* Cap image height to prevent overflow */
+  object-fit: contain; /* Ensure entire image is visible */
+  display: block; /* Remove inline spacing */
 }
 
 .section-text.accent-text {
