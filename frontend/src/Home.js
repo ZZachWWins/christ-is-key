@@ -116,48 +116,6 @@ function Home({ user, setShowChipsModal }) {
 
   return (
     <main className="main">
-      <section className="poem-section" ref={poemRef}>
-        <div className="poem-container">
-          <div className="poem-content">
-            <div className="poem-container-full">
-              <div className="poem-hue poem-animated"></div>
-              {/* Replace with direct URL from Cloudinary or similar */}
-              <img
-                className="poem-backgroundImage"
-                src="https://drive.google.com/thumbnail?id=1_ZMV_LcmUXLsRokuz6WXGyN9zVCGfAHp&sz=w1920"
-                alt="Background"
-              />
-              {/* Replace with direct URL from Cloudinary or similar */}
-              <img
-                className="poem-boyImage"
-                src="https://drive.google.com/thumbnail?id=1eGqJskQQgBJ67myGekmo4YfIVI3lfDTm&sz=w1920"
-                alt="Christopher Key"
-              />
-              <div className="poem-container">
-                <div className="poem-cube">
-                  <div className="poem-face poem-top"></div>
-                  <div className="poem-face poem-bottom"></div>
-                  <div className="poem-face poem-left poem-text"></div>
-                  <div className="poem-face poem-right poem-text"></div>
-                  <div className="poem-face poem-front"></div>
-                  <div className="poem-face poem-back poem-text"></div>
-                </div>
-              </div>
-              <div className="poem-container-reflect">
-                <div className="poem-cube">
-                  <div className="poem-face poem-top"></div>
-                  <div className="poem-face poem-bottom"></div>
-                  <div className="poem-face poem-left poem-text"></div>
-                  <div className="poem-face poem-right poem-text"></div>
-                  <div className="poem-face poem-front"></div>
-                  <div className="poem-face poem-back poem-text"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       <section className="landing-section">
         <h2 className="landing-title">Welcome to KNN - Key News Network</h2>
         <div className="news-ticker">
@@ -192,6 +150,46 @@ function Home({ user, setShowChipsModal }) {
       ) : (
         <p>No breaking news yet—stay tuned!</p>
       )}
+
+      <section className="poem-section" ref={poemRef}>
+        <div className="poem-container">
+          <div className="poem-content">
+            <div className="poem-container-full">
+              <div className="poem-hue poem-animated"></div>
+              <img
+                className="poem-backgroundImage"
+                src="https://drive.google.com/thumbnail?id=1_ZMV_LcmUXLsRokuz6WXGyN9zVCGfAHp&sz=w1920"
+                alt="Background"
+              />
+              <img
+                className="poem-boyImage"
+                src="https://drive.google.com/thumbnail?id=1eGqJskQQgBJ67myGekmo4YfIVI3lfDTm&sz=w1920"
+                alt="Christopher Key"
+              />
+              <div className="poem-container">
+                <div className="poem-cube">
+                  <div className="poem-face poem-top"></div>
+                  <div className="poem-face poem-bottom"></div>
+                  <div className="poem-face poem-left poem-text"></div>
+                  <div className="poem-face poem-right poem-text"></div>
+                  <div className="poem-face poem-front"></div>
+                  <div className="poem-face poem-back poem-text"></div>
+                </div>
+              </div>
+              <div className="poem-container-reflect">
+                <div className="poem-cube">
+                  <div className="poem-face poem-top"></div>
+                  <div className="poem-face poem-bottom"></div>
+                  <div className="poem-face poem-left poem-text"></div>
+                  <div className="poem-face poem-right poem-text"></div>
+                  <div className="poem-face poem-front"></div>
+                  <div className="poem-face poem-back poem-text"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       <section className="support-section">
         <h2 className="section-title">Support KNN’s Fight</h2>
