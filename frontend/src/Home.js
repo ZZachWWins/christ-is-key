@@ -6,15 +6,34 @@ import { loadStripe } from '@stripe/stripe-js';
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY);
 const publisherCode = '3ycfre'; // Your Rumble publisher code from ?pub=3ycfre
 
-function Home({ user }) {
+// Poem text about Christopher Key
+const keyPoem = `<p>If you can <span>stand</span> for truth when lies surround you,  
+And <span>fight</span> the tyrants who would <span>chain</span> us all;  
+If you can <span>shout</span> your voice though they <span>drown</span> you,  
+Yet hold your <span>ground</span> and never fall;  
+If you can <span>heal</span> with chips that spark your <span>fire</span>,  
+Or <span>break</span> the chains of jabs with <span>bold</span> decree,  
+And <span>rise</span> against the powers that <span>conspire</span>,  
+While keeping <span>faith</span> in liberty;  
+If you can <span>lead</span> the lost to find their <span>freedom</span>,  
+And <span>guard</span> the kids from masks and <span>harm</span>’s disguise;  
+If you can <span>build</span> a world with truth’s own <span>wisdom</span>,  
+And <span>shine</span> through darkness with unyielding <span>eyes</span>;  
+Yours is the <span>fight</span> that wakes the silent <span>nation</span>,  
+And—more than all—you’ll be the <span>Key</span>, our guide!  
+- Inspired by Christopher Key’s Mission</p>`;
+
+function Home({ user, setShowChipsModal }) {
   const [videos, setVideos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [donationTotal, setDonationTotal] = useState(0);
   const [showMission, setShowMission] = useState(false);
   const [showFight, setShowFight] = useState(false);
   const chipsRef = useRef(null);
+  const poemRef = useRef(null);
 
   useEffect(() => {
+    // Fetch videos
     const fetchVideos = async () => {
       try {
         const res = await axios.get('/.netlify/functions/videos');
@@ -27,11 +46,13 @@ function Home({ user }) {
     };
     fetchVideos();
 
+    // Fetch donation total (placeholder)
     const fetchDonationTotal = async () => {
-      setDonationTotal(0); // Placeholder
+      setDonationTotal(0);
     };
     fetchDonationTotal();
 
+    // GSAP animation for chips section
     const chips = chipsRef.current;
     if (chips) {
       gsap.from(chips.children, {
@@ -42,6 +63,26 @@ function Home({ user }) {
         ease: 'power3.out',
         scrollTrigger: { trigger: chips },
       });
+    }
+
+    // Insert poem into text divs
+    const textDivs = poemRef.current?.querySelectorAll('.poem-text');
+    textDivs?.forEach((div) => {
+      div.innerHTML = keyPoem;
+    });
+
+    // Adjust content size for poem
+    const contentDiv = poemRef.current?.querySelector('.poem-content');
+    if (contentDiv) {
+      const adjustContentSize = () => {
+        const viewportWidth = window.innerWidth;
+        const baseWidth = 1000;
+        const scaleFactor = viewportWidth < baseWidth ? (viewportWidth / baseWidth) * 0.8 : 1;
+        contentDiv.style.transform = `scale(${scaleFactor})`;
+      };
+      adjustContentSize();
+      window.addEventListener('resize', adjustContentSize);
+      return () => window.removeEventListener('resize', adjustContentSize);
     }
   }, []);
 
@@ -75,6 +116,48 @@ function Home({ user }) {
 
   return (
     <main className="main">
+      <section className="poem-section" ref={poemRef}>
+        <div className="poem-container">
+          <div className="poem-content">
+            <div className="poem-container-full">
+              <div className="poem-hue poem-animated"></div>
+              {/* Replace with direct URL from Cloudinary or similar */}
+              <img
+                className="poem-backgroundImage"
+                src="https://drive.google.com/thumbnail?id=1_ZMV_LcmUXLsRokuz6WXGyN9zVCGfAHp&sz=w1920"
+                alt="Background"
+              />
+              {/* Replace with direct URL from Cloudinary or similar */}
+              <img
+                className="poem-boyImage"
+                src="https://drive.google.com/thumbnail?id=1eGqJskQQgBJ67myGekmo4YfIVI3lfDTm&sz=w1920"
+                alt="Christopher Key"
+              />
+              <div className="poem-container">
+                <div className="poem-cube">
+                  <div className="poem-face poem-top"></div>
+                  <div className="poem-face poem-bottom"></div>
+                  <div className="poem-face poem-left poem-text"></div>
+                  <div className="poem-face poem-right poem-text"></div>
+                  <div className="poem-face poem-front"></div>
+                  <div className="poem-face poem-back poem-text"></div>
+                </div>
+              </div>
+              <div className="poem-container-reflect">
+                <div className="poem-cube">
+                  <div className="poem-face poem-top"></div>
+                  <div className="poem-face poem-bottom"></div>
+                  <div className="poem-face poem-left poem-text"></div>
+                  <div className="poem-face poem-right poem-text"></div>
+                  <div className="poem-face poem-front"></div>
+                  <div className="poem-face poem-back poem-text"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section className="landing-section">
         <h2 className="landing-title">Welcome to KNN - Key News Network</h2>
         <div className="news-ticker">
@@ -126,7 +209,7 @@ function Home({ user }) {
         <p className="section-text">
           Experience the power of nano-tech Pain & Energy Chips from Christopher Key’s arsenal. These non-invasive patches deliver natural relief from chronic pain and supercharge your energy—stick ‘em on and feel the freedom! Claim your 12 FREE chips today through our exclusive offer and join thousands reclaiming their vitality.
         </p>
-        <button className="cta-btn pulse-btn" onClick={() => window.location.href = '#free-chips'}>
+        <button className="cta-btn pulse-btn" onClick={() => setShowChipsModal(true)}>
           Claim Your Free Chips Now
         </button>
         <div className="chips-testimonials">
