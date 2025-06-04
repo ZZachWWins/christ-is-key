@@ -19,8 +19,22 @@ If you can <span>lead</span> the lost to find their <span>freedom</span>,
 And <span>guard</span> the kids from masks and <span>harm</span>’s disguise;  
 If you can <span>build</span> a world with truth’s own <span>wisdom</span>,  
 And <span>shine</span> through darkness with unyielding <span>eyes</span>;  
+If you can <span>forge</span> a path where none would <span>venture</span>,  
+And <span>defy</span> the shadows cast by fear’s <span>command</span>;  
+If you can <span>rally</span> souls to break their <span>silence</span>,  
+And <span>plant</span> the seeds of justice in this land;  
+If you can <span>storm</span> the gates of lies with <span>courage</span>,  
+And <span>wield</span> the truth as sword and blazing <span>light</span>;  
+If you can <span>free</span> the minds held long in <span>bondage</span>,  
+And <span>carve</span> a future fierce with righteous <span>might</span>;  
+If you can <span>call</span> the weary to awaken,  
+And <span>stir</span> the hearts grown cold with doubt’s <span>embrace</span>;  
+If you can <span>lift</span> the flag of freedom <span>higher</span>,  
+And <span>spark</span> a flame no tyrant can <span>erase</span>;  
 Yours is the <span>fight</span> that wakes the silent <span>nation</span>,  
-And—more than all—you’ll be the <span>Key</span>, our guide!  
+The <span>roar</span> that shakes the chains from sea to <span>sea</span>;  
+And—more than all—you’ll be the <span>Key</span>, our guide,  
+The <span>beacon</span> of our boundless liberty!  
 - Inspired by Christopher Key’s Mission</p>`;
 
 function Home({ user, setShowChipsModal }) {

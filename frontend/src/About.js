@@ -24,7 +24,7 @@ function About() {
         <div className="bio-container">
           <div className="bio-image">
             <img
-              src="https://res.cloudinary.com/diwgwgndv/image/upload/w_300,h_300,c_fill/hegegf5e0xzx7siuncsv"
+              src="https://res.cloudinary.com/diwgwgndv/image/upload/v1749074780/62f7f7aa542420137a2718e8_chris-redshirt_vfljwm.jpg"
               alt="Christopher Key"
               className="christopher-pic"
             />
