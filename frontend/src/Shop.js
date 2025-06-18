@@ -262,6 +262,23 @@ function Shop() {
               Get It Now
             </button>
           </div>
+          <div className="sponsored-card">
+            <img
+              src="https://res.cloudinary.com/diwgwgndv/image/upload/w_300,h_200,c_fill/Screenshot_2025-06-18_at_8.42.52_AM_vwqgau"
+              alt="Nesa's Hemp"
+              className="sponsored-image"
+            />
+            <h3 className="sponsored-title">Nesa's Hemp</h3>
+            <p className="sponsored-text">
+              Experience premium hemp products for wellness and balance.
+            </p>
+            <button
+              className="cta-btn"
+              onClick={() => window.open('https://www.nesashemp.com/#key', '_blank')}
+            >
+              Get It Now
+            </button>
+          </div>
         </div>
         <button className="cta-btn pulse-btn" onClick={handleCheckout}>
           <span className="exclusive-badge">KNN Exclusive</span> Get the Key Report - $17.76
