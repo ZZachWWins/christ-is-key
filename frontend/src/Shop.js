@@ -187,6 +187,81 @@ function Shop() {
               Get It Now
             </button>
           </div>
+          <div className="sponsored-card">
+            <img
+              src="https://res.cloudinary.com/diwgwgndv/image/upload/w_300,h_200,c_fill/wvsd59jkfmhwogvwwbfx"
+              alt="Apricot Seeds"
+              className="sponsored-image"
+            />
+            <h3 className="sponsored-title">Apricot Seeds</h3>
+            <p className="sponsored-text">
+              Harness the power of nature with these nutrient-rich seeds for wellness.
+            </p>
+            <button
+              className="cta-btn"
+              onClick={() =>
+                window.open(
+                  'https://rncstore.com/?utm_source=simple-affiliate&utm_medium=referral&utm_campaign=Jennifer+%285274143522876%29&sacode=tdeanq',
+                  '_blank'
+                )
+              }
+            >
+              Get It Now
+            </button>
+          </div>
+          <div className="sponsored-card">
+            <img
+              src="https://res.cloudinary.com/diwgwgndv/image/upload/w_300,h_200,c_fill/hiut1t0d9xgfdliuhe68"
+              alt="Microbiome"
+              className="sponsored-image"
+            />
+            <h3 className="sponsored-title">Microbiome</h3>
+            <p className="sponsored-text">
+              Support gut health and immunity with advanced microbiome solutions.
+            </p>
+            <button
+              className="cta-btn"
+              onClick={() => window.open('https://microbiomelabs.com/register/?ref=VPolice', '_blank')}
+            >
+              Get It Now
+            </button>
+          </div>
+          <div className="sponsored-card">
+            <img
+              src="https://res.cloudinary.com/diwgwgndv/image/upload/w_300,h_200,c_fill/h6pajzrzb5mtee9rjfsd"
+              alt="Sulphur Crystals"
+              className="sponsored-image"
+            />
+            <h3 className="sponsored-title">Sulphur Crystals</h3>
+            <p className="sponsored-text">
+              Purify and energize your body with these potent sulphur crystals.
+            </p>
+            <button
+              className="cta-btn"
+              onClick={() =>
+                window.open('https://www.h2oairwateramericas.com/?affid=vaccine-police', '_blank')
+              }
+            >
+              Get It Now
+            </button>
+          </div>
+          <div className="sponsored-card">
+            <img
+              src="https://res.cloudinary.com/diwgwgndv/image/upload/w_300,h_200,c_fill/g8ziobkzyd3ditqq4aag"
+              alt="PH Prescription Water"
+              className="sponsored-image"
+            />
+            <h3 className="sponsored-title">PH Prescription Water</h3>
+            <p className="sponsored-text">
+              Hydrate and balance your body with optimized pH water for health.
+            </p>
+            <button
+              className="cta-btn"
+              onClick={() => window.open('https://www.phprescription.com/?ref=CKey', '_blank')}
+            >
+              Get It Now
+            </button>
+          </div>
         </div>
         <button className="cta-btn pulse-btn" onClick={handleCheckout}>
           <span className="exclusive-badge">KNN Exclusive</span> Get the Key Report - $17.76
