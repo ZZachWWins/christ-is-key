@@ -279,6 +279,23 @@ function Shop() {
               Get It Now
             </button>
           </div>
+          <div className="sponsored-card">
+            <img
+              src="https://res.cloudinary.com/diwgwgndv/image/upload/w_300,h_200,c_fill/v1751910808/Screenshot_2025-07-07_at_12.52.47_PM_tbkcmd.png"
+              alt="Triad Aer"
+              className="sponsored-image"
+            />
+            <h3 className="sponsored-title">Triad Aer</h3>
+            <p className="sponsored-text">
+              Purify your air and enhance wellness with advanced air purification technology.
+            </p>
+            <button
+              className="cta-btn"
+              onClick={() => window.open('https://mytriadaer.funnelpages.com/KEY', '_blank')}
+            >
+              Get It Now
+            </button>
+          </div>
         </div>
         <button className="cta-btn pulse-btn" onClick={handleCheckout}>
           <span className="exclusive-badge">KNN Exclusive</span> Get the Key Report - $17.76
