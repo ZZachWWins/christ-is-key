@@ -11,7 +11,6 @@ function Header({ user, setShowAuth, handleLogout }) {
   const [showDonateModal, setShowDonateModal] = useState(false);
   const [showChipsModal, setShowChipsModal] = useState(false);
   const [customAmount, setCustomAmount] = useState('');
-  const [isExpanded, setIsExpanded] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -131,12 +130,12 @@ function Header({ user, setShowAuth, handleLogout }) {
         <div className="header-right">
           <h1 className="header-title">Christopher Key - Truth Warrior</h1>
           <p className="subtitle">WE DO NOT SHIP ANY PRODUCTS TO THE STATE OF ALABAMA</p>
-          <div className={`action-cta-container ${isExpanded ? 'expanded' : ''}`} ref={ctaRef}>
+          <div className="action-cta-container" ref={ctaRef}>
             <button
               className="action-mobile-toggle-btn"
-              onClick={() => setIsExpanded(!isExpanded)}
+              onClick={() => setShowChipsModal(true)}
             >
-              {isExpanded ? 'Close Actions' : 'PRESS HERE NOW'}
+              PRESS HERE NOW
             </button>
             <div className="action-ticker">
               <span>{tickerText}</span>
@@ -158,7 +157,7 @@ function Header({ user, setShowAuth, handleLogout }) {
             Sign Up or Log In
           </button>
         )}
-        </div>
+      </div>
       <nav className="nav">
         <Link to="/" className="nav-link">Home</Link>
         <Link to="/about" className="nav-link">About</Link>
