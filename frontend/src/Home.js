@@ -74,15 +74,15 @@ function Home({ user }) {
     fetchDonationTotal();
 
     // GSAP animation for chips section
-    const chips = chipsRef.current;
-    if (chips) {
-      gsap.from(chips.children, {
+    const chip = chipsRef.current;
+    if (chip) {
+      gsap.from(chip.children, {
         duration: 1,
         opacity: 0,
         x: 50,
         stagger: 0.2,
         ease: 'power3.out',
-        scrollTrigger: { trigger: chips },
+        scrollTrigger: { trigger: chip },
       });
     }
 
@@ -163,9 +163,6 @@ function Home({ user }) {
         </p>
         <button className="cta-btn" onClick={() => setShowMission(true)}>Our Mission</button>
         <button className="cta-btn" onClick={() => setShowFight(true)}>Join the Fight</button>
-        <button className="mobile-query-btn" onClick={() => setShowChipsModal(true)}>
-          Press Here Now
-        </button>
       </section>
 
       {loading ? (
