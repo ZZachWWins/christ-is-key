@@ -4,7 +4,7 @@ import { gsap } from 'gsap';
 import { loadStripe } from '@stripe/stripe-js';
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY);
-const publisherCode = '3ycfre'; // Your Rumble publisher code from ?pub=3ycfre
+const publisherCode = '3ycfre';
 
 // Poem text about Christopher Key
 const keyPoem = `<p>If you can <span>stand</span> for truth when lies surround you,  
@@ -37,12 +37,19 @@ And—more than all—you’ll be the <span>Key</span>, our guide,
 The <span>beacon</span> of our boundless liberty!  
 - Inspired by Christopher Key’s Mission</p>`;
 
-function Home({ user, setShowChipsModal }) {
+function Home({ user }) {
   const [videos, setVideos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [donationTotal, setDonationTotal] = useState(0);
   const [showMission, setShowMission] = useState(false);
   const [showFight, setShowFight] = useState(false);
+  const [showChipsModal, setShowChipsModal] = useState(false);
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    address: '',
+    phone: '',
+  });
   const chipsRef = useRef(null);
   const poemRef = useRef(null);
 
@@ -115,6 +122,22 @@ function Home({ user, setShowChipsModal }) {
     }
   };
 
+  const handleChipsSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post('/.netlify/functions/send-chips-email', formData);
+      alert(response.data.message);
+      setFormData({ name: '', email: '', address: '', phone: '' });
+      setShowChipsModal(false);
+    } catch (err) {
+      alert(err.response?.data?.error || 'Failed to submit—try again!');
+    }
+  };
+
+  const handleFormChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
   const featuredVideo = videos.length > 0 ? videos[0] : null;
 
   const testimonials = [
@@ -140,6 +163,9 @@ function Home({ user, setShowChipsModal }) {
         </p>
         <button className="cta-btn" onClick={() => setShowMission(true)}>Our Mission</button>
         <button className="cta-btn" onClick={() => setShowFight(true)}>Join the Fight</button>
+        <button className="mobile-query-btn" onClick={() => setShowChipsModal(true)}>
+          Press Here Now
+        </button>
       </section>
 
       {loading ? (
@@ -254,6 +280,49 @@ function Home({ user, setShowChipsModal }) {
               Become part of the Key News Network movement. Share your stories, upload your reports, and stand with Christopher against tyranny.
             </p>
             <button className="close-btn" onClick={() => setShowFight(false)}>Close</button>
+          </div>
+        </div>
+      )}
+
+      {showChipsModal && (
+        <div className="chips-modal">
+          <div className="chips-content">
+            <h2 className="chips-title">Claim Your Free Pain & Energy Chips</h2>
+            <form onSubmit={handleChipsSubmit} className="chips-form">
+              <input
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleFormChange}
+                placeholder="Your Name"
+                required
+              />
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleFormChange}
+                placeholder="Your Email"
+                required
+              />
+              <textarea
+                name="address"
+                value={formData.address}
+                onChange={handleFormChange}
+                placeholder="Your Shipping Address"
+                required
+              />
+              <input
+                type="tel"
+                name="phone"
+                value={formData.phone}
+                onChange={handleFormChange}
+                placeholder="Your Phone Number"
+                required
+              />
+              <button type="submit" className="submit-btn">Submit</button>
+            </form>
+            <button className="close-btn" onClick={() => setShowChipsModal(false)}>Close</button>
           </div>
         </div>
       )}
